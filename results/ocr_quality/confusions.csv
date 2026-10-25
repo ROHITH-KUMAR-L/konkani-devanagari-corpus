@@ -1,0 +1,107 @@
+op,gold_char,ocr_char,count
+delete,ं (DEVANAGARI SIGN ANUSVARA),<none>,118
+delete,""" (QUOTATION MARK)",<none>,39
+delete,<space>,<none>,35
+insert,<none>,<space>,33
+delete,् (DEVANAGARI SIGN VIRAMA),<none>,30
+delete,ा (DEVANAGARI VOWEL SIGN AA),<none>,25
+delete,. (FULL STOP),<none>,25
+insert,<none>,. (FULL STOP),16
+delete,ल (DEVANAGARI LETTER LA),<none>,15
+insert,<none>,ा (DEVANAGARI VOWEL SIGN AA),13
+delete,र (DEVANAGARI LETTER RA),<none>,11
+delete,े (DEVANAGARI VOWEL SIGN E),<none>,11
+insert,<none>,घ (DEVANAGARI LETTER GHA),10
+delete,न (DEVANAGARI LETTER NA),<none>,9
+delete,आ (DEVANAGARI LETTER AA),<none>,8
+insert,<none>,", (COMMA)",7
+insert,<none>,ं (DEVANAGARI SIGN ANUSVARA),7
+insert,<none>,ण (DEVANAGARI LETTER NNA),6
+replace,ग (DEVANAGARI LETTER GA),व (DEVANAGARI LETTER VA),6
+delete,ह (DEVANAGARI LETTER HA),<none>,6
+delete,व (DEVANAGARI LETTER VA),<none>,6
+delete,त (DEVANAGARI LETTER TA),<none>,6
+delete,म (DEVANAGARI LETTER MA),<none>,5
+delete,ग (DEVANAGARI LETTER GA),<none>,5
+insert,<none>,य (DEVANAGARI LETTER YA),5
+delete,", (COMMA)",<none>,5
+delete,श (DEVANAGARI LETTER SHA),<none>,5
+delete,? (QUESTION MARK),<none>,5
+replace,""" (QUOTATION MARK)",” (RIGHT DOUBLE QUOTATION MARK),5
+insert,<none>,१ (DEVANAGARI DIGIT ONE),5
+delete,ो (DEVANAGARI VOWEL SIGN O),<none>,5
+replace,. (FULL STOP),", (COMMA)",4
+delete,ी (DEVANAGARI VOWEL SIGN II),<none>,4
+delete,ि (DEVANAGARI VOWEL SIGN I),<none>,4
+replace,त (DEVANAGARI LETTER TA),ब (DEVANAGARI LETTER BA),3
+insert,<none>,् (DEVANAGARI SIGN VIRAMA),3
+delete,ट (DEVANAGARI LETTER TTA),<none>,3
+delete,ज (DEVANAGARI LETTER JA),<none>,3
+insert,<none>,२ (DEVANAGARI DIGIT TWO),3
+delete,च (DEVANAGARI LETTER CA),<none>,3
+delete,क (DEVANAGARI LETTER KA),<none>,3
+delete,प (DEVANAGARI LETTER PA),<none>,3
+delete,ड (DEVANAGARI LETTER DDA),<none>,3
+insert,<none>,े (DEVANAGARI VOWEL SIGN E),3
+replace,ल (DEVANAGARI LETTER LA),ळ (DEVANAGARI LETTER LLA),3
+delete,ब (DEVANAGARI LETTER BA),<none>,2
+replace,च (DEVANAGARI LETTER CA),ज (DEVANAGARI LETTER JA),2
+replace,द (DEVANAGARI LETTER DA),ढ (DEVANAGARI LETTER DDHA),2
+delete,ऱ (DEVANAGARI LETTER RRA),<none>,2
+delete,ु (DEVANAGARI VOWEL SIGN U),<none>,2
+insert,<none>,ि (DEVANAGARI VOWEL SIGN I),2
+delete,ण (DEVANAGARI LETTER NNA),<none>,2
+insert,<none>,४ (DEVANAGARI DIGIT FOUR),2
+replace,. (FULL STOP),<space>,2
+delete,द (DEVANAGARI LETTER DA),<none>,2
+delete,य (DEVANAGARI LETTER YA),<none>,2
+replace,थ (DEVANAGARI LETTER THA),ध (DEVANAGARI LETTER DHA),2
+replace,य (DEVANAGARI LETTER YA),च (DEVANAGARI LETTER CA),1
+insert,<none>,९ (DEVANAGARI DIGIT NINE),1
+replace,प (DEVANAGARI LETTER PA),व (DEVANAGARI LETTER VA),1
+delete,ख (DEVANAGARI LETTER KHA),<none>,1
+replace,द (DEVANAGARI LETTER DA),य (DEVANAGARI LETTER YA),1
+replace,अ (DEVANAGARI LETTER A),आ (DEVANAGARI LETTER AA),1
+replace,ि (DEVANAGARI VOWEL SIGN I),ी (DEVANAGARI VOWEL SIGN II),1
+replace,े (DEVANAGARI VOWEL SIGN E),ै (DEVANAGARI VOWEL SIGN AI),1
+delete,! (EXCLAMATION MARK),<none>,1
+replace,क (DEVANAGARI LETTER KA),ल (DEVANAGARI LETTER LA),1
+replace,ट (DEVANAGARI LETTER TTA),ठ (DEVANAGARI LETTER TTHA),1
+insert,<none>,६ (DEVANAGARI DIGIT SIX),1
+replace,घ (DEVANAGARI LETTER GHA),ध (DEVANAGARI LETTER DHA),1
+replace,प (DEVANAGARI LETTER PA),य (DEVANAGARI LETTER YA),1
+delete,स (DEVANAGARI LETTER SA),<none>,1
+delete,ध (DEVANAGARI LETTER DHA),<none>,1
+insert,<none>,र (DEVANAGARI LETTER RA),1
+insert,<none>,त (DEVANAGARI LETTER TA),1
+replace,ह (DEVANAGARI LETTER HA),म (DEVANAGARI LETTER MA),1
+replace,म (DEVANAGARI LETTER MA),ह (DEVANAGARI LETTER HA),1
+replace,द (DEVANAGARI LETTER DA),इ (DEVANAGARI LETTER I),1
+delete,ू (DEVANAGARI VOWEL SIGN UU),<none>,1
+delete,ष (DEVANAGARI LETTER SSA),<none>,1
+replace,<space>,ं (DEVANAGARI SIGN ANUSVARA),1
+insert,<none>,” (RIGHT DOUBLE QUOTATION MARK),1
+delete,इ (DEVANAGARI LETTER I),<none>,1
+delete,ळ (DEVANAGARI LETTER LLA),<none>,1
+insert,<none>,श (DEVANAGARI LETTER SHA),1
+insert,<none>,क (DEVANAGARI LETTER KA),1
+insert,<none>,ल (DEVANAGARI LETTER LA),1
+insert,<none>,ो (DEVANAGARI VOWEL SIGN O),1
+delete,ई (DEVANAGARI LETTER II),<none>,1
+replace,ं (DEVANAGARI SIGN ANUSVARA),<space>,1
+replace,. (FULL STOP),' (APOSTROPHE),1
+delete,‘ (LEFT SINGLE QUOTATION MARK),<none>,1
+insert,<none>,३ (DEVANAGARI DIGIT THREE),1
+replace,ी (DEVANAGARI VOWEL SIGN II),ि (DEVANAGARI VOWEL SIGN I),1
+insert,<none>,' (APOSTROPHE),1
+replace,‘ (LEFT SINGLE QUOTATION MARK),<space>,1
+replace,’ (RIGHT SINGLE QUOTATION MARK),' (APOSTROPHE),1
+replace,स (DEVANAGARI LETTER SA),झ (DEVANAGARI LETTER JHA),1
+replace,? (QUESTION MARK),<space>,1
+replace,ग (DEVANAGARI LETTER GA),न (DEVANAGARI LETTER NA),1
+replace,ग (DEVANAGARI LETTER GA),क (DEVANAGARI LETTER KA),1
+replace,न (DEVANAGARI LETTER NA),त (DEVANAGARI LETTER TA),1
+insert,<none>,० (DEVANAGARI DIGIT ZERO),1
+replace,े (DEVANAGARI VOWEL SIGN E),ं (DEVANAGARI SIGN ANUSVARA),1
+replace,ं (DEVANAGARI SIGN ANUSVARA),च (DEVANAGARI LETTER CA),1
+insert,<none>,""" (QUOTATION MARK)",1

@@ -1,0 +1,31 @@
+Gold:  data/interim/08_ldcil_gold_sample/KO00002.txt
+OCR:   data/raw/01_literature/GHANAGHAINIYATICHE.txt
+Gold paragraphs (>= 15 tokens): 41; aligned (score >= 80): 41
+Characters compared: 12673; words compared: 1971
+CER (raw OCR):                  6.87%
+CER (punct spacing fixed):      4.77%
+WER (raw OCR):                  43.33%
+WER (punct spacing fixed):      17.86%
+Median paragraph CER:           6.36%
+
+Top 20 character confusions (after punct spacing fix):
+    118  delete   ं (DEVANAGARI SIGN ANUSVARA)  ->  <none>
+     39  delete   " (QUOTATION MARK)  ->  <none>
+     35  delete   <space>  ->  <none>
+     33  insert   <none>  ->  <space>
+     30  delete   ् (DEVANAGARI SIGN VIRAMA)  ->  <none>
+     25  delete   ा (DEVANAGARI VOWEL SIGN AA)  ->  <none>
+     25  delete   . (FULL STOP)  ->  <none>
+     16  insert   <none>  ->  . (FULL STOP)
+     15  delete   ल (DEVANAGARI LETTER LA)  ->  <none>
+     13  insert   <none>  ->  ा (DEVANAGARI VOWEL SIGN AA)
+     11  delete   र (DEVANAGARI LETTER RA)  ->  <none>
+     11  delete   े (DEVANAGARI VOWEL SIGN E)  ->  <none>
+     10  insert   <none>  ->  घ (DEVANAGARI LETTER GHA)
+      9  delete   न (DEVANAGARI LETTER NA)  ->  <none>
+      8  delete   आ (DEVANAGARI LETTER AA)  ->  <none>
+      7  insert   <none>  ->  , (COMMA)
+      7  insert   <none>  ->  ं (DEVANAGARI SIGN ANUSVARA)
+      6  insert   <none>  ->  ण (DEVANAGARI LETTER NNA)
+      6  replace  ग (DEVANAGARI LETTER GA)  ->  व (DEVANAGARI LETTER VA)
+      6  delete   ह (DEVANAGARI LETTER HA)  ->  <none>

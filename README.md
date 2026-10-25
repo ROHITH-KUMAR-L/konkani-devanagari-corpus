@@ -47,7 +47,8 @@ Course: NLP, Experiential Learning, Phase 1 → 3.
 | `05_public_information` | 0 | n/a | n/a | not started |
 | `06_web_articles` | 0 | n/a | n/a | not started |
 | `07_oral_transcripts` | 0 | n/a | n/a | not started |
-| **Total** | | | **~612k (~541k after dedup)** | |
+| `08_ldcil_gold_sample` | 5 XML + metadata `.xls` | hand-typed, proofread XML | 15.6k | LDC-IL (CIIL Mysore) gold sample, novels. Clean reference data, see [§2.3](#23-ldc-il-gold-sample-how-we-use-it) |
+| **Total** | | | **~627k (~554k after dedup)** | |
 
 \*Whitespace-split tokens on the raw text, before any cleaning.
 
@@ -65,8 +66,28 @@ Course: NLP, Experiential Learning, Phase 1 → 3.
 | 8 | **Mixed sentence markers** | `।` 12.8k, `॥` 716, `.` 57.8k | Segmenter handles `। ॥ . ? !` and protects abbreviations such as `के.के.` and `पी.ओ.` |
 | 9 | **Hyphenated words and line breaks inside paragraphs** from OCR | Short broken lines everywhere | Rejoin lines into paragraphs before segmentation |
 | 10 | File name with trailing space: `PALATADANCHE TARUM .txt` | n/a | Rename |
+| 11 | **Overlap with the LDC-IL sample** | `KO00002.xml` is the same book as `GHANAGHAINIYATICHE.txt` (Ashok Kamat, 2005) | Keep `KO00002` only as the gold reference for OCR quality and leave it out of corpus counts (logged in `metadata/excluded_documents.csv`) |
+| 12 | **Anusvara dropped by OCR** | 118 cases in the gold comparison: `शारांचें` comes out as `शाराचे` | Note in the report. Inflates the type count, because one word appears in two spellings. Candidate for an OCR post-correction pass |
 
 **Tooling available locally:** Python 3.12, `pdftotext`, PyMuPDF, pdfplumber, pytesseract (binary **not installed**), EasyOCR (has no Konkani model, but its `mr`/`hi` models read Devanagari), pandas and matplotlib.
+
+### 2.3 LDC-IL gold sample: how we use it
+
+The **LDC-IL "Gold Standard Konkani Raw Text Corpus"** (CIIL Mysore, 2018) has about 4M hand-typed, proofread words. The full corpus is not available to us, but we do have its free **sample** (`data/raw/08_ldcil_gold_sample/`, 5 novel extracts, 15,595 words) and its **documentation** (`docs/references/LDCIL_Konkani_Raw_Text_Corpus_Documentation_2018.pdf`). We use them in four ways:
+
+1. **Gold reference for OCR quality.** `KO00002` contains hand-typed pages from the same book we have as OCR (`GHANAGHAINIYATICHE.txt`). `scripts/ocr_quality_check.py` fuzzy-aligns each gold paragraph to the OCR text and measures error rates:
+
+   | Metric (41 paragraphs, 12,673 chars, 1,971 words) | Value |
+   |---|---|
+   | CER, raw OCR | 6.87% |
+   | CER, after removing the space OCR adds before punctuation | **4.77%** |
+   | WER, raw OCR | 43.33% |
+   | WER, after punctuation spacing fix | **17.86%** |
+
+   Main error types (`results/ocr_quality/confusions.csv`): **dropped anusvara `ं`** (118), dropped quotation marks (39), split or merged words (68 space errors), dropped virama `्` (30), dropped vowel sign `ा` (25). **Inference:** the OCR text is usable for counting, but about 1 word in 6 is misspelt. This inflates types and hapax counts, which we expect to see in the Phase 1 type/token analysis.
+2. **Clean test data.** Use it to check cleaning rules (cleaning should barely change it) and the sentence segmenter (it uses `.`, `?`, `!` and abbreviations like `आर्.पी.आय.`).
+3. **Clean corpus text.** The four non-overlapping samples (`KO00001`, `KO00003–05`, ~13k words) go into the corpus under literature.
+4. **Methodology to follow.** Its metadata schema (title, author, publisher, year, sampling, inputter, proofreader) is our template for `metadata/sources.csv`. Its proofreading rules (drop verse inside prose, trim incomplete trailing sentences, remove foreign-script sentences, fix space before punctuation) feed into `clean_text.py`. Its observation that Konkani is *"highly agglutinative… one needs much larger text corpora for good coverage of words"* is a published benchmark to compare our coverage results against.
 
 ---
 
@@ -77,7 +98,9 @@ konkani-devanagari-corpus/
 ├── data/
 │   ├── raw/                       # untouched source files (never edited)
 │   │   ├── 01_literature/ … 07_oral_transcripts/
-│   ├── interim/                   # extracted / OCR'd plain text, 1 file per source (to add)
+│   │   └── 08_ldcil_gold_sample/  # LDC-IL hand-typed XML sample + metadata .xls
+│   ├── interim/                   # extracted / OCR'd plain text, 1 file per source
+│   │   └── 08_ldcil_gold_sample/  # KO0000x.txt, one paragraph per line
 │   └── processed/
 │       ├── by_category/<cat>/corpus_clean.txt   # cleaned text per category
 │       ├── by_category/<cat>/sentences.tsv
@@ -88,6 +111,8 @@ konkani-devanagari-corpus/
 │           └── documents.jsonl                  # {doc_id, category, source, title, text}
 ├── scripts/
 │   ├── extract_text.py        # PDF/DOCX/HTML → text, OCR fallback
+│   ├── extract_ldcil.py       # LDC-IL XML → text + metadata CSV  ✅
+│   ├── ocr_quality_check.py   # CER/WER of OCR text against the LDC-IL gold sample  ✅
 │   ├── clean_text.py          # normalisation + noise removal
 │   ├── validate_konkani.py    # script ratio + Konkani-vs-Marathi/Hindi check
 │   ├── deduplicate.py         # exact + near-duplicate (MinHash/line Jaccard) removal
@@ -95,7 +120,8 @@ konkani-devanagari-corpus/
 │   └── analyze_corpus.py      # type/token, coverage, length analyses + plots
 ├── metadata/
 │   ├── sources.csv            # doc_id, file, title, author, year, category, url, licence
-│   ├── excluded_documents.csv # doc_id, reason
+│   ├── excluded_documents.csv # file, reason, kept_instead
+│   ├── ldcil_sample_metadata.csv # header fields of the LDC-IL sample files
 │   ├── quality_checks.csv     # per-file: tokens, deva %, latin %, FFFD, pass/fail
 │   └── data_dictionary.md     # column definitions for every output file
 ├── results/
@@ -103,8 +129,10 @@ konkani-devanagari-corpus/
 │   ├── word_frequencies.csv   # rank, type, freq, rel_freq, cum_coverage
 │   ├── coverage_analysis.csv  # coverage %, types needed
 │   ├── document_audit.csv
+│   ├── ocr_quality/           # summary.txt, per_paragraph.csv, confusions.csv
 │   └── plots/                 # Zipf, coverage, sentence-length, word-length (to add)
 ├── docs/
+│   ├── references/            # LDC-IL Konkani corpus documentation (PDF)
 │   ├── collection_guidelines.md
 │   ├── data_cleaning_log.md   # every cleaning iteration: what changed, before/after stats
 │   └── report.md              # Phase 1 report
@@ -245,10 +273,18 @@ Data prep for Phase 2 (done at the end of Phase 1): fixed train/dev/test split b
 
 ## 8. How to run
 
-> Scripts are placeholders until Phase 1 implementation is done; the commands below are the intended interface.
+**Working now:**
 
 ```bash
-pip install -r requirements.txt          # also install Tesseract + hin/mar traineddata for OCR
+pip install -r requirements.txt
+python scripts/extract_ldcil.py          # LDC-IL XML → data/interim/08_ldcil_gold_sample/*.txt + metadata CSV
+python scripts/ocr_quality_check.py      # CER/WER of our OCR vs LDC-IL gold → results/ocr_quality/
+```
+
+**Planned:** the other scripts are still placeholders. The commands below are their intended interface.
+
+```bash
+# also install Tesseract + hin/mar traineddata for OCR
 
 python scripts/extract_text.py   --in data/raw --out data/interim
 python scripts/clean_text.py     --in data/interim --out data/processed/by_category
@@ -280,5 +316,7 @@ Planned `requirements.txt`: `pymupdf`, `pdfplumber`, `pytesseract`, `pdf2image`,
 ---
 
 ## 10. Data sources and licensing
+
+**Reference corpus:** Varik, S., Rajesha N., Manasa G., Choudhary, N. & Ramamoorthy, L. (2018). *Konkani Raw Text Corpus* (documentation of LDC-IL's "A Gold Standard Konkani Raw Text Corpus"). Linguistic Data Consortium for Indian Languages, CIIL, Mysore. ISBN 978-81-7343-232-3. We use only the publicly downloadable sample and documentation; © CIIL.
 
 Every document is listed in `metadata/sources.csv` with title, author/editor, publisher, year and URL. Book scans and e-paper issues are copyrighted by their publishers (e.g. Sahitya Akademi, *Bhaangarbhuin* / The Goan). They are used here **only for academic, non-commercial research**, and raw copyrighted files should not be redistributed publicly. Consider making the GitHub repo private, or keeping only derived statistics public.

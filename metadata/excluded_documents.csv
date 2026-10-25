@@ -1,0 +1,6 @@
+file,reason,kept_instead
+data/raw/01_literature/MAHAROOKH.txt,"Duplicate: identical line set to KONKANI KATHA SANGRAH.txt (Konkani Katha Sangraha, ed. Chandrakant Keni); mislabelled filename",data/raw/04_culture_history/KONKANI KATHA SANGRAH.txt
+data/raw/08_ldcil_gold_sample/KO00002.xml,"Overlap: LDC-IL sample of the same book as GHANAGHAINIYATICHE.txt (Ashok Kamat, 2005). Excluded from corpus counts; used only as gold reference for OCR quality (scripts/ocr_quality_check.py)",data/raw/01_literature/GHANAGHAINIYATICHE.txt
+data/raw/03_education_science/extracted1.txt,"Broken PDF extraction (U+FFFD characters, split vowel signs); re-OCR fkokb1ps.pdf instead",data/raw/03_education_science/fkokb1ps.pdf
+data/raw/03_education_science/extracted2.txt,"Broken PDF extraction (U+FFFD characters, split vowel signs); re-OCR fkokb1ps.pdf instead",data/raw/03_education_science/fkokb1ps.pdf
+data/raw/03_education_science/extracted3.txt,"Broken PDF extraction (U+FFFD characters, split vowel signs); re-OCR fkokb1ps.pdf instead",data/raw/03_education_science/fkokb1ps.pdf
