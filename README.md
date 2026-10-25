@@ -2,6 +2,8 @@
 
 A clean, documented, plain-text corpus of **Konkani written in Devanagari script** (ISO 639-3 `gom`/`kok`), built for the NLP Experiential Learning (EL) project. Phase 1 builds and analyses the corpus. Phases 2 and 3 build word embeddings, language models, neural networks and NER on top of it, so the cleaner and larger the corpus is now, the better everything later will be.
 
+> **Requirements:** see [PRD.md](PRD.md) for goals, numbered requirements, acceptance criteria and risks.
+>
 > **Status (25 Oct 2026):** Phase 1 is in progress. Raw data is partly collected and the repo scaffold exists, but every script, doc, metadata and result file is still an empty placeholder.
 
 ---
