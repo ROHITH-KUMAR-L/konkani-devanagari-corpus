@@ -4,12 +4,13 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 > **Requirements:** see [PRD.md](PRD.md) for goals, numbered requirements, acceptance criteria and risks.
 >
-> **Status (25 Oct 2026):** Phase 1 is in progress. Raw data is partly collected and the repo scaffold exists, but every script, doc, metadata and result file is still an empty placeholder.
+> **Status (25 Oct 2026):** Phase 1 is in progress. Collection and OCR tooling works and **~0.9M raw tokens** are collected. Cleaning, analysis, segmentation and the report are still to do. See [Progress and remaining work](#progress-and-remaining-work).
 
 ---
 
 ## Table of contents
 
+0. [Progress and remaining work](#progress-and-remaining-work)
 1. [Team](#1-team)
 2. [Current state of the repository (audit)](#2-current-state-of-the-repository-audit)
 3. [Repository layout](#3-repository-layout)
@@ -20,6 +21,87 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 8. [How to run](#8-how-to-run)
 9. [Timeline and work split](#9-timeline-and-work-split)
 10. [Data sources and licensing](#10-data-sources-and-licensing)
+
+---
+
+## Progress and remaining work
+
+*Last updated: 25 Oct 2026. Tick items here as they are finished.*
+
+| Phase | Status | Summary |
+|---|---|---|
+| **Phase 1:** corpus building and analysis | 🟡 In progress, about 30% | Collection and OCR tooling done; ~0.9M raw tokens. Analysis, cleaning, segmentation and the report remain |
+| **Phase 2:** tokenisers, n-gram LMs, embeddings | ⚪ Not started | Starts once corpus v1.0 is frozen |
+| **Phase 3:** neural LMs, NER | ⚪ Not started | Starts after Phase 2 |
+
+### Phase 1: done ✅
+- [x] Language, script and team chosen (brief steps 1–2)
+- [x] Repo audit of raw data (README §2): duplicates, broken files and noise found and logged in `metadata/excluded_documents.csv`
+- [x] README plan + [PRD.md](PRD.md) with requirements and acceptance criteria
+- [x] LDC-IL gold sample extracted (`scripts/extract_ldcil.py`), 15.6k clean words
+- [x] OCR quality measured against gold (`scripts/ocr_quality_check.py`): CER 4.77%, WER 17.86%
+- [x] E-paper download + OCR pipeline (`scripts/fetch_epaper.py`), Tesseract `mar+hin` set up
+- [x] 20 hand-downloaded newspaper PDFs + 1 fetched issue OCR'd: 21 issues, 360k tokens
+- [x] `.gitattributes` enforces LF line endings
+
+### Phase 1: remaining ⏳
+
+**Brief step 3: collect and convert to plain text**
+- [ ] Run the full e-paper fetch: `python scripts/fetch_epaper.py fetch`. About 527 free issues, **~9M tokens**, ~18 h, resumable. Commit the text after each chunk
+- [ ] OCR the textbook `03_education_science/fkokb1ps.pdf` (`fetch_epaper.py ocr`) and delete the broken `extracted1–3.txt`
+- [ ] Normalise raw books: CRLF → LF, rename `PALATADANCHE TARUM .txt`, drop the `MAHAROOKH.txt` duplicate
+- [ ] Fill `metadata/sources.csv`: one row per source (title, author, publisher, year, category, URL, licence)
+- [ ] Optional, for domain variety: Konkani Wikipedia, Goa government texts, blogs → categories 05–07
+- [ ] Check every final file with `file` → "UTF-8 text", no CRLF
+
+**Brief step 4: type–token analysis (raw, iteration 0)**
+- [ ] Write `scripts/analyze_corpus.py`: tokens, types, TTR, hapax count, frequency list sorted by decreasing frequency → `results/word_frequencies.csv`, `results/corpus_statistics.txt`
+
+**Brief step 5: coverage analysis**
+- [ ] Types needed for 10/25/50/75/90/95/99% coverage → `results/coverage_analysis.csv` + coverage curve; overall and per category
+- [ ] Zipf and Heaps plots → `results/plots/`
+
+**Brief step 6: observations**
+- [ ] Read the iteration-0 outputs and record observations in `docs/data_cleaning_log.md` (punctuation, numbers, English/OCR junk, Marathi/Hindi words, spelling variants, anusvara loss)
+
+**Brief step 7: clean and repeat**
+- [ ] `scripts/clean_text.py`: NFC, tag/header/masthead/ad removal, Devanagari-ratio line filter, punctuation spacing, paragraph rejoin
+- [ ] `scripts/validate_konkani.py`: Konkani vs Marathi/Hindi paragraph filter + encoding checks → `metadata/quality_checks.csv`
+- [ ] `scripts/deduplicate.py`: exact + near-duplicate paragraphs and documents (including repeated newspaper boilerplate)
+- [ ] Re-run steps 4–5 after each cleaning iteration; before/after tables in the cleaning log
+
+**Brief step 8: sentence segmentation**
+- [ ] `scripts/segment_sentences.py`: split on `। ॥ ? ! .` while protecting abbreviations, initials and decimals → `sentences.txt` (one per line) + `sentences.tsv`
+- [ ] Evaluate on ~200 hand-checked paragraphs (precision/recall)
+
+**Brief step 9: length analyses**
+- [ ] Sentence-length histogram + stats (overall, per category)
+- [ ] Word-length histogram in characters and aksharas (token- and type-weighted)
+
+**Brief step 10: report**
+- [ ] `docs/report.md` (+ PDF): sources, extraction, OCR quality, every cleaning iteration, statistics, coverage, segmentation, length plots, **observations and inferences**, limitations
+- [ ] `metadata/data_dictionary.md`: describe every output file and column
+
+**Hand-off to Phase 2**
+- [ ] Freeze corpus v1.0 (git tag `corpus-v1.0`)
+- [ ] Document-level train/dev/test split (80/10/10) → `data/splits/`
+
+### Phase 2: remaining (all) ⚪
+*Proposed; revise when the official brief arrives. Details in [§5](#5-phase-2-representations-and-language-models).*
+- [ ] Tokenisers: whitespace baseline + SentencePiece BPE/Unigram; fertility and OOV rate
+- [ ] N-gram LMs (1–5-gram) with Laplace, Good-Turing, Kneser-Ney; test perplexity
+- [ ] Word embeddings: word2vec (CBOW, skip-gram), FastText, GloVe
+- [ ] Konkani word-similarity and analogy test sets; nearest neighbours; t-SNE/UMAP plots
+- [ ] Learning curves with 10/25/50/100% of the corpus
+- [ ] Phase 2 report
+
+### Phase 3: remaining (all) ⚪
+*Proposed; details in [§6](#6-phase-3-neural-models-and-applications).*
+- [ ] Neural LMs: feed-forward → LSTM/GRU → small Transformer; perplexity compared with n-gram models
+- [ ] NER annotation guidelines + 2–3k annotated sentences (PER, LOC, ORG, MISC, DATE); Cohen's κ
+- [ ] NER models: CRF → BiLSTM-CRF (FastText) → fine-tuned MuRIL/IndicBERT; P/R/F1
+- [ ] Optional: POS tagging, domain classification, OCR spell-corrector
+- [ ] Final report and presentation
 
 ---
 
@@ -179,7 +261,7 @@ Each step below maps to a point in the assignment brief.
 ### Step 1–2: Language and team ✅
 Konkani, Devanagari script (the official script of Konkani in Goa). Team of four.
 
-### Step 3: Collect and convert to plain text
+### Step 3: Collect and convert to plain text 🟡 (tooling done, collection in progress)
 **Target: at least 2M clean tokens**, aiming for 5M+, across at least 5 categories so the corpus is not just literary.
 
 | Source to add | Category | How |
