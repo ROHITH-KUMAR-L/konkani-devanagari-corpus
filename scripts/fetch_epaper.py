@@ -25,9 +25,12 @@ Usage:
     # only the 10 newest issues, or a date range
     python scripts/fetch_epaper.py fetch --max-issues 10
     python scripts/fetch_epaper.py fetch --since 2026-01-01 --until 2026-06-30
-    # OCR PDFs that are already on disk (e.g. the 20 PDFs in data/raw)
-    python scripts/fetch_epaper.py ocr --pdf-dir data/raw/02_news_and_media \
-        --out data/interim/02_news_and_media/local_pdfs
+    # issue PDFs already downloaded by hand (e.g. the 20 in data/raw/02_news_and_media):
+    # match each to its site issue and OCR it locally, so `fetch` won't download it again
+    python scripts/fetch_epaper.py import
+    # OCR any other PDFs (books, textbooks) to plain text
+    python scripts/fetch_epaper.py ocr --pdf-dir data/raw/03_education_science \
+        --out data/interim/03_education_science
 """
 import argparse
 import csv
@@ -42,6 +45,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import fitz  # PyMuPDF
+import numpy as np
 import pytesseract
 import requests
 from PIL import Image
@@ -53,7 +57,8 @@ USER_AGENT = ("Mozilla/5.0 (konkani-devanagari-corpus; academic NLP research; "
 ISSUE_LINK = re.compile(r"/r/(\d+)")
 CONFIG_FIELD = re.compile(r"'(\w+)'\s*:\s*('(?:[^'\\]|\\.)*'|\"(?:[^\"\\]|\\.)*\"|[^,\n]+)")
 META_FIELDS = ["title", "issue_id", "date", "language", "type", "pages",
-               "pages_ocr", "pages_text_layer", "tokens", "status", "source_url"]
+               "pages_ocr", "pages_text_layer", "tokens", "status", "source_url",
+               "local_pdf"]
 
 
 # ---------------------------------------------------------------- HTTP
@@ -173,10 +178,10 @@ def normalise(text):
     return re.sub(r"\n{3,}", "\n\n", text).strip() + "\n"
 
 
-def pdf_page_to_text(pdf_path, args):
-    """Return (text, method) for a single-page PDF (or page 0 of a PDF)."""
+def pdf_page_to_text(pdf_path, args, page_index=0):
+    """Return (text, method) for one page of a PDF."""
     with fitz.open(pdf_path) as doc:
-        return page_text(doc[0], args)
+        return page_text(doc[page_index], args)
 
 
 def page_text(page, args):
@@ -202,10 +207,8 @@ def process_issue(client, title, issue_id, cfg, args, pool):
     ptype = cfg.get("pType", title["type"])
     date = cfg.get("publishDate", "unknown")
     num_pages = int(cfg.get("numPages", "0") or 0)
-    tag = f"{date}_{issue_id}"
-    pdf_dir = Path(args.pdf_out) / title["slug"] / tag
-    txt_dir = Path(args.out) / title["slug"] / tag
-    issue_txt = Path(args.out) / title["slug"] / f"{tag}.txt"
+    pdf_dir = Path(args.pdf_out) / title["slug"] / f"{date}_{issue_id}"
+    txt_dir, issue_txt = issue_paths(args, title, date, issue_id)
     row = {"title": title["name"], "issue_id": issue_id, "date": date,
            "language": cfg.get("language", ""), "type": ptype, "pages": num_pages,
            "source_url": f"{BASE}/r/{issue_id}"}
@@ -228,40 +231,65 @@ def process_issue(client, title, issue_id, cfg, args, pool):
                 continue
             pdf_path.parent.mkdir(parents=True, exist_ok=True)
             pdf_path.write_bytes(r.content)
-        jobs.append((pnum, pdf_path))
+        jobs.append((pnum, pdf_path, 0))
 
+    return {**row, **ocr_issue_pages(jobs, txt_dir, issue_txt, num_pages, args, pool)}
+
+
+def issue_paths(args, title, date, issue_id):
+    tag = f"{date}_{issue_id}"
+    base = Path(args.out) / title["slug"]
+    return base / tag, base / f"{tag}.txt"
+
+
+def ocr_issue_pages(jobs, txt_dir, issue_txt, num_pages, args, pool):
+    """OCR jobs of (page_number, pdf_path, page_index); write page + issue text."""
     def run(job):
-        pnum, pdf_path = job
+        pnum, pdf_path, page_index = job
         txt_path = txt_dir / f"page_{pnum:02d}.txt"
         if txt_path.exists() and not args.force:
             return pnum, txt_path.read_text(encoding="utf-8"), "cached"
-        text, method = pdf_page_to_text(pdf_path, args)
+        text, method = pdf_page_to_text(pdf_path, args, page_index)
         write_text(txt_path, text)
         return pnum, text, method
 
     results = sorted(pool.map(run, jobs))
     write_text(issue_txt, "\n".join(t for _, t, _ in results))
-    tokens = sum(len(t.split()) for _, t, _ in results)
-    return {**row, "pages_ocr": sum(m == "ocr" for *_, m in results),
+    return {"pages_ocr": sum(m == "ocr" for *_, m in results),
             "pages_text_layer": sum(m == "text_layer" for *_, m in results),
-            "tokens": tokens, "status": "ok" if len(results) == num_pages else "partial"}
+            "tokens": sum(len(t.split()) for _, t, _ in results),
+            "status": "ok" if len(results) == num_pages else "partial"}
+
+
+def open_meta(path):
+    """Open the metadata CSV for appending; return (file, writer, done_issue_ids)."""
+    path = Path(path)
+    rows = []
+    if path.exists():
+        with open(path, encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+            header = reader.fieldnames or []
+        if header != META_FIELDS:  # older file without newer columns: rewrite it
+            with open(path, "w", encoding="utf-8", newline="") as f:
+                w = csv.DictWriter(f, fieldnames=META_FIELDS, extrasaction="ignore")
+                w.writeheader()
+                w.writerows(rows)
+    done = {r["issue_id"] for r in rows if r["status"] in ("ok", "cached")}
+    new_file = not path.exists()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    f = open(path, "a", encoding="utf-8", newline="")
+    writer = csv.DictWriter(f, fieldnames=META_FIELDS)
+    if new_file:
+        writer.writeheader()
+    return f, writer, done
 
 
 def cmd_fetch(args):
     setup_tesseract(args)
     client = Client(args.delay)
     wanted = {l.lower() for l in args.languages}
-    meta_path = Path(args.meta)
-    done = set()
-    if meta_path.exists():
-        with open(meta_path, encoding="utf-8") as f:
-            done = {r["issue_id"] for r in csv.DictReader(f) if r["status"] in ("ok", "cached")}
-    new_file = not meta_path.exists()
-    meta_path.parent.mkdir(parents=True, exist_ok=True)
-    meta_f = open(meta_path, "a", encoding="utf-8", newline="")
-    writer = csv.DictWriter(meta_f, fieldnames=META_FIELDS)
-    if new_file:
-        writer.writeheader()
+    meta_f, writer, done = open_meta(args.meta)
 
     titles = discover_titles(client)
     if args.titles:
@@ -312,6 +340,84 @@ def cmd_fetch(args):
                 fetched += row["status"] in ("ok", "partial", "cached")
                 print(f"  {date} {issue_id}: {row['status']}, {row.get('pages', 0)} pages, "
                       f"{row.get('tokens', 0)} tokens ({time.time() - t0:.0f}s)")
+    meta_f.close()
+
+
+# ---------------------------------------------------------------- import command
+
+def front_page_thumb(page):
+    """Small grayscale image of a page, used to recognise which issue a PDF is."""
+    pix = page.get_pixmap(dpi=10, colorspace=fitz.csGRAY)
+    img = Image.frombytes("L", (pix.width, pix.height), pix.samples).resize((60, 95))
+    return np.asarray(img, dtype=float)
+
+
+def pdf_created(pdf):
+    with fitz.open(pdf) as doc:
+        m = re.match(r"D:(\d{4})(\d{2})(\d{2})", doc.metadata.get("creationDate") or "")
+    return f"{m[1]}-{m[2]}-{m[3]}" if m else None
+
+
+def cmd_import(args):
+    """Identify already-downloaded issue PDFs and OCR them into the fetch layout,
+    so a later `fetch` run treats those issues as done instead of downloading them."""
+    setup_tesseract(args)
+    client = Client(args.delay)
+    slug, title_id = args.title
+    title = {"name": slug, "slug": slug, "type": "newspaper"}
+    pdfs = sorted(Path(args.pdf_dir).glob("*.pdf"))
+    created = [d for d in map(pdf_created, pdfs) if d]
+    # issues are dated about one day after the PDF is created; allow some slack
+    window_lo = min(created) if created else "0000-00-00"
+    window_lo = time.strftime("%Y-%m-%d", time.localtime(
+        time.mktime(time.strptime(window_lo, "%Y-%m-%d")) - 3 * 86400))
+
+    print(f"Collecting {slug} issues published since {window_lo} to match {len(pdfs)} PDFs ...")
+    candidates = {}
+    for issue_id in list_issues(client, slug, title_id, max_pages=args.max_listing_pages):
+        cfg = reader_config(client, issue_id) or {}
+        date = cfg.get("publishDate", "")
+        if date and date < window_lo:
+            break
+        links = page_download_links(client, cfg.get("pType", "newspaper"), issue_id)
+        r = client.get(BASE + links[1]) if 1 in links else None
+        if r is None or not r.content.startswith(b"%PDF"):
+            continue
+        with fitz.open(stream=r.content, filetype="pdf") as doc:
+            candidates[issue_id] = (cfg, front_page_thumb(doc[0]))
+
+    meta_f, writer, done = open_meta(args.meta)
+    used = {}
+    with ThreadPoolExecutor(max_workers=args.workers) as pool:
+        for pdf in pdfs:
+            with fitz.open(pdf) as doc:
+                thumb, num_pages = front_page_thumb(doc[0]), len(doc)
+            scores = sorted((np.abs(thumb - t).mean(), i) for i, (_, t) in candidates.items())
+            if not scores or scores[0][0] > args.max_diff:
+                print(f"{pdf.name}: no matching issue on the site, skipped")
+                continue
+            issue_id = scores[0][1]
+            cfg = candidates[issue_id][0]
+            date = cfg.get("publishDate", "unknown")
+            if issue_id in used:
+                print(f"{pdf.name}: same issue as {used[issue_id]} ({date}), skipped")
+                continue
+            used[issue_id] = pdf.name
+            txt_dir, issue_txt = issue_paths(args, title, date, issue_id)
+            row = {"title": cfg.get("titleName", slug), "issue_id": issue_id, "date": date,
+                   "language": cfg.get("language", ""), "type": cfg.get("pType", "newspaper"),
+                   "pages": num_pages, "source_url": f"{BASE}/r/{issue_id}",
+                   "local_pdf": pdf.as_posix()}
+            if issue_id in done or (issue_txt.exists() and not args.force):
+                print(f"{pdf.name}: {date} issue {issue_id} already done")
+                continue
+            t0 = time.time()
+            jobs = [(i + 1, pdf, i) for i in range(num_pages)]
+            row.update(ocr_issue_pages(jobs, txt_dir, issue_txt, num_pages, args, pool))
+            writer.writerow(row)
+            meta_f.flush()
+            print(f"{pdf.name}: {date} issue {issue_id}, {row['tokens']} tokens "
+                  f"({time.time() - t0:.0f}s)")
     meta_f.close()
 
 
@@ -379,17 +485,26 @@ def main():
     f.add_argument("--meta", default="metadata/epaper_issues.csv")
     ocr_opts(f)
 
-    o = sub.add_parser("ocr", help="OCR PDFs already on disk")
+    i = sub.add_parser("import", help="OCR issue PDFs already downloaded by hand, matched to "
+                                      "their site issue so `fetch` skips them")
+    i.add_argument("--pdf-dir", default="data/raw/02_news_and_media")
+    i.add_argument("--title", nargs=2, default=list(SEED_TITLE), metavar=("SLUG", "ID"))
+    i.add_argument("--max-diff", type=float, default=5.0,
+                   help="max mean pixel difference between front-page thumbnails")
+    i.add_argument("--max-listing-pages", type=int, default=20)
+    i.add_argument("--delay", type=float, default=1.0)
+    i.add_argument("--out", default="data/interim/02_news_and_media/epaper")
+    i.add_argument("--meta", default="metadata/epaper_issues.csv")
+    ocr_opts(i)
+
+    o = sub.add_parser("ocr", help="OCR any other PDFs on disk (e.g. books, textbooks)")
     o.add_argument("--pdf-dir", default="data/raw/02_news_and_media")
     o.add_argument("--out", default="data/interim/02_news_and_media/local_pdfs")
     o.add_argument("--recursive", action="store_true", help="also search subfolders")
     ocr_opts(o)
 
     args = ap.parse_args()
-    if args.cmd == "fetch":
-        cmd_fetch(args)
-    else:
-        cmd_ocr(args)
+    {"fetch": cmd_fetch, "import": cmd_import, "ocr": cmd_ocr}[args.cmd](args)
 
 
 if __name__ == "__main__":

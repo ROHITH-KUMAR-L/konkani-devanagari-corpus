@@ -43,7 +43,7 @@ Course: NLP, Experiential Learning, Phase 1 → 3.
 | Category | Files | Format | Approx. raw tokens* | Notes |
 |---|---|---|---|---|
 | `01_literature` | 10 | OCR `.txt` | ~356k | Novels, poetry anthology (Sahitya Akademi), drama, tiatr history |
-| `02_news_and_media` | 20 PDFs + e-paper download | PDF (*Bhaangarbhuin* e-paper) | ~16k (1 issue OCR'd so far) | No usable Devanagari text layer, so **needs OCR**. `scripts/fetch_epaper.py` downloads and OCRs the **548 free issues** (Apr 2025 onwards, **~9M tokens** expected), see [§2.4](#24-bhaangarbhuin-e-paper-pipeline) |
+| `02_news_and_media` | 20 PDFs + e-paper download | PDF (*Bhaangarbhuin* e-paper) | **~360k (21 issues OCR'd so far)** | No usable Devanagari text layer, so **needs OCR**. `scripts/fetch_epaper.py` downloads and OCRs the **548 free issues** (Apr 2025 onwards, **~9M tokens** expected), see [§2.4](#24-bhaangarbhuin-e-paper-pipeline) |
 | `03_education_science` | 1 PDF + 3 `.txt` | PDF + broken extraction | ~7k | `extracted*.txt` are corrupt (see below); PDF needs OCR |
 | `04_culture_history` | 6 | OCR `.txt` | ~248k | History, Mahabharata, story collection, spelling rules |
 | `05_public_information` | 0 | n/a | n/a | not started |
@@ -115,7 +115,9 @@ The **LDC-IL "Gold Standard Konkani Raw Text Corpus"** (CIIL Mysore, 2018) has a
   - Advertisements.
   - Repeated headers on every issue, such as the paper name and date line, which the dedup step should catch.
 
-The same script's `ocr` command also handles the 20 PDFs already in `data/raw/02_news_and_media/`. One of them gave 19,565 tokens.
+**The 20 PDFs downloaded by hand** (`data/raw/02_news_and_media/BHAANGARBHUIN-*.pdf`) are complete 8-page issues from **1–21 Oct 2026**, with 7 Oct missing. File (1) is the newest issue and (20) the oldest. They are not downloaded again. `fetch_epaper.py import` identifies each one by comparing its front page with the site's issues (all 20 matched exactly), then OCRs it into the same `<date>_<issue_id>` layout that `fetch` uses, recording the local file in the `local_pdf` column of `metadata/epaper_issues.csv`. A later `fetch` run sees these issues as done and skips them, so no issue ends up in the corpus twice.
+
+**Status:** 21 issues OCR'd (the 20 local PDFs + 25 Oct 2026) = **360,122 tokens**, 14k–20k per issue. The 20 local PDFs took 77–236 s each.
 
 ---
 
@@ -313,7 +315,10 @@ python scripts/ocr_quality_check.py      # CER/WER of our OCR vs LDC-IL gold →
 python scripts/fetch_epaper.py fetch                      # all free issues (~548, ~18 h, resumable)
 python scripts/fetch_epaper.py fetch --max-issues 20      # or a few at a time
 python scripts/fetch_epaper.py fetch --since 2026-01-01   # or a date range
-python scripts/fetch_epaper.py ocr                        # OCR the 20 PDFs already in data/raw/02_news_and_media
+python scripts/fetch_epaper.py import                     # OCR the 20 issue PDFs already in data/raw/02_news_and_media
+                                                          #   (run before fetch, so those issues aren't downloaded again)
+python scripts/fetch_epaper.py ocr --pdf-dir data/raw/03_education_science --out data/interim/03_education_science
+                                                          # OCR other PDFs, e.g. the textbook
 ```
 
 `fetch_epaper.py` keeps only Konkani titles; the site's Marathi and English papers and magazines are skipped. It downloads only issues the site offers as free downloads (Apr 2025 onwards), and paid archive issues are skipped. It waits 1 s between requests. Page PDFs go to `data/raw/02_news_and_media/epaper/`, which is git-ignored. Text goes to `data/interim/02_news_and_media/epaper/<title>/<date>_<id>.txt`, and per-issue metadata to `metadata/epaper_issues.csv`. One issue gives about 16k tokens.
