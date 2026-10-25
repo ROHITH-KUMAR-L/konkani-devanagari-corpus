@@ -1,0 +1,3 @@
+# Downloaded e-paper page PDFs (~2.4 MB per issue); only the OCR text is committed
+data/raw/02_news_and_media/epaper/
+__pycache__/

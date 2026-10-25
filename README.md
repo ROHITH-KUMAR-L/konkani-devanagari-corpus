@@ -43,7 +43,7 @@ Course: NLP, Experiential Learning, Phase 1 → 3.
 | Category | Files | Format | Approx. raw tokens* | Notes |
 |---|---|---|---|---|
 | `01_literature` | 10 | OCR `.txt` | ~356k | Novels, poetry anthology (Sahitya Akademi), drama, tiatr history |
-| `02_news_and_media` | 20 | PDF (*Bhaangarbhuin* e-paper) | 0 (not extracted) | No usable Devanagari text layer, so **needs OCR** |
+| `02_news_and_media` | 20 PDFs + e-paper download | PDF (*Bhaangarbhuin* e-paper) | ~16k (1 issue OCR'd so far) | No usable Devanagari text layer, so **needs OCR**. `scripts/fetch_epaper.py` downloads and OCRs the **548 free issues** (Apr 2025 onwards, **~9M tokens** expected), see [§2.4](#24-bhaangarbhuin-e-paper-pipeline) |
 | `03_education_science` | 1 PDF + 3 `.txt` | PDF + broken extraction | ~7k | `extracted*.txt` are corrupt (see below); PDF needs OCR |
 | `04_culture_history` | 6 | OCR `.txt` | ~248k | History, Mahabharata, story collection, spelling rules |
 | `05_public_information` | 0 | n/a | n/a | not started |
@@ -64,7 +64,7 @@ Course: NLP, Experiential Learning, Phase 1 → 3.
 | 4 | **Front/back matter**: title pages, publisher info, ISBN, © lines, English blurbs | `KONKANI KAVYA SANGRAHA.txt` header | Strip headers and English paragraphs |
 | 5 | **HTML remnants** | `<pre>` at start of `GHANAGHAINIYATICHE.txt` (3 tags total) | Strip tags |
 | 6 | **Broken PDF extraction** in `03_education_science/extracted*.txt` | 2,006 `U+FFFD` replacement characters, doubled/split vowel signs (`शीारिररीका`) | Discard these and re-OCR `fkokb1ps.pdf` |
-| 7 | **Newspaper PDFs use non-Unicode fonts** | `pdftotext` returns only Latin/whitespace | OCR page images (Tesseract `hin+mar` / Google Vision / Indic OCR) |
+| 7 | **Newspaper PDFs use non-Unicode fonts** | `pdftotext` returns only Latin/whitespace; the fonts (ChanakyaUni) have no Unicode mapping | ✅ Render pages and OCR with Tesseract `mar+hin` (`scripts/fetch_epaper.py`) |
 | 8 | **Mixed sentence markers** | `।` 12.8k, `॥` 716, `.` 57.8k | Segmenter handles `। ॥ . ? !` and protects abbreviations such as `के.के.` and `पी.ओ.` |
 | 9 | **Hyphenated words and line breaks inside paragraphs** from OCR | Short broken lines everywhere | Rejoin lines into paragraphs before segmentation |
 | 10 | File name with trailing space: `PALATADANCHE TARUM .txt` | n/a | Rename |
@@ -90,6 +90,32 @@ The **LDC-IL "Gold Standard Konkani Raw Text Corpus"** (CIIL Mysore, 2018) has a
 2. **Clean test data.** Use it to check cleaning rules (cleaning should barely change it) and the sentence segmenter (it uses `.`, `?`, `!` and abbreviations like `आर्.पी.आय.`).
 3. **Clean corpus text.** The four non-overlapping samples (`KO00001`, `KO00003–05`, ~13k words) go into the corpus under literature.
 4. **Methodology to follow.** Its metadata schema (title, author, publisher, year, sampling, inputter, proofreader) is our template for `metadata/sources.csv`. Its proofreading rules (drop verse inside prose, trim incomplete trailing sentences, remove foreign-script sentences, fix space before punctuation) feed into `clean_text.py`. Its observation that Konkani is *"highly agglutinative… one needs much larger text corpora for good coverage of words"* is a published benchmark to compare our coverage results against.
+
+### 2.4 Bhaangarbhuin e-paper pipeline
+
+*Bhaangarbhuin* is the Konkani daily of The Goan group and our main news source. `scripts/fetch_epaper.py` automates collecting it from [epaper.thegoan.net](https://epaper.thegoan.net/edition/bhaangarbhuin/23246).
+
+| Step | What the script does |
+|---|---|
+| 1. Find titles | Reads all titles on the site and keeps only **Konkani** ones. Bhaangarbhuin is the only one: Konkansaad and Goan Varta are Marathi; The Goan and the Diwali/Christmas magazines are English |
+| 2. List issues | Walks the archive listing newest first: 3,045 issues listed |
+| 3. Free issues only | Issues from **2 Apr 2025 onwards (548)** have a free per-page download. Older issues are paid archives (₹29.50) and are **skipped**. robots.txt allows crawling; the script waits 1 s between requests |
+| 4. Download | One PDF per page into `data/raw/02_news_and_media/epaper/<title>/<date>_<id>/` (git-ignored, ~2.4 MB per issue) |
+| 5. Extract text | PDF text layer if it is real Devanagari; otherwise (always, for this paper) render the page and OCR it with **Tesseract `mar+hin`** (`tessdata_best`) |
+| 6. Save | `data/interim/02_news_and_media/epaper/BHAANGARBHUIN/<date>_<id>.txt` (plus per-page files), UTF-8, LF, NFC. One row per issue in `metadata/epaper_issues.csv` |
+
+**Why `mar+hin`:** there is no Tesseract model for Konkani. In our comparison on a sample page, Marathi reads `ळ` correctly (common in Konkani: `वाळपय`, `वेळा`), while Hindi alone produces junk such as `वाव्ठपय`. Combining both gave the best output.
+
+**Results so far:**
+- **Yield:** one issue (25 Oct 2026) took 8 pages, about 2 minutes, and gave **16,414 tokens**, with 100% Devanagari letters.
+- **Expected total:** 548 issues × ~16k ≈ **9M raw tokens**, before cleaning and deduplication.
+- **Known OCR artefacts** for the cleaning step to handle:
+  - Masthead and registration-number junk on page 1.
+  - Lines from neighbouring columns sometimes interleave.
+  - Advertisements.
+  - Repeated headers on every issue, such as the paper name and date line, which the dedup step should catch.
+
+The same script's `ocr` command also handles the 20 PDFs already in `data/raw/02_news_and_media/`. One of them gave 19,565 tokens.
 
 ---
 
@@ -281,7 +307,16 @@ Data prep for Phase 2 (done at the end of Phase 1): fixed train/dev/test split b
 pip install -r requirements.txt
 python scripts/extract_ldcil.py          # LDC-IL XML → data/interim/08_ldcil_gold_sample/*.txt + metadata CSV
 python scripts/ocr_quality_check.py      # CER/WER of our OCR vs LDC-IL gold → results/ocr_quality/
+
+# E-paper: download + OCR all FREE Konkani issues from epaper.thegoan.net (Bhaangarbhuin)
+# needs Tesseract (winget install UB-Mannheim.TesseractOCR) + mar/hin tessdata_best in ~/tessdata
+python scripts/fetch_epaper.py fetch                      # all free issues (~548, ~18 h, resumable)
+python scripts/fetch_epaper.py fetch --max-issues 20      # or a few at a time
+python scripts/fetch_epaper.py fetch --since 2026-01-01   # or a date range
+python scripts/fetch_epaper.py ocr                        # OCR the 20 PDFs already in data/raw/02_news_and_media
 ```
+
+`fetch_epaper.py` keeps only Konkani titles; the site's Marathi and English papers and magazines are skipped. It downloads only issues the site offers as free downloads (Apr 2025 onwards), and paid archive issues are skipped. It waits 1 s between requests. Page PDFs go to `data/raw/02_news_and_media/epaper/`, which is git-ignored. Text goes to `data/interim/02_news_and_media/epaper/<title>/<date>_<id>.txt`, and per-issue metadata to `metadata/epaper_issues.csv`. One issue gives about 16k tokens.
 
 **Planned:** the other scripts are still placeholders. The commands below are their intended interface.
 
