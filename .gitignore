@@ -9,3 +9,6 @@ __pycache__/
 .venv/
 data/processed/
 data/splits/
+fetch_epaper.log
+.venv-phase2/
+.claude/
