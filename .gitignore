@@ -1,3 +1,14 @@
 # Downloaded e-paper page PDFs (~2.4 MB per issue); only the OCR text is committed
 data/raw/02_news_and_media/epaper/
 __pycache__/
+
+.venv/
+.pytest_cache/
+.pipeline-test/
+# New large datasets belong in shared storage/DVC, not normal Git history.
+# These patterns do not untrack existing committed data.
+data/raw/**
+data/raw_txt/**
+data/interim/**
+data/processed/**
+results/plots/**
