@@ -103,10 +103,11 @@ Per-document survival through every iteration is in `results/document_audit.csv`
 
 ## Known remaining noise
 
-- A 100-paragraph random audit of the final corpus is in `data/eval/language_audit_sample.tsv` (first pass by Claude; the team should verify and extend it to 200):
-  - about 1% possibly non-Konkani (a Portuguese transliteration);
-  - about 3% OCR garbage or partial garbage;
-  - about 4% newspaper fragments where OCR merged columns.
+- A 200-paragraph random audit of the final corpus is in `data/eval/language_audit_sample.tsv` (first pass by Claude; the team should verify it):
+  - 2 non-Konkani (1.0%): a Hindi line from the parallel grammar and a Portuguese transliteration;
+  - 4 pure OCR garbage (2%) and 7 partly garbled (3.5%);
+  - 21 newspaper fragments where OCR merged columns (10.5%);
+  - 7 Konkani in other dialect spellings (Mangalorean, Cochin, Bible/Romi-style transliteration), which are kept.
 - **Anusvara loss from OCR is not corrected** (FR-N9 is optional). It inflates the type count with pairs like `आसा`/`आसां`.
 - **Newspaper OCR sometimes interleaves two columns**, which produces fragments ("एकसारकी दिस ता. नंदकिशोर आनी").
 - **Words joined because OCR missed a space** (`दुसऱ्याचेरआशिल्ल्या`) remain.

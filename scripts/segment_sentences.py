@@ -11,6 +11,8 @@ Reads the final cleaned document tree (one paragraph per line) and writes:
 Rules (PRD FR-S1..S4):
   - Boundaries after । ॥ ? ! and '.', plus any closing quotes/brackets that follow.
   - A verse number "॥ १ ॥" is one boundary.
+  - A newspaper dateline ("पणजी:", "'मडगांव:") starts a new sentence; a list
+    number ("... ना 13. समासांत") starts a new sentence before the number.
   - '.' is NOT a boundary in: decimals (3.5), ellipses (...), known abbreviations
     (डॉ. श्री. क्र. किमी. ...), and initials: a one-akshara word before '.'
     (के.के., आर्.पी.आय., पी. नायक) unless it is a common one-akshara word
@@ -31,7 +33,7 @@ ABBREVIATIONS = set("""डॉ डा श्री श्रीम सौ कु�
 वि अॅड ॲड ज मा सं पृ पा आ ले उ दि जि ऑ स्व कै मिं""".split()) | set(
     # English letter names used as initials (के.आर., जी.एन., पी.ओ.)
     """ए बी सी डी ई इ एफ जी एच आय जे के एल एम एन ओ पी क्यू आर एस टी यू व्ही डब्ल्यू एक्स वाय झेड""".split())
-FINAL_MONO = set("ना हो जा घे दी ये खा वा गे रे तो ती ते तें ही हे को".split())
+FINAL_MONO = set("ना हो जा घे दी ये यो खा वा गे गो रे तो ती ते तें ही हे को".split())
 TERMINATOR = re.compile(r"॥\s*[०-९0-9]+\s*॥|[।॥?!]+|\.{2,}|\.")
 CLOSERS = re.compile(r"[”’\"')\]]+")
 
@@ -56,22 +58,43 @@ def is_boundary(text, m, start=0):
     return True
 
 
+DATELINE_PLACES = """पणजी मडगांव म्हापशें म्हापसा पेडणें फोंडें दिल्ली सत्तरी दिवचल डिचोली माशेल सांखळी वाळपय बाळपय
+मुरगांव वास्को मुंबय केरी-सत्तरी सांगें दिवची काणकोण केपें कुडचडें पर्वरी हणजूण कळंगुट शिवोली बेळगांव कारवार
+बार्देस तिसवाडी साश्टी कुंकळ्ळी नावेली मंड्या बंगळूर""".split()
+# a newspaper dateline ("'पणजी: ...") starts a new sentence even when the headline before it has no full stop
+DATELINE = re.compile(r"(?<!\S)['‘’]?(?:" + "|".join(map(re.escape, DATELINE_PLACES)) + r")\s?[:ः]\s")
+# "... केलें ना 13. समासांत ..." : a list number that starts the next item
+LIST_NUMBER = re.compile(r"(?<=\s)[(\[]?[0-9०-९]{1,3}$")
+
+
 def split_sentences(para):
-    out, start = [], 0
+    cuts, start = set(), 0
     for m in TERMINATOR.finditer(para):
+        if m.start() < start:
+            continue
+        if m.group() == "." and re.match(r"\s*[^\s0-9०-९]", para[m.end():]):
+            n = LIST_NUMBER.search(para, start, m.start())
+            if n and tokenize(para[start:n.start()]):
+                cuts.add(n.start())                  # boundary before the number, not after it
+                start = n.start()
+                continue
         if not is_boundary(para, m, start):
             continue
         end = m.end()
         c = CLOSERS.match(para, end)
         if c:
             end = c.end()
-        s = para[start:end].strip()
-        if s:
-            out.append(s)
+        cuts.add(end)
         start = end
-    rest = para[start:].strip()
-    if rest:
-        out.append(rest)
+    for d in DATELINE.finditer(para):
+        if tokenize(para[:d.start()]):
+            cuts.add(d.start())
+    out, prev = [], 0
+    for c in sorted(cuts) + [len(para)]:
+        piece = para[prev:c].strip()
+        if piece:
+            out.append(piece)
+        prev = c
     merged = []
     for s in out:                                    # punctuation-only pieces join the previous sentence
         if not tokenize(s):

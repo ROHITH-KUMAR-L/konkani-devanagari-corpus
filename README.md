@@ -54,7 +54,8 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 - [x] Before/after statistics per iteration (`results/iter0..2`, `results/`), per-document audit `results/document_audit.csv`
 
 **Brief steps 8–10, hand-off**
-- [x] `segment_sentences.py`: rules for abbreviations, initials, decimals, list numbers, verse markers → `sentences.txt` / `.tsv`; F1 0.934 on 40 gold paragraphs
+- [x] `segment_sentences.py`: rules for abbreviations, initials, decimals, list numbers, datelines, verse markers → `sentences.txt` / `.tsv`; **held-out F1 0.989** (154 paragraphs; dev set 0.990)
+- [x] Language audit extended to 200 paragraphs: 1.0% non-Konkani (target < 2%)
 - [x] `length_analysis.py`: sentence length (tokens) and word length (characters, aksharas; token- and type-weighted) with plots
 - [x] [docs/report.md](docs/report.md), [metadata/data_dictionary.md](metadata/data_dictionary.md), [docs/collection_guidelines.md](docs/collection_guidelines.md)
 - [x] `make_splits.py`: document-level 80/10/10 split → `data/splits/`
@@ -63,7 +64,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 ### Phase 1: remaining ⏳
 - [ ] Let `python scripts/fetch_epaper.py fetch` finish (about 527 issues, resumable), then re-run `scripts/run_phase1.sh` and refresh the numbers in the report and the cleaning log
 - [ ] Domain balance (FR-C6): after the full fetch news will exceed 60%; decide whether to cap issues
-- [ ] Team: verify `data/eval/segmentation_gold.txt` and extend it to about 200 paragraphs; verify `data/eval/language_audit_sample.tsv` (both first-pass annotated by Claude)
+- [ ] Team: verify `data/eval/segmentation_gold.txt`, `segmentation_gold_heldout.txt` and `language_audit_sample.tsv` (all first-pass annotated by Claude)
 - [ ] Team: fill the blank author/year fields in `metadata/sources.csv`
 - [ ] Newspaper OCR CER: hand-type about 3 e-paper pages as gold (FR-E6)
 - [ ] Optional: categories 05/07 (Goa government texts, oral transcripts); anusvara OCR post-correction (FR-N9)

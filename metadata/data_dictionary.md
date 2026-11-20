@@ -39,8 +39,9 @@ All text files are UTF-8, LF line endings, Unicode NFC. "Document tree" means `<
 | `processed/combined/documents.jsonl` | `{"doc_id", "category", "text"}` per document (paragraphs separated by `\n`) |
 | `splits/{train,dev,test}.txt` | One sentence per line, document-level split |
 | `splits/split_manifest.csv` | doc_id, category, split, sentences, tokens |
-| `eval/segmentation_gold.txt` | Gold paragraphs; sentence boundaries marked ` \|\| ` |
-| `eval/language_audit_sample.tsv` | n, category, doc_id, label (`konkani`, `konkani_fragment`, `konkani_other_dialect_spelling`, `ocr_garbage`, `ocr_garbage_partial`, `non_konkani_unclear`), paragraph |
+| `eval/segmentation_gold.txt` | Development gold (40 paragraphs); sentence boundaries marked ` \|\| ` |
+| `eval/segmentation_gold_heldout.txt` | Held-out gold (154 paragraphs), same format, never used to tune rules |
+| `eval/language_audit_sample.tsv` | n, category, doc_id, label (`konkani`, `konkani_fragment`, `konkani_other_dialect_spelling`, `ocr_garbage`, `ocr_garbage_partial`, `non_konkani_hindi`, `non_konkani_unclear`); 200 rows, paragraph |
 
 `data/processed/` and `data/splits/` are not in git (size and copyright). They are shared inside the team as a zip, or rebuilt with `scripts/run_phase1.sh`.
 
@@ -54,7 +55,7 @@ All text files are UTF-8, LF line endings, Unicode NFC. "Document tree" means `<
 | `category_statistics.csv` | category, documents, tokens, share_of_corpus, types, ttr, root_ttr, hapax, hapax_ratio_types, deva/num/latin/other_share |
 | `iter0/`, `iter1/`, `iter2/` | The same files for earlier iterations (top-level `results/` = final, iteration 3) |
 | `document_audit.csv` | doc_id, category, tokens_iter0..iter3, kept_pct |
-| `segmentation_eval.txt` | Boundary TP/FP/FN, precision, recall, F1, system output for paragraphs with errors |
+| `segmentation_eval.txt`, `segmentation_eval_heldout.txt` | Boundary TP/FP/FN, precision, recall, F1, system output for paragraphs with errors (dev / held-out gold) |
 | `length_analysis.txt` | Sentence- and word-length summary |
 | `sentence_length_stats.csv` | scope, sentences, mean, std, min, max, p5, p25, p50, p75, p95, p99 |
 | `sentence_length_distribution.csv` | n_tokens, sentences |

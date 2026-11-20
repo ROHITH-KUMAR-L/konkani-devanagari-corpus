@@ -12,7 +12,7 @@
 | Format | Plain UTF-8, LF line endings, Unicode NFC; `file` reports "UTF-8 text" |
 | Non-Devanagari tokens | 0.00% (numbers 2.88%, as `<NUM>`) |
 | OCR quality (book OCR vs. LDC-IL gold) | CER 4.77%, WER 17.86% |
-| Sentence segmentation | P 0.939, R 0.929, F1 0.934 (40 gold paragraphs, 99 boundaries) |
+| Sentence segmentation | Held-out F1 **0.989** (154 paragraphs, 311 boundaries); P 0.987, R 0.990 |
 | Splits | Document-level 80.2 / 11.1 / 8.8% of tokens (train/dev/test) |
 
 ## 1. Sources (brief step 3)
@@ -54,7 +54,7 @@ The full rationale and the before/after tables are in [`docs/data_cleaning_log.m
 - `HISTORY.txt` turned out to be Marathi (2 Konkani vs 676 Marathi markers).
 - One culture book is a Konkani–Hindi parallel grammar.
 
-A 100-paragraph random audit of the final corpus (`data/eval/language_audit_sample.tsv`) found about 1% possibly non-Konkani and about 3% OCR garbage.
+A 200-paragraph random audit of the final corpus (`data/eval/language_audit_sample.tsv`) found 2 non-Konkani paragraphs (**1.0%**, target < 2%), 2% OCR garbage, 3.5% partly garbled paragraphs and 10.5% newspaper fragments where OCR merged columns.
 
 ## 4. Type–token analysis (brief step 4)
 
@@ -106,13 +106,26 @@ Common one-akshara words that end sentences (`ना`, `हो`, `जा`, …) 
 
 The output is `data/processed/combined/sentences.txt` (one sentence per line) and `sentences.tsv` (doc_id, sent_id, n_tokens, sentence).
 
-**Evaluation.** 40 paragraphs were sampled from all categories, half of them chosen because they contain a `.` after a short word. The gold boundaries are in `data/eval/segmentation_gold.txt` and are compared by token position. Result: precision **0.939**, recall **0.929**, F1 **0.934**, just under the 0.95 target. The errors (`results/segmentation_eval.txt`) are:
-- a footnote list (`… ना 13.`), where the number belongs to the next item;
-- a newspaper headline with no final punctuation, which runs into the dateline;
-- an OCR-split word (`मारिना लो.`) mistaken for an initial;
-- `आप.` in an address.
+A newspaper dateline (`पणजी:`, `'मडगांव:` …) starts a new sentence even when the headline before it has no full stop. A list number (`… ना 13. समासांत`, `कृश्ण 2.त्या`) starts a new sentence *before* the number.
 
-**Limitation:** the gold set was made by correcting system output and was first annotated by an AI assistant. The team should verify it and extend it to about 200 paragraphs (FR-S5).
+**Evaluation** (`data/eval/`, boundaries compared by token position, so the side a quote mark falls on is not an error):
+
+| Gold set | Paragraphs | Gold boundaries | Precision | Recall | F1 |
+|---|---|---|---|---|---|
+| Development (`segmentation_gold.txt`; rules were tuned on it) | 40 | 99 | 0.934 → 0.990 | 0.929 → 0.990 | 0.934 → **0.990** |
+| **Held-out** (`segmentation_gold_heldout.txt`; never used for development), rules frozen | 154 | 311 | 0.987 | 0.990 | **0.989** |
+| Held-out after two fixes it revealed | 154 | 311 | 0.987 | 0.997 | 0.992 |
+
+The honest estimate is the frozen held-out score, **F1 0.989**, above the 0.95 target. Development and held-out paragraphs were sampled separately (seeds 7 and 2027), stratified by category, and half of each set was chosen to contain hard cases (a `.` after a short word, or a colon). Six held-out paragraphs that were pure OCR garbage from advertisement pages were left out.
+
+The rules added after the first dev-set evaluation were the newspaper dateline rule and splitting before list numbers. The held-out set then revealed two further gaps: list numbers written with no space (`2.त्या`) and the sentence-final particles `गो`/`यो`.
+
+Remaining errors (`results/segmentation_eval*.txt`) are almost all OCR artefacts:
+- a stray `.` inside a word or number (`सूतवाड्. मय`, `37.2. अंश`);
+- `आदी.` ("etc.") ending a list in mid-sentence;
+- an OCR-split word read as an initial (`मारिना लो.`).
+
+**Limitation:** both gold sets were made by correcting system output, first by an AI assistant. The team should verify them.
 
 ## 7. Length analyses (brief step 9)
 
@@ -161,7 +174,7 @@ On average one akshara is 1.88 code points: a consonant plus a vowel sign, conju
 - **Missing categories.** Public information (05) and oral transcripts (07) are empty. Education has one textbook.
 - **Residual OCR noise.** Anusvara loss, merged newspaper columns and missing spaces remain. CER is measured on book OCR only; newspaper CER has not yet been measured (FR-E6 needs about 3 hand-typed pages).
 - **Language ID uses marker words.** Paragraphs with no markers (short headlines) are kept unchecked.
-- **Small gold sets.** The segmentation gold (40 paragraphs) and the language audit (100 paragraphs) were first annotated by an AI assistant and need team verification.
+- **Gold sets annotated by an AI assistant.** The segmentation gold (40 dev + 154 held-out paragraphs) and the language audit (200 paragraphs) were first annotated by an AI assistant and need team verification.
 - **Copyright.** Books and the e-paper are copyrighted. The corpus is for non-commercial academic use. The processed text is kept out of the public repository and shared inside the team as a zip.
 
 ## 10. Readiness for Phase 2

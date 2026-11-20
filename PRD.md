@@ -207,10 +207,10 @@ data/splits/{train,dev,test}.txt  → Phase 2 (tokenisers, LMs, embeddings) → 
 | Categories with data | ≥ 5 | 5 ✅ (literature, news, education, culture/history, web); 05 and 07 empty |
 | Files passing `file` = "UTF-8 text", no CRLF | 100% | 100% of processed and split files ✅ |
 | Non-Devanagari characters in final corpus (excluding punctuation/digits) | < 0.5% | 0.00% of tokens ✅ |
-| Estimated non-Konkani (Marathi/Hindi) paragraphs remaining | < 2% on a 200-paragraph manual audit | ~1% on a 100-paragraph first-pass audit (team to verify, extend to 200) |
+| Estimated non-Konkani (Marathi/Hindi) paragraphs remaining | < 2% on a 200-paragraph manual audit | **1.0%** on a 200-paragraph audit ✅ (first pass by Claude; team to verify) |
 | Exact duplicate paragraphs | 0 | 0 ✅ (32,420 removed) |
 | OCR CER on gold reference | Reported per OCR source | 4.77% (book OCR) ✅; newspaper OCR not yet measured |
-| Sentence segmentation F1 | ≥ 0.95 on the annotated sample | 0.934 on 40 paragraphs (just below target) |
+| Sentence segmentation F1 | ≥ 0.95 on the annotated sample | **0.989** held-out (154 paragraphs, 311 boundaries) ✅ |
 | Report | Covers all 10 brief items, with observations and inferences per step | ✅ [docs/report.md](docs/report.md); numbers to refresh after the full fetch |
 
 ### Phase 2

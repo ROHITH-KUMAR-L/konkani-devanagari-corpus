@@ -21,6 +21,7 @@ $PY scripts/analyze_corpus.py --in data/interim/iter3 --out results --label "fin
 $PY scripts/document_audit.py --iters data/interim/iter0 data/interim/iter1 data/interim/iter2 data/interim/iter3
 
 $PY scripts/segment_sentences.py --in data/interim/iter3 --out data/processed
-$PY scripts/segment_sentences.py --eval data/eval/segmentation_gold.txt
+$PY scripts/segment_sentences.py --eval data/eval/segmentation_gold.txt --eval-out results/segmentation_eval.txt
+$PY scripts/segment_sentences.py --eval data/eval/segmentation_gold_heldout.txt --eval-out results/segmentation_eval_heldout.txt
 $PY scripts/length_analysis.py --processed data/processed --out results
 $PY scripts/make_splits.py --processed data/processed --out data/splits
