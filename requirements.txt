@@ -1,1 +1,16 @@
-rapidfuzz>=3.0
+# Python 3.10+; core analysis and Unicode processing
+regex==2024.11.6
+pandas==2.2.3
+numpy==2.2.3
+matplotlib==3.10.1
+# Local document extraction (Tesseract itself is an optional system install)
+PyMuPDF==1.25.3
+python-docx==1.1.2
+beautifulsoup4==4.13.3
+defusedxml==0.7.1
+EbookLib==0.18
+pytesseract==0.3.13
+Pillow==11.1.0
+# Existing collection and OCR comparison helpers
+requests==2.32.3
+rapidfuzz==3.12.1
