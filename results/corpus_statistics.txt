@@ -1,0 +1,61 @@
+Corpus statistics: final (deduplicated)
+Input: data/interim/iter3
+
+Documents:            96
+Tokens (N):           2,336,777
+Types (V):            269,859
+Type-token ratio:     0.1155
+Root TTR (V/sqrt N):  176.53
+Hapax legomena:       167,977 (62.2% of types, 7.19% of tokens)
+Dis legomena:         35,835
+Token composition:    deva 97.06%, num 2.94%, latin 0.00%, other 0.00%
+Zipf slope (ranks 10-10000): -0.989
+Heaps' law V = K N^b: K = 3.93, b = 0.757
+
+Coverage (types needed for X% of tokens):
+   10%:       12 types (0.00% of vocabulary)
+   25%:      136 types (0.05% of vocabulary)
+   50%:    1,371 types (0.51% of vocabulary)
+   75%:   11,883 types (4.40% of vocabulary)
+   90%:   69,032 types (25.58% of vocabulary)
+   95%:  153,021 types (56.70% of vocabulary)
+   99%:  246,492 types (91.34% of vocabulary)
+
+category                  docs      tokens  share     types     TTR  hapax%  deva%
+01_literature               13     234,999  10.1%    47,285  0.2012   63.3%  99.6%
+02_news_media               56     862,511  36.9%    92,578  0.1073   56.6%  96.4%
+03_education_science         1       5,177   0.2%     1,922  0.3713   64.2%  97.4%
+04_culture_history           6     154,942   6.6%    37,511  0.2421   62.5%  98.7%
+06_web_articles             20   1,079,148  46.2%   166,558  0.1543   64.8%  96.8%
+
+Top 30 types:
+    1. <NUM>	68,735
+    2. आनी	56,755
+    3. ह्या	20,909
+    4. आसा	18,308
+    5. हे	10,790
+    6. एक	10,595
+    7. ते	9,715
+    8. खातीर	9,147
+    9. तो	8,668
+   10. ना	8,467
+   11. हो	7,618
+   12. ताका	7,583
+   13. अशें	7,243
+   14. पूण	6,725
+   15. ही	6,150
+   16. आसात	5,880
+   17. उपरांत	5,662
+   18. करून	5,650
+   19. ताणें	5,621
+   20. जाता	5,604
+   21. वा	5,551
+   22. वर्सा	5,348
+   23. हें	5,305
+   24. जाल्यार	4,870
+   25. तें	4,771
+   26. त्या	4,761
+   27. कांय	4,716
+   28. हांणी	4,663
+   29. लागून	4,652
+   30. तशेंच	4,641

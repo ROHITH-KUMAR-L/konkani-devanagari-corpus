@@ -5,8 +5,8 @@
 |---|---|
 | **Document owner** | Team (Members 1–4) |
 | **Stakeholders** | Course instructor (evaluator), team members, future users of the corpus |
-| **Status** | Draft v1.0, Phase 1 in progress |
-| **Last updated** | 25 Oct 2026 |
+| **Status** | Draft v1.0, Phase 1 pipeline complete; final data collection running |
+| **Last updated** | 20 Nov 2026 |
 | **Related docs** | [README.md](README.md) (plan + audit), [docs/report.md](docs/report.md) (Phase 1 report), [docs/data_cleaning_log.md](docs/data_cleaning_log.md), [LDC-IL documentation](docs/references/LDCIL_Konkani_Raw_Text_Corpus_Documentation_2018.pdf) |
 
 ---
@@ -175,7 +175,7 @@ Priority: **P0** is required to pass Phase 1, **P1** is strongly expected, **P2*
 | NFR-5 **Portability** | Runs on Windows and Linux with Python ≥ 3.10; dependencies pinned in `requirements.txt` |
 | NFR-6 **Code quality** | Scripts are small and single-purpose, with a usage docstring; no hard-coded absolute paths |
 | NFR-7 **Legal/ethical** | Copyrighted texts are used for non-commercial academic research only; licences are recorded; repo visibility is reviewed before release |
-| NFR-8 **Versioning** | Corpus releases are tagged (`corpus-v1.0`, …); large derived files are kept out of git if they exceed GitHub limits (use releases or Git LFS) |
+| NFR-8 **Versioning** | Corpus releases are tagged (`corpus-v1.0`, …); large derived files (`data/processed`, `data/splits`, `data/interim/iter*`) are kept out of git and shared inside the team as a zip |
 
 ## 9. System overview
 
@@ -201,17 +201,17 @@ data/splits/{train,dev,test}.txt  → Phase 2 (tokenisers, LMs, embeddings) → 
 ## 10. Success metrics and acceptance criteria
 
 ### Phase 1 (exit criteria)
-| Metric | Target | Current (25 Oct 2026) |
+| Metric | Target | Current (20 Nov 2026, 43-issue snapshot) |
 |---|---|---|
-| Clean tokens | ≥ 2M (stretch 5M) | ~0.55M raw, not yet cleaned |
-| Categories with data | ≥ 5 | 4 (literature, culture/history, partial education, LDC-IL sample); news needs OCR |
-| Files passing `file` = "UTF-8 text", no CRLF | 100% | 0% of raw `.txt` (all CRLF); LDC-IL interim files ✅ |
-| Non-Devanagari characters in final corpus (excluding punctuation/digits) | < 0.5% | 0.1–3.3% per raw file |
-| Estimated non-Konkani (Marathi/Hindi) paragraphs remaining | < 2% on a 200-paragraph manual audit | not measured |
-| Exact duplicate paragraphs | 0 | 1 duplicate book found and logged |
-| OCR CER on gold reference | Reported per OCR source | 4.77% (literature OCR) ✅ |
-| Sentence segmentation F1 | ≥ 0.95 on the annotated sample | not built |
-| Report | Covers all 10 brief items, with observations and inferences per step | not started |
+| Clean tokens | ≥ 2M (stretch 5M) | **2.14M** ✅ (e-paper fetch still adding news) |
+| Categories with data | ≥ 5 | 5 ✅ (literature, news, education, culture/history, web); 05 and 07 empty |
+| Files passing `file` = "UTF-8 text", no CRLF | 100% | 100% of processed and split files ✅ |
+| Non-Devanagari characters in final corpus (excluding punctuation/digits) | < 0.5% | 0.00% of tokens ✅ |
+| Estimated non-Konkani (Marathi/Hindi) paragraphs remaining | < 2% on a 200-paragraph manual audit | ~1% on a 100-paragraph first-pass audit (team to verify, extend to 200) |
+| Exact duplicate paragraphs | 0 | 0 ✅ (32,420 removed) |
+| OCR CER on gold reference | Reported per OCR source | 4.77% (book OCR) ✅; newspaper OCR not yet measured |
+| Sentence segmentation F1 | ≥ 0.95 on the annotated sample | 0.934 on 40 paragraphs (just below target) |
+| Report | Covers all 10 brief items, with observations and inferences per step | ✅ [docs/report.md](docs/report.md); numbers to refresh after the full fetch |
 
 ### Phase 2
 - Kneser-Ney trigram perplexity is lower than the Laplace trigram on the same test split, with a clear table.

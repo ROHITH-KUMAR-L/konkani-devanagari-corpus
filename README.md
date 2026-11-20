@@ -4,7 +4,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 > **Requirements:** see [PRD.md](PRD.md) for goals, numbered requirements, acceptance criteria and risks.
 >
-> **Status (25 Oct 2026):** Phase 1 is in progress. Collection and OCR tooling works and **~0.9M raw tokens** are collected. Cleaning, analysis, segmentation and the report are still to do. See [Progress and remaining work](#progress-and-remaining-work).
+> **Status (20 Nov 2026):** Phase 1 pipeline complete and runnable end to end (`scripts/run_phase1.sh`). Clean corpus: **2.14M tokens**, 5 domains, 221k sentences. The full e-paper fetch is still running (66 of ~527 issues at 23:07); re-run the pipeline when it finishes, zip `data/processed` + `data/splits` for the team, then tag `corpus-v1.0`. Report: [docs/report.md](docs/report.md). See [Progress and remaining work](#progress-and-remaining-work).
 
 ---
 
@@ -26,65 +26,49 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 ## Progress and remaining work
 
-*Last updated: 25 Oct 2026. Tick items here as they are finished.*
+*Last updated: 20 Nov 2026. Tick items here as they are finished.*
 
 | Phase | Status | Summary |
 |---|---|---|
-| **Phase 1:** corpus building and analysis | 🟡 In progress, about 30% | Collection and OCR tooling done; ~0.9M raw tokens. Analysis, cleaning, segmentation and the report remain |
+| **Phase 1:** corpus building and analysis | 🟢 About 90% | Pipeline, analyses, segmentation, splits and report done on 2.14M clean tokens. Remaining: finish e-paper fetch, re-run, team verification, tag v1.0 |
 | **Phase 2:** tokenisers, n-gram LMs, embeddings | ⚪ Not started | Starts once corpus v1.0 is frozen |
 | **Phase 3:** neural LMs, NER | ⚪ Not started | Starts after Phase 2 |
 
 ### Phase 1: done ✅
-- [x] Language, script and team chosen (brief steps 1–2)
-- [x] Repo audit of raw data (README §2): duplicates, broken files and noise found and logged in `metadata/excluded_documents.csv`
-- [x] README plan + [PRD.md](PRD.md) with requirements and acceptance criteria
-- [x] LDC-IL gold sample extracted (`scripts/extract_ldcil.py`), 15.6k clean words
-- [x] OCR quality measured against gold (`scripts/ocr_quality_check.py`): CER 4.77%, WER 17.86%
-- [x] E-paper download + OCR pipeline (`scripts/fetch_epaper.py`), Tesseract `mar+hin` set up
-- [x] 20 hand-downloaded newspaper PDFs + 1 fetched issue OCR'd: 21 issues, 360k tokens
-- [x] `.gitattributes` enforces LF line endings
+
+**Brief steps 1–3: language, team, collection**
+- [x] Language, script and team chosen; repo audit; README + [PRD.md](PRD.md)
+- [x] LDC-IL gold sample extracted (`extract_ldcil.py`); OCR quality vs gold: CER 4.77%, WER 17.86% (`ocr_quality_check.py`)
+- [x] E-paper download + OCR pipeline (`fetch_epaper.py`); works on Linux (system tessdata auto-detected)
+- [x] Textbook `fkokb1ps.pdf` re-OCR'd at 300 dpi with new `--force-ocr` (its text layer has broken matras)
+- [x] Konkani Wikipedia (gomwiki dump, CC BY-SA) added as `06_web_articles`: 5th domain
+- [x] `extract_text.py`: every source → iteration-0 tree (UTF-8, LF), manifest `metadata/documents.csv`
+- [x] `metadata/sources.csv` filled from book front matter (some author/year fields still blank)
+
+**Brief steps 4–7: analysis, observations, cleaning iterations**
+- [x] `analyze_corpus.py`: tokens, types, TTR, hapax, frequency list, coverage, Zipf/Heaps fits and plots, overall + per category
+- [x] Iteration-0 observations → [docs/data_cleaning_log.md](docs/data_cleaning_log.md) (Wikipedia templates, Marathi book, Hindi parallel text, OCR noise, spelling variants)
+- [x] Iteration 1 `clean_text.py`: NFC, junk lines, running headers, boilerplate, Latin/other scripts, punctuation spacing, paragraph rejoin across line and page breaks
+- [x] Iteration 2 `validate_konkani.py`: Konkani vs Marathi/Hindi language ID, orthography check, numeric tables → `metadata/quality_checks.csv`
+- [x] Iteration 3 `deduplicate.py`: exact paragraph dedup (31% removed) + MinHash near-duplicate documents → `metadata/dedup_log.csv`
+- [x] Before/after statistics per iteration (`results/iter0..2`, `results/`), per-document audit `results/document_audit.csv`
+
+**Brief steps 8–10, hand-off**
+- [x] `segment_sentences.py`: rules for abbreviations, initials, decimals, list numbers, verse markers → `sentences.txt` / `.tsv`; F1 0.934 on 40 gold paragraphs
+- [x] `length_analysis.py`: sentence length (tokens) and word length (characters, aksharas; token- and type-weighted) with plots
+- [x] [docs/report.md](docs/report.md), [metadata/data_dictionary.md](metadata/data_dictionary.md), [docs/collection_guidelines.md](docs/collection_guidelines.md)
+- [x] `make_splits.py`: document-level 80/10/10 split → `data/splits/`
+- [x] `scripts/run_phase1.sh` runs everything after OCR in about a minute
 
 ### Phase 1: remaining ⏳
-
-**Brief step 3: collect and convert to plain text**
-- [ ] Run the full e-paper fetch: `python scripts/fetch_epaper.py fetch`. About 527 free issues, **~9M tokens**, ~18 h, resumable. Commit the text after each chunk
-- [ ] OCR the textbook `03_education_science/fkokb1ps.pdf` (`fetch_epaper.py ocr`) and delete the broken `extracted1–3.txt`
-- [ ] Normalise raw books: CRLF → LF, rename `PALATADANCHE TARUM .txt`, drop the `MAHAROOKH.txt` duplicate
-- [ ] Fill `metadata/sources.csv`: one row per source (title, author, publisher, year, category, URL, licence)
-- [ ] Optional, for domain variety: Konkani Wikipedia, Goa government texts, blogs → categories 05–07
-- [ ] Check every final file with `file` → "UTF-8 text", no CRLF
-
-**Brief step 4: type–token analysis (raw, iteration 0)**
-- [ ] Write `scripts/analyze_corpus.py`: tokens, types, TTR, hapax count, frequency list sorted by decreasing frequency → `results/word_frequencies.csv`, `results/corpus_statistics.txt`
-
-**Brief step 5: coverage analysis**
-- [ ] Types needed for 10/25/50/75/90/95/99% coverage → `results/coverage_analysis.csv` + coverage curve; overall and per category
-- [ ] Zipf and Heaps plots → `results/plots/`
-
-**Brief step 6: observations**
-- [ ] Read the iteration-0 outputs and record observations in `docs/data_cleaning_log.md` (punctuation, numbers, English/OCR junk, Marathi/Hindi words, spelling variants, anusvara loss)
-
-**Brief step 7: clean and repeat**
-- [ ] `scripts/clean_text.py`: NFC, tag/header/masthead/ad removal, Devanagari-ratio line filter, punctuation spacing, paragraph rejoin
-- [ ] `scripts/validate_konkani.py`: Konkani vs Marathi/Hindi paragraph filter + encoding checks → `metadata/quality_checks.csv`
-- [ ] `scripts/deduplicate.py`: exact + near-duplicate paragraphs and documents (including repeated newspaper boilerplate)
-- [ ] Re-run steps 4–5 after each cleaning iteration; before/after tables in the cleaning log
-
-**Brief step 8: sentence segmentation**
-- [ ] `scripts/segment_sentences.py`: split on `। ॥ ? ! .` while protecting abbreviations, initials and decimals → `sentences.txt` (one per line) + `sentences.tsv`
-- [ ] Evaluate on ~200 hand-checked paragraphs (precision/recall)
-
-**Brief step 9: length analyses**
-- [ ] Sentence-length histogram + stats (overall, per category)
-- [ ] Word-length histogram in characters and aksharas (token- and type-weighted)
-
-**Brief step 10: report**
-- [ ] `docs/report.md` (+ PDF): sources, extraction, OCR quality, every cleaning iteration, statistics, coverage, segmentation, length plots, **observations and inferences**, limitations
-- [ ] `metadata/data_dictionary.md`: describe every output file and column
-
-**Hand-off to Phase 2**
-- [ ] Freeze corpus v1.0 (git tag `corpus-v1.0`)
-- [ ] Document-level train/dev/test split (80/10/10) → `data/splits/`
+- [ ] Let `python scripts/fetch_epaper.py fetch` finish (about 527 issues, resumable), then re-run `scripts/run_phase1.sh` and refresh the numbers in the report and the cleaning log
+- [ ] Domain balance (FR-C6): after the full fetch news will exceed 60%; decide whether to cap issues
+- [ ] Team: verify `data/eval/segmentation_gold.txt` and extend it to about 200 paragraphs; verify `data/eval/language_audit_sample.tsv` (both first-pass annotated by Claude)
+- [ ] Team: fill the blank author/year fields in `metadata/sources.csv`
+- [ ] Newspaper OCR CER: hand-type about 3 e-paper pages as gold (FR-E6)
+- [ ] Optional: categories 05/07 (Goa government texts, oral transcripts); anusvara OCR post-correction (FR-N9)
+- [x] Sharing decided: processed corpus and splits stay out of GitHub and go to the team as a zip
+- [ ] After the final re-run: zip `data/processed` + `data/splits` for the team, then tag `corpus-v1.0`
 
 ### Phase 2: remaining (all) ⚪
 *Proposed; revise when the official brief arrives. Details in [§5](#5-phase-2-representations-and-language-models).*
@@ -209,47 +193,51 @@ The **LDC-IL "Gold Standard Konkani Raw Text Corpus"** (CIIL Mysore, 2018) has a
 konkani-devanagari-corpus/
 ├── data/
 │   ├── raw/                       # untouched source files (never edited)
-│   │   ├── 01_literature/ … 07_oral_transcripts/
-│   │   └── 08_ldcil_gold_sample/  # LDC-IL hand-typed XML sample + metadata .xls
-│   ├── interim/                   # extracted / OCR'd plain text, 1 file per source
-│   │   └── 08_ldcil_gold_sample/  # KO0000x.txt, one paragraph per line
-│   └── processed/
-│       ├── by_category/<cat>/corpus_clean.txt   # cleaned text per category
-│       ├── by_category/<cat>/sentences.tsv
-│       └── combined/
-│           ├── konkani_devanagari_clean.txt     # final cleaned corpus (UTF-8, LF)
-│           ├── sentences.txt                    # one sentence per line
-│           ├── sentences.tsv                    # doc_id, sent_id, n_tokens, sentence
-│           └── documents.jsonl                  # {doc_id, category, source, title, text}
+│   │   ├── 01_literature/ 02_news_and_media/ 03_education_science/ 04_culture_history/
+│   │   ├── 06_web_articles/wikipedia/   # gomwiki dump (CC BY-SA)
+│   │   └── 08_ldcil_gold_sample/        # LDC-IL hand-typed XML sample + metadata .xls
+│   ├── interim/                   # OCR'd / extracted text (committed)
+│   │   ├── 02_news_and_media/epaper/BHAANGARBHUIN/<date>_<id>.txt   # one file per issue
+│   │   ├── 03_education_science/  # textbook OCR
+│   │   ├── 08_ldcil_gold_sample/  # KO0000x.txt
+│   │   └── iter0/ … iter3/        # cleaning iterations (build output, NOT in git)
+│   ├── processed/                 # final corpus (build output, NOT in git; shared as a zip)
+│   │   ├── by_category/<cat>/{corpus_clean.txt, sentences.tsv}
+│   │   └── combined/{konkani_devanagari_clean.txt, sentences.txt, sentences.tsv, documents.jsonl}
+│   ├── splits/                    # train/dev/test.txt + split_manifest.csv (NOT in git; in the zip)
+│   └── eval/                      # segmentation gold, language audit sample
 ├── scripts/
-│   ├── extract_text.py        # PDF/DOCX/HTML → text, OCR fallback
-│   ├── extract_ldcil.py       # LDC-IL XML → text + metadata CSV  ✅
-│   ├── ocr_quality_check.py   # CER/WER of OCR text against the LDC-IL gold sample  ✅
-│   ├── clean_text.py          # normalisation + noise removal
-│   ├── validate_konkani.py    # script ratio + Konkani-vs-Marathi/Hindi check
-│   ├── deduplicate.py         # exact + near-duplicate (MinHash/line Jaccard) removal
-│   ├── segment_sentences.py   # paragraph → sentences
-│   └── analyze_corpus.py      # type/token, coverage, length analyses + plots
-├── metadata/
-│   ├── sources.csv            # doc_id, file, title, author, year, category, url, licence
-│   ├── excluded_documents.csv # file, reason, kept_instead
-│   ├── ldcil_sample_metadata.csv # header fields of the LDC-IL sample files
-│   ├── quality_checks.csv     # per-file: tokens, deva %, latin %, FFFD, pass/fail
-│   └── data_dictionary.md     # column definitions for every output file
-├── results/
-│   ├── corpus_statistics.txt
-│   ├── word_frequencies.csv   # rank, type, freq, rel_freq, cum_coverage
-│   ├── coverage_analysis.csv  # coverage %, types needed
-│   ├── document_audit.csv
-│   ├── ocr_quality/           # summary.txt, per_paragraph.csv, confusions.csv
-│   └── plots/                 # Zipf, coverage, sentence-length, word-length (to add)
-├── docs/
-│   ├── references/            # LDC-IL Konkani corpus documentation (PDF)
-│   ├── collection_guidelines.md
-│   ├── data_cleaning_log.md   # every cleaning iteration: what changed, before/after stats
-│   └── report.md              # Phase 1 report
+│   ├── run_phase1.sh          # runs every step below after OCR (~1 min)
+│   ├── corpus_utils.py        # shared tokeniser, akshara splitter, document-tree helpers
+│   ├── fetch_epaper.py        # e-paper download + OCR; also OCRs any PDF (--force-ocr)
+│   ├── extract_ldcil.py       # LDC-IL XML → text + metadata CSV
+│   ├── ocr_quality_check.py   # CER/WER of OCR text against the LDC-IL gold sample
+│   ├── extract_text.py        # all sources → iteration-0 tree + metadata/documents.csv
+│   ├── clean_text.py          # iteration 1: normalisation, junk lines, paragraph rejoin
+│   ├── validate_konkani.py    # iteration 2: Konkani vs Marathi/Hindi, orthography, numeric
+│   ├── deduplicate.py         # iteration 3: exact paragraph + MinHash document dedup
+│   ├── analyze_corpus.py      # type/token, frequency, coverage, Zipf/Heaps + plots
+│   ├── document_audit.py      # per-document tokens through every iteration
+│   ├── segment_sentences.py   # sentences + final processed files; --eval for P/R/F1
+│   ├── length_analysis.py     # sentence and word (chars, aksharas) length distributions
+│   └── make_splits.py         # document-level 80/10/10 split
+├── metadata/                  # sources.csv, documents.csv, epaper_issues.csv, excluded_documents.csv,
+│                              # quality_checks.csv, dedup_log.csv, ldcil_sample_metadata.csv, data_dictionary.md
+├── results/                   # final stats (top level) + iter0/ iter1/ iter2/, plots/, ocr_quality/
+├── docs/                      # report.md, data_cleaning_log.md, collection_guidelines.md, references/
 ├── requirements.txt
 └── README.md
+```
+
+Column-level descriptions of every file: [metadata/data_dictionary.md](metadata/data_dictionary.md).
+
+### Sharing the corpus
+
+`data/processed/`, `data/splits/` and `data/interim/iter*/` are too large for GitHub (hundreds of MB) and contain copyrighted text, so they are **not committed**. Either rebuild them with `scripts/run_phase1.sh` (needs only the committed `data/raw` + `data/interim` text), or use the zip shared within the team:
+
+```bash
+zip -r konkani_corpus_processed.zip data/processed data/splits     # sender
+unzip konkani_corpus_processed.zip                                  # receiver, from the repo root
 ```
 
 ---
@@ -385,42 +373,29 @@ Data prep for Phase 2 (done at the end of Phase 1): fixed train/dev/test split b
 
 ## 8. How to run
 
-**Working now:**
-
 ```bash
+python -m venv .venv && . .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-python scripts/extract_ldcil.py          # LDC-IL XML → data/interim/08_ldcil_gold_sample/*.txt + metadata CSV
-python scripts/ocr_quality_check.py      # CER/WER of our OCR vs LDC-IL gold → results/ocr_quality/
+# OCR needs Tesseract 5 with mar + hin traineddata
+#   Fedora: sudo dnf install tesseract tesseract-langpack-mar tesseract-langpack-hin
+#   Windows: winget install UB-Mannheim.TesseractOCR, traineddata in ~/tessdata
 
-# E-paper: download + OCR all FREE Konkani issues from epaper.thegoan.net (Bhaangarbhuin)
-# needs Tesseract (winget install UB-Mannheim.TesseractOCR) + mar/hin tessdata_best in ~/tessdata
-python scripts/fetch_epaper.py fetch                      # all free issues (~548, ~18 h, resumable)
-python scripts/fetch_epaper.py fetch --max-issues 20      # or a few at a time
-python scripts/fetch_epaper.py fetch --since 2026-01-01   # or a date range
-python scripts/fetch_epaper.py import                     # OCR the 20 issue PDFs already in data/raw/02_news_and_media
-                                                          #   (run before fetch, so those issues aren't downloaded again)
-python scripts/fetch_epaper.py ocr --pdf-dir data/raw/03_education_science --out data/interim/03_education_science
-                                                          # OCR other PDFs, e.g. the textbook
+# 1. Slow, cached collection steps (run once)
+python scripts/extract_ldcil.py                   # LDC-IL XML → data/interim/08_ldcil_gold_sample
+python scripts/ocr_quality_check.py               # OCR CER/WER vs LDC-IL gold → results/ocr_quality/
+python scripts/fetch_epaper.py fetch              # all free Bhaangarbhuin issues (~18 h, resumable)
+python scripts/fetch_epaper.py ocr --pdf-dir data/raw/03_education_science \
+    --out data/interim/03_education_science --dpi 300 --force-ocr
+curl -o data/raw/06_web_articles/wikipedia/gomwiki-latest-pages-articles.xml.bz2 \
+    https://dumps.wikimedia.org/gomwiki/latest/gomwiki-latest-pages-articles.xml.bz2
+
+# 2. Everything else: cleaning iterations, analyses, segmentation, lengths, splits (~1 min)
+scripts/run_phase1.sh                             # PYTHON=.venv/bin/python scripts/run_phase1.sh
+
+file data/processed/combined/*.txt                # must say: UTF-8 text (no CRLF)
 ```
 
-`fetch_epaper.py` keeps only Konkani titles; the site's Marathi and English papers and magazines are skipped. It downloads only issues the site offers as free downloads (Apr 2025 onwards), and paid archive issues are skipped. It waits 1 s between requests. Page PDFs go to `data/raw/02_news_and_media/epaper/`, which is git-ignored. Text goes to `data/interim/02_news_and_media/epaper/<title>/<date>_<id>.txt`, and per-issue metadata to `metadata/epaper_issues.csv`. One issue gives about 16k tokens.
-
-**Planned:** the other scripts are still placeholders. The commands below are their intended interface.
-
-```bash
-# also install Tesseract + hin/mar traineddata for OCR
-
-python scripts/extract_text.py   --in data/raw --out data/interim
-python scripts/clean_text.py     --in data/interim --out data/processed/by_category
-python scripts/validate_konkani.py --in data/processed/by_category --report metadata/quality_checks.csv
-python scripts/deduplicate.py    --in data/processed/by_category --log metadata/excluded_documents.csv
-python scripts/segment_sentences.py --in data/processed/by_category --out data/processed/combined
-python scripts/analyze_corpus.py --in data/processed/combined --out results/
-
-file data/processed/combined/*.txt      # must say: UTF-8 text (no CRLF)
-```
-
-Planned `requirements.txt`: `pymupdf`, `pdfplumber`, `pytesseract`, `pdf2image`, `beautifulsoup4`, `python-docx`, `regex` (for `\X` grapheme clusters), `indic-nlp-library`, `datasketch`, `pandas`, `matplotlib`, `tqdm`; Phase 2+: `sentencepiece`, `gensim`, `fasttext`, `kenlm`, `torch`, `transformers`, `sklearn-crfsuite`, `seqeval`.
+`fetch_epaper.py` keeps only Konkani titles, downloads only issues the site offers free, waits 1 s between requests, and git-ignores the page PDFs. `data/interim/iter*`, `data/processed/` and `data/splits/` are build outputs and are not committed.
 
 ---
 
@@ -443,4 +418,4 @@ Planned `requirements.txt`: `pymupdf`, `pdfplumber`, `pytesseract`, `pdf2image`,
 
 **Reference corpus:** Varik, S., Rajesha N., Manasa G., Choudhary, N. & Ramamoorthy, L. (2018). *Konkani Raw Text Corpus* (documentation of LDC-IL's "A Gold Standard Konkani Raw Text Corpus"). Linguistic Data Consortium for Indian Languages, CIIL, Mysore. ISBN 978-81-7343-232-3. We use only the publicly downloadable sample and documentation; © CIIL.
 
-Every document is listed in `metadata/sources.csv` with title, author/editor, publisher, year and URL. Book scans and e-paper issues are copyrighted by their publishers (e.g. Sahitya Akademi, *Bhaangarbhuin* / The Goan). They are used here **only for academic, non-commercial research**, and raw copyrighted files should not be redistributed publicly. Consider making the GitHub repo private, or keeping only derived statistics public.
+Every document is listed in `metadata/sources.csv` with title, author/editor, publisher, year and URL. Book scans and e-paper issues are copyrighted by their publishers (e.g. Sahitya Akademi, *Bhaangarbhuin* / The Goan). They are used here **only for academic, non-commercial research**, and raw copyrighted files should not be redistributed publicly. The processed corpus is therefore kept out of GitHub and shared only inside the team as a zip (see [Sharing the corpus](#sharing-the-corpus)). The repo still holds OCR text in `data/interim`; consider making it private.

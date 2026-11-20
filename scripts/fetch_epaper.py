@@ -150,6 +150,18 @@ def page_download_links(client, ptype, issue_id):
 
 # ---------------------------------------------------------------- text extraction
 
+def default_tessdata():
+    """~/tessdata if it exists (Windows setup), else the Linux system location."""
+    home = Path.home() / "tessdata"
+    if home.exists():
+        return str(home)
+    for p in ("/usr/share/tesseract/tessdata", "/usr/share/tesseract-ocr/5/tessdata",
+              "/usr/share/tessdata"):
+        if Path(p).exists():
+            return p
+    return str(home)
+
+
 def setup_tesseract(args):
     cmd = args.tesseract or shutil.which("tesseract") or r"C:\Program Files\Tesseract-OCR\tesseract.exe"
     if not Path(cmd).exists() and not shutil.which(cmd):
@@ -187,7 +199,7 @@ def pdf_page_to_text(pdf_path, args, page_index=0):
 def page_text(page, args):
     layer = page.get_text()
     ratio, deva = devanagari_ratio(layer)
-    if ratio >= 0.5 and deva >= 200:
+    if not args.force_ocr and ratio >= 0.5 and deva >= 200:
         return normalise(layer), "text_layer"
     pix = page.get_pixmap(dpi=args.dpi, colorspace=fitz.csGRAY)
     img = Image.frombytes("L", (pix.width, pix.height), pix.samples)
@@ -463,12 +475,14 @@ def main():
                        help="render resolution; these PDFs use oversized page units, "
                             "so 150 already gives ~3000px wide pages")
         p.add_argument("--psm", type=int, default=3, help="Tesseract page segmentation mode")
-        p.add_argument("--tessdata", default=os.environ.get("TESSDATA_PREFIX",
-                                                            str(Path.home() / "tessdata")))
+        p.add_argument("--tessdata", default=os.environ.get("TESSDATA_PREFIX", default_tessdata()))
         p.add_argument("--tesseract", help="path to tesseract executable")
         p.add_argument("--workers", type=int, default=max(1, (os.cpu_count() or 2) // 2),
                        help="pages OCR'd in parallel")
         p.add_argument("--force", action="store_true", help="redo pages that already exist")
+        p.add_argument("--force-ocr", action="store_true",
+                       help="OCR every page even if it has a Devanagari text layer "
+                            "(use for legacy-font PDFs whose layer has broken matras)")
 
     f = sub.add_parser("fetch", help="download free issues from the site and OCR them")
     f.add_argument("--languages", nargs="+", default=["Konkani"])

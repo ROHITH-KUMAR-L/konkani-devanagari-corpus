@@ -1,1 +1,9 @@
-rapidfuzz>=3.0
+# Phase 1 pipeline (Python >= 3.10). OCR also needs Tesseract 5 with mar + hin traineddata.
+rapidfuzz==3.14.6        # ocr_quality_check.py
+numpy==2.5.4             # analysis, MinHash dedup
+matplotlib==3.11.2       # plots
+mwparserfromhell==0.7.2  # Konkani Wikipedia extraction
+pymupdf==2.1             # PDF rendering / text layer (fetch_epaper.py)
+pytesseract==0.3.13      # OCR (fetch_epaper.py)
+pillow==13.0.0
+requests==2.34.2         # e-paper download

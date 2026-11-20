@@ -1,0 +1,97 @@
+doc_id,category,source_type,source_path,title,tokens
+lit_dasharatha,01_literature,book_ocr,data/raw/01_literature/DASHARATHA.txt,DASHARATHA,7892
+lit_ghanaghainiyatiche,01_literature,book_ocr,data/raw/01_literature/GHANAGHAINIYATICHE.txt,GHANAGHAINIYATICHE,83879
+lit_konkani_kavya_sangraha,01_literature,book_ocr,data/raw/01_literature/KONKANI KAVYA SANGRAHA.txt,KONKANI KAVYA SANGRAHA,16689
+lit_manu,01_literature,book_ocr,data/raw/01_literature/MANU.txt,MANU,12194
+lit_nataka,01_literature,book_ocr,data/raw/01_literature/NATAKA.txt,NATAKA,12209
+lit_nirbala_ani_mukti,01_literature,book_ocr,data/raw/01_literature/NIRBALA ANI MUKTI.txt,NIRBALA ANI MUKTI,22294
+lit_palatadanche_tarum,01_literature,book_ocr,data/raw/01_literature/PALATADANCHE TARUM .txt,PALATADANCHE TARUM,29124
+lit_tiatracho_ithihas,01_literature,book_ocr,data/raw/01_literature/TIATRACHO ITHIHAS.txt,TIATRACHO ITHIHAS,21317
+lit_umajani,01_literature,book_ocr,data/raw/01_literature/UMAJANI.txt,UMAJANI,24345
+cult_history,04_culture_history,book_ocr,data/raw/04_culture_history/HISTORY.txt,HISTORY,22135
+cult_konkani_katha_sangrah,04_culture_history,book_ocr,data/raw/04_culture_history/KONKANI KATHA SANGRAH.txt,KONKANI KATHA SANGRAH,58150
+cult_konkani_mhabharot_adi_porv,04_culture_history,book_ocr,data/raw/04_culture_history/KONKANI MHABHAROT ADI PORV.txt,KONKANI MHABHAROT ADI PORV,52782
+cult_konkani_shuddlekhanache_nem,04_culture_history,book_ocr,data/raw/04_culture_history/KONKANI SHUDDLEKHANACHE NEM.txt,KONKANI SHUDDLEKHANACHE NEM,3671
+cult_shennoi_goembab,04_culture_history,book_ocr,data/raw/04_culture_history/SHENNOI GOEMBAB.txt,SHENNOI GOEMBAB,34200
+cult_some_aspects_of_konkani_culture_heritage,04_culture_history,book_ocr,data/raw/04_culture_history/SOME ASPECTS OF KONKANI CULTURE HERITAGE.txt,SOME ASPECTS OF KONKANI CULTURE HERITAGE,33689
+edu_fkokb1ps,03_education_science,pdf_ocr,data/interim/03_education_science/fkokb1ps.txt,fkokb1ps,6257
+news_bhaangarbhuin_2026_09_25_4202719,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-09-25_4202719.txt,BHAANGARBHUIN 2026-09-25,15362
+news_bhaangarbhuin_2026_09_26_4203088,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-09-26_4203088.txt,BHAANGARBHUIN 2026-09-26,16829
+news_bhaangarbhuin_2026_09_27_4203377,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-09-27_4203377.txt,BHAANGARBHUIN 2026-09-27,16733
+news_bhaangarbhuin_2026_09_28_4203797,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-09-28_4203797.txt,BHAANGARBHUIN 2026-09-28,16341
+news_bhaangarbhuin_2026_09_29_4204143,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-09-29_4204143.txt,BHAANGARBHUIN 2026-09-29,17264
+news_bhaangarbhuin_2026_09_30_4204517,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-09-30_4204517.txt,BHAANGARBHUIN 2026-09-30,16180
+news_bhaangarbhuin_2026_10_01_4204870,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-01_4204870.txt,BHAANGARBHUIN 2026-10-01,18199
+news_bhaangarbhuin_2026_10_02_4205300,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-02_4205300.txt,BHAANGARBHUIN 2026-10-02,14440
+news_bhaangarbhuin_2026_10_03_4205658,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-03_4205658.txt,BHAANGARBHUIN 2026-10-03,17303
+news_bhaangarbhuin_2026_10_04_4206026,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-04_4206026.txt,BHAANGARBHUIN 2026-10-04,16360
+news_bhaangarbhuin_2026_10_05_4206408,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-05_4206408.txt,BHAANGARBHUIN 2026-10-05,17501
+news_bhaangarbhuin_2026_10_06_4206758,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-06_4206758.txt,BHAANGARBHUIN 2026-10-06,14272
+news_bhaangarbhuin_2026_10_07_4207131,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-07_4207131.txt,BHAANGARBHUIN 2026-10-07,18043
+news_bhaangarbhuin_2026_10_08_4207499,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-08_4207499.txt,BHAANGARBHUIN 2026-10-08,17155
+news_bhaangarbhuin_2026_10_08_4207850,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-08_4207850.txt,BHAANGARBHUIN 2026-10-08,18407
+news_bhaangarbhuin_2026_10_10_4208271,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-10_4208271.txt,BHAANGARBHUIN 2026-10-10,18017
+news_bhaangarbhuin_2026_10_11_4208603,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-11_4208603.txt,BHAANGARBHUIN 2026-10-11,19490
+news_bhaangarbhuin_2026_10_12_4208974,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-12_4208974.txt,BHAANGARBHUIN 2026-10-12,17127
+news_bhaangarbhuin_2026_10_13_4209374,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-13_4209374.txt,BHAANGARBHUIN 2026-10-13,16095
+news_bhaangarbhuin_2026_10_14_4209687,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-14_4209687.txt,BHAANGARBHUIN 2026-10-14,15404
+news_bhaangarbhuin_2026_10_15_4210110,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-15_4210110.txt,BHAANGARBHUIN 2026-10-15,15113
+news_bhaangarbhuin_2026_10_16_4210441,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-16_4210441.txt,BHAANGARBHUIN 2026-10-16,18198
+news_bhaangarbhuin_2026_10_17_4210843,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-17_4210843.txt,BHAANGARBHUIN 2026-10-17,18253
+news_bhaangarbhuin_2026_10_18_4211271,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-18_4211271.txt,BHAANGARBHUIN 2026-10-18,17530
+news_bhaangarbhuin_2026_10_19_4211609,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-19_4211609.txt,BHAANGARBHUIN 2026-10-19,17680
+news_bhaangarbhuin_2026_10_20_4211916,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-20_4211916.txt,BHAANGARBHUIN 2026-10-20,17602
+news_bhaangarbhuin_2026_10_21_4212187,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-21_4212187.txt,BHAANGARBHUIN 2026-10-21,20655
+news_bhaangarbhuin_2026_10_22_4212455,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-22_4212455.txt,BHAANGARBHUIN 2026-10-22,16726
+news_bhaangarbhuin_2026_10_23_4212803,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-23_4212803.txt,BHAANGARBHUIN 2026-10-23,22612
+news_bhaangarbhuin_2026_10_24_4213207,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-24_4213207.txt,BHAANGARBHUIN 2026-10-24,15278
+news_bhaangarbhuin_2026_10_25_4213532,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-25_4213532.txt,BHAANGARBHUIN 2026-10-25,16214
+news_bhaangarbhuin_2026_10_26_4213910,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-26_4213910.txt,BHAANGARBHUIN 2026-10-26,16121
+news_bhaangarbhuin_2026_10_27_4214275,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-27_4214275.txt,BHAANGARBHUIN 2026-10-27,16510
+news_bhaangarbhuin_2026_10_28_4214638,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-28_4214638.txt,BHAANGARBHUIN 2026-10-28,17464
+news_bhaangarbhuin_2026_10_29_4215019,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-29_4215019.txt,BHAANGARBHUIN 2026-10-29,15061
+news_bhaangarbhuin_2026_10_30_4215394,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-30_4215394.txt,BHAANGARBHUIN 2026-10-30,14638
+news_bhaangarbhuin_2026_10_31_4215764,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-10-31_4215764.txt,BHAANGARBHUIN 2026-10-31,15770
+news_bhaangarbhuin_2026_11_01_4216090,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-01_4216090.txt,BHAANGARBHUIN 2026-11-01,17441
+news_bhaangarbhuin_2026_11_02_4216492,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-02_4216492.txt,BHAANGARBHUIN 2026-11-02,16640
+news_bhaangarbhuin_2026_11_03_4216841,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-03_4216841.txt,BHAANGARBHUIN 2026-11-03,17969
+news_bhaangarbhuin_2026_11_04_4217239,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-04_4217239.txt,BHAANGARBHUIN 2026-11-04,17485
+news_bhaangarbhuin_2026_11_05_4217577,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-05_4217577.txt,BHAANGARBHUIN 2026-11-05,17837
+news_bhaangarbhuin_2026_11_06_4217959,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-06_4217959.txt,BHAANGARBHUIN 2026-11-06,16933
+news_bhaangarbhuin_2026_11_07_4218347,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-07_4218347.txt,BHAANGARBHUIN 2026-11-07,15903
+news_bhaangarbhuin_2026_11_08_4218758,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-08_4218758.txt,BHAANGARBHUIN 2026-11-08,14737
+news_bhaangarbhuin_2026_11_10_4219243,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-10_4219243.txt,BHAANGARBHUIN 2026-11-10,17802
+news_bhaangarbhuin_2026_11_11_4219590,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-11_4219590.txt,BHAANGARBHUIN 2026-11-11,18257
+news_bhaangarbhuin_2026_11_12_4219884,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-12_4219884.txt,BHAANGARBHUIN 2026-11-12,16853
+news_bhaangarbhuin_2026_11_13_4220272,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-13_4220272.txt,BHAANGARBHUIN 2026-11-13,17069
+news_bhaangarbhuin_2026_11_14_4220675,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-14_4220675.txt,BHAANGARBHUIN 2026-11-14,18170
+news_bhaangarbhuin_2026_11_15_4220986,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-15_4220986.txt,BHAANGARBHUIN 2026-11-15,16004
+news_bhaangarbhuin_2026_11_16_4221482,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-16_4221482.txt,BHAANGARBHUIN 2026-11-16,13280
+news_bhaangarbhuin_2026_11_17_4221732,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-17_4221732.txt,BHAANGARBHUIN 2026-11-17,17712
+news_bhaangarbhuin_2026_11_18_4222171,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-18_4222171.txt,BHAANGARBHUIN 2026-11-18,16304
+news_bhaangarbhuin_2026_11_19_4222497,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-19_4222497.txt,BHAANGARBHUIN 2026-11-19,17903
+news_bhaangarbhuin_2026_11_20_4222913,02_news_media,epaper_ocr,data/interim/02_news_and_media/epaper/BHAANGARBHUIN/2026-11-20_4222913.txt,BHAANGARBHUIN 2026-11-20,16571
+ldcil_ko00001,01_literature,ldcil_gold,data/interim/08_ldcil_gold_sample/KO00001.txt,KO00001,2582
+ldcil_ko00003,01_literature,ldcil_gold,data/interim/08_ldcil_gold_sample/KO00003.txt,KO00003,3053
+ldcil_ko00004,01_literature,ldcil_gold,data/interim/08_ldcil_gold_sample/KO00004.txt,KO00004,2752
+ldcil_ko00005,01_literature,ldcil_gold,data/interim/08_ldcil_gold_sample/KO00005.txt,KO00005,4685
+wiki_gom_00,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 00 (139 articles),74803
+wiki_gom_01,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 01 (139 articles),70270
+wiki_gom_02,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 02 (139 articles),68493
+wiki_gom_03,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 03 (139 articles),68475
+wiki_gom_04,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 04 (139 articles),67923
+wiki_gom_05,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 05 (139 articles),73726
+wiki_gom_06,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 06 (139 articles),72392
+wiki_gom_07,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 07 (139 articles),69947
+wiki_gom_08,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 08 (139 articles),63028
+wiki_gom_09,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 09 (139 articles),63342
+wiki_gom_10,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 10 (139 articles),68665
+wiki_gom_11,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 11 (139 articles),63845
+wiki_gom_12,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 12 (139 articles),74079
+wiki_gom_13,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 13 (139 articles),71933
+wiki_gom_14,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 14 (139 articles),75829
+wiki_gom_15,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 15 (139 articles),88947
+wiki_gom_16,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 16 (139 articles),72478
+wiki_gom_17,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 17 (139 articles),78174
+wiki_gom_18,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 18 (139 articles),74352
+wiki_gom_19,06_web_articles,wikipedia,data/raw/06_web_articles/wikipedia/gomwiki-20261101-pages-articles.xml.bz2,Konkani Wikipedia shard 19 (138 articles),73897
