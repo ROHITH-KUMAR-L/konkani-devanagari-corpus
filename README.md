@@ -4,7 +4,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 > **Requirements:** see [PRD.md](PRD.md) for goals, numbered requirements, acceptance criteria and risks.
 >
-> **Status (20 Nov 2026):** Phase 1 pipeline complete and runnable end to end (`scripts/run_phase1.sh`). Clean corpus: **2.14M tokens**, 5 domains, 221k sentences. The full e-paper fetch is still running (66 of ~527 issues at 23:07); re-run the pipeline when it finishes, zip `data/processed` + `data/splits` for the team, then tag `corpus-v1.0`. Report: [docs/report.md](docs/report.md). See [Progress and remaining work](#progress-and-remaining-work).
+> **Status (20 Nov 2026):** Phase 1 pipeline complete and runnable end to end (`scripts/run_phase1.sh`). Clean corpus at the last run: **3.47M tokens**, 5 domains (live numbers: [docs/report.md](docs/report.md), regenerated on every run). The full e-paper fetch is still running; when it finishes, re-run the pipeline, zip `data/processed` + `data/splits` for the team, then tag `corpus-v1.0`. See [Progress and remaining work](#progress-and-remaining-work).
 
 ---
 
@@ -30,7 +30,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 | Phase | Status | Summary |
 |---|---|---|
-| **Phase 1:** corpus building and analysis | 🟢 About 90% | Pipeline, analyses, segmentation, splits and report done on 2.14M clean tokens. Remaining: finish e-paper fetch, re-run, team verification, tag v1.0 |
+| **Phase 1:** corpus building and analysis | 🟢 About 90% | Pipeline, analyses, segmentation, splits and auto-generated report done (3.47M clean tokens at the last run). Remaining: finish e-paper fetch, re-run, team verification, tag v1.0 |
 | **Phase 2:** tokenisers, n-gram LMs, embeddings | ⚪ Not started | Starts once corpus v1.0 is frozen |
 | **Phase 3:** neural LMs, NER | ⚪ Not started | Starts after Phase 2 |
 
@@ -59,15 +59,16 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 - [x] `length_analysis.py`: sentence length (tokens) and word length (characters, aksharas; token- and type-weighted) with plots
 - [x] [docs/report.md](docs/report.md), [metadata/data_dictionary.md](metadata/data_dictionary.md), [docs/collection_guidelines.md](docs/collection_guidelines.md)
 - [x] `make_splits.py`: document-level 80/10/10 split → `data/splits/`
-- [x] `scripts/run_phase1.sh` runs everything after OCR in about a minute
+- [x] `scripts/run_phase1.sh` runs everything after OCR in about 2 minutes, ending with `build_report.py`, which refills every number in the report and cleaning log from `docs/templates/`
+- [x] Domain balance (FR-C6): `make_splits.py` also writes `data/splits/balanced/` (no category above 60%)
+- [x] Category 05 tried: Goa government press releases are unreachable (DIP site down, `goa.gov.in` blocks automated access) and in English; documented in the report
 
 ### Phase 1: remaining ⏳
-- [ ] Let `python scripts/fetch_epaper.py fetch` finish (about 527 issues, resumable), then re-run `scripts/run_phase1.sh` and refresh the numbers in the report and the cleaning log
-- [ ] Domain balance (FR-C6): after the full fetch news will exceed 60%; decide whether to cap issues
+- [ ] Let `python scripts/fetch_epaper.py fetch` finish (about 527 issues, resumable), then re-run `scripts/run_phase1.sh` (the report and cleaning log update themselves)
 - [ ] Team: verify `data/eval/segmentation_gold.txt`, `segmentation_gold_heldout.txt` and `language_audit_sample.tsv` (all first-pass annotated by Claude)
 - [ ] Team: fill the blank author/year fields in `metadata/sources.csv`
 - [ ] Newspaper OCR CER: hand-type about 3 e-paper pages as gold (FR-E6)
-- [ ] Optional: categories 05/07 (Goa government texts, oral transcripts); anusvara OCR post-correction (FR-N9)
+- [ ] Optional: categories 05/07 if a reachable Konkani source turns up. Anusvara post-correction (FR-N9) deliberately skipped: both forms are often real words
 - [x] Sharing decided: processed corpus and splits stay out of GitHub and go to the team as a zip
 - [ ] After the final re-run: zip `data/processed` + `data/splits` for the team, then tag `corpus-v1.0`
 
@@ -205,10 +206,10 @@ konkani-devanagari-corpus/
 │   ├── processed/                 # final corpus (build output, NOT in git; shared as a zip)
 │   │   ├── by_category/<cat>/{corpus_clean.txt, sentences.tsv}
 │   │   └── combined/{konkani_devanagari_clean.txt, sentences.txt, sentences.tsv, documents.jsonl}
-│   ├── splits/                    # train/dev/test.txt + split_manifest.csv (NOT in git; in the zip)
+│   ├── splits/                    # train/dev/test.txt, balanced/, split_manifest.csv (NOT in git; in the zip)
 │   └── eval/                      # segmentation gold, language audit sample
 ├── scripts/
-│   ├── run_phase1.sh          # runs every step below after OCR (~1 min)
+│   ├── run_phase1.sh          # runs every step below after OCR (~2 min)
 │   ├── corpus_utils.py        # shared tokeniser, akshara splitter, document-tree helpers
 │   ├── fetch_epaper.py        # e-paper download + OCR; also OCRs any PDF (--force-ocr)
 │   ├── extract_ldcil.py       # LDC-IL XML → text + metadata CSV
@@ -221,11 +222,12 @@ konkani-devanagari-corpus/
 │   ├── document_audit.py      # per-document tokens through every iteration
 │   ├── segment_sentences.py   # sentences + final processed files; --eval for P/R/F1
 │   ├── length_analysis.py     # sentence and word (chars, aksharas) length distributions
-│   └── make_splits.py         # document-level 80/10/10 split
+│   ├── make_splits.py         # document-level 80/10/10 split + domain-balanced subset
+│   └── build_report.py        # fills docs/templates/*.md with the numbers of the last run
 ├── metadata/                  # sources.csv, documents.csv, epaper_issues.csv, excluded_documents.csv,
-│                              # quality_checks.csv, dedup_log.csv, ldcil_sample_metadata.csv, data_dictionary.md
+│                              # clean_log.csv, quality_checks.csv, dedup_log.csv, ldcil_sample_metadata.csv, data_dictionary.md
 ├── results/                   # final stats (top level) + iter0/ iter1/ iter2/, plots/, ocr_quality/
-├── docs/                      # report.md, data_cleaning_log.md, collection_guidelines.md, references/
+├── docs/                      # report.md + data_cleaning_log.md (generated), templates/, collection_guidelines.md, references/
 ├── requirements.txt
 └── README.md
 ```
@@ -390,7 +392,7 @@ python scripts/fetch_epaper.py ocr --pdf-dir data/raw/03_education_science \
 curl -o data/raw/06_web_articles/wikipedia/gomwiki-latest-pages-articles.xml.bz2 \
     https://dumps.wikimedia.org/gomwiki/latest/gomwiki-latest-pages-articles.xml.bz2
 
-# 2. Everything else: cleaning iterations, analyses, segmentation, lengths, splits (~1 min)
+# 2. Everything else: cleaning iterations, analyses, segmentation, lengths, splits, report (~2 min)
 scripts/run_phase1.sh                             # PYTHON=.venv/bin/python scripts/run_phase1.sh
 
 file data/processed/combined/*.txt                # must say: UTF-8 text (no CRLF)

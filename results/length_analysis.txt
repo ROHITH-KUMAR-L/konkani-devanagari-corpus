@@ -1,15 +1,15 @@
 Length analyses (processed corpus)
 
 Sentence length in word tokens:
-  sentences 241,247; mean 9.69; std 7.19; median 8; p5 2; p95 23; p99 35; max 279
-  sentences with 1-2 tokens: 15,785 (6.5%); > 60 tokens: 222
-  01_literature            n   33,927  mean   6.93  median    6  std   4.98  p95   16
-  02_news_media            n   89,252  mean   9.66  median    8  std   7.73  p95   24
+  sentences 363,370; mean 9.56; std 7.71; median 8; p5 2; p95 23; p99 35; max 871
+  sentences with 1-2 tokens: 28,774 (7.9%); > 60 tokens: 343
+  01_literature            n   34,018  mean   6.91  median    6  std   4.97  p95   15
+  02_news_media            n  211,235  mean   9.46  median    7  std   8.28  p95   24
   03_education_science     n      347  mean  14.92  median   13  std   9.38  p95   31
-  04_culture_history       n   18,666  mean   8.30  median    6  std   6.99  p95   21
-  06_web_articles          n   99,055  mean  10.89  median    9  std   7.04  p95   23
+  04_culture_history       n   18,690  mean   8.29  median    6  std   6.99  p95   21
+  06_web_articles          n   99,080  mean  10.89  median    9  std   7.04  p95   23
 
 Word length (Devanagari words, numbers excluded):
-  characters  token-weighted mean 5.64 median 5; type-weighted mean 7.96 median 8
-  aksharas    token-weighted mean 3.00 median 3; type-weighted mean 4.06 median 4
-  characters per akshara (token-weighted): 1.88
+  characters  token-weighted mean 5.66 median 5; type-weighted mean 8.02 median 8
+  aksharas    token-weighted mean 3.02 median 3; type-weighted mean 4.09 median 4
+  characters per akshara (token-weighted): 1.87

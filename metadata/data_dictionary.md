@@ -20,6 +20,7 @@ All text files are UTF-8, LF line endings, Unicode NFC. "Document tree" means `<
 | `epaper_issues.csv` | title, issue_id, date, language, type, pages, pages_ocr, pages_text_layer, tokens, status, source_url, local_pdf. One row per newspaper issue (`fetch_epaper.py`) |
 | `ldcil_sample_metadata.csv` | LDC-IL header fields per XML file (`extract_ldcil.py`) |
 | `excluded_documents.csv` | file, reason, kept_instead. Hand-curated exclusions, skipped by `extract_text.py` |
+| `clean_log.csv` | doc_id, category, lines_in, junk_lines, short_paragraphs, paragraphs_out (`clean_text.py`) |
 | `quality_checks.csv` | doc_id, category, paragraphs_in, tokens_in, kok/mar/hin_markers, dropped_marathi/hindi/orthography/numeric (paragraphs), doc_dropped (0/1), invalid_token_rate, paragraphs_out, tokens_out (`validate_konkani.py`) |
 | `dedup_log.csv` | doc_id, category, paragraphs_in, exact_duplicate_paragraphs, near_duplicate_of, jaccard_estimate, paragraphs_out (`deduplicate.py`) |
 
@@ -38,7 +39,8 @@ All text files are UTF-8, LF line endings, Unicode NFC. "Document tree" means `<
 | `processed/combined/sentences.tsv` | As the per-category TSV, all categories |
 | `processed/combined/documents.jsonl` | `{"doc_id", "category", "text"}` per document (paragraphs separated by `\n`) |
 | `splits/{train,dev,test}.txt` | One sentence per line, document-level split |
-| `splits/split_manifest.csv` | doc_id, category, split, sentences, tokens |
+| `splits/balanced/{train,dev,test}.txt` | Same split restricted to the domain-balanced subset (no category above 60% of tokens) |
+| `splits/split_manifest.csv` | doc_id, category, split, sentences, tokens, in_balanced (0/1) |
 | `eval/segmentation_gold.txt` | Development gold (40 paragraphs); sentence boundaries marked ` \|\| ` |
 | `eval/segmentation_gold_heldout.txt` | Held-out gold (154 paragraphs), same format, never used to tune rules |
 | `eval/language_audit_sample.tsv` | n, category, doc_id, label (`konkani`, `konkani_fragment`, `konkani_other_dialect_spelling`, `ocr_garbage`, `ocr_garbage_partial`, `non_konkani_hindi`, `non_konkani_unclear`); 200 rows, paragraph |
@@ -54,6 +56,7 @@ All text files are UTF-8, LF line endings, Unicode NFC. "Document tree" means `<
 | `coverage_analysis.csv` | scope (`overall` or category), coverage_pct, types_needed, pct_of_vocabulary |
 | `category_statistics.csv` | category, documents, tokens, share_of_corpus, types, ttr, root_ttr, hapax, hapax_ratio_types, deva/num/latin/other_share |
 | `iter0/`, `iter1/`, `iter2/` | The same files for earlier iterations (top-level `results/` = final, iteration 3) |
+| `split_summary.json` | Seed, max_share, documents/sentences/tokens per split, balanced-subset totals per category |
 | `document_audit.csv` | doc_id, category, tokens_iter0..iter3, kept_pct |
 | `segmentation_eval.txt`, `segmentation_eval_heldout.txt` | Boundary TP/FP/FN, precision, recall, F1, system output for paragraphs with errors (dev / held-out gold) |
 | `length_analysis.txt` | Sentence- and word-length summary |

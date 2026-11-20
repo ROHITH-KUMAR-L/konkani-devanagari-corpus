@@ -1,0 +1,32 @@
+{
+ "seed": 2026,
+ "max_share": 0.6,
+ "splits": {
+  "train": {
+   "documents": 133,
+   "sentences": 291106,
+   "tokens": 2763685
+  },
+  "dev": {
+   "documents": 17,
+   "sentences": 39489,
+   "tokens": 383610
+  },
+  "test": {
+   "documents": 17,
+   "sentences": 32775,
+   "tokens": 326175
+  }
+ },
+ "balanced": {
+  "documents": 167,
+  "tokens": 3473470,
+  "category_tokens": {
+   "01_literature": 234999,
+   "02_news_media": 1999204,
+   "03_education_science": 5177,
+   "04_culture_history": 154942,
+   "06_web_articles": 1079148
+  }
+ }
+}

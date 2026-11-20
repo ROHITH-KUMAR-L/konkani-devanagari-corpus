@@ -19,10 +19,13 @@ Steps (PRD FR-N1..N5):
      Wikipedia and LDC-IL files already have one paragraph per line.
   5. Paragraphs with fewer than 3 word tokens are dropped (headings, titles).
 
+Writes one row per document to metadata/clean_log.csv.
+
 Usage:
     python scripts/clean_text.py --in data/interim/iter0 --out data/interim/iter1
 """
 import argparse
+import csv
 import html
 import re
 import unicodedata
@@ -144,12 +147,19 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--in", dest="inp", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--log", default="metadata/clean_log.csv")
     args = ap.parse_args()
-    total = Counter()
+    total, rows = Counter(), []
     for cat, doc_id, path in iter_docs(args.inp):
         text, st = clean_doc(read_doc(path), doc_id)
         write_doc(f"{args.out}/{cat}/{doc_id}.txt", text)
         total.update(st)
+        rows.append({"doc_id": doc_id, "category": cat, "lines_in": st["lines_in"], "junk_lines": st["junk_lines"],
+                     "short_paragraphs": st["short_paragraphs"], "paragraphs_out": st["paragraphs_out"]})
+    with open(args.log, "w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(rows[0]), lineterminator="\n")
+        w.writeheader()
+        w.writerows(rows)
     print(f"lines in {total['lines_in']:,}; junk lines removed {total['junk_lines']:,}; "
           f"short paragraphs dropped {total['short_paragraphs']:,}; paragraphs out {total['paragraphs_out']:,}")
 

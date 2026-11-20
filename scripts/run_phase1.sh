@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run the whole Phase 1 pipeline from data/raw + OCR caches to results and splits.
+# Run the whole Phase 1 pipeline from data/raw + OCR caches to results, splits and the report.
 # OCR / downloads are separate, slow, cached steps (see README "How to run"):
 #   python scripts/fetch_epaper.py fetch
 #   python scripts/fetch_epaper.py ocr --pdf-dir data/raw/03_education_science \
@@ -25,3 +25,4 @@ $PY scripts/segment_sentences.py --eval data/eval/segmentation_gold.txt --eval-o
 $PY scripts/segment_sentences.py --eval data/eval/segmentation_gold_heldout.txt --eval-out results/segmentation_eval_heldout.txt
 $PY scripts/length_analysis.py --processed data/processed --out results
 $PY scripts/make_splits.py --processed data/processed --out data/splits
+$PY scripts/build_report.py
