@@ -4,7 +4,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 > **Requirements:** see [PRD.md](PRD.md) for goals, numbered requirements, acceptance criteria and risks.
 >
-> **Status (25 Oct 2026):** Phase 1 is in progress. Collection and OCR tooling works and **~0.9M raw tokens** are collected. Cleaning, analysis, segmentation and the report are still to do. See [Progress and remaining work](#progress-and-remaining-work).
+> **Implementation update (20 Nov 2026):** All six Phase 1 pipeline scripts are implemented. See [the pipeline guide](docs/pipeline.md) for current commands, review rules, outputs, and limitations. The collection counts and checklist below describe the earlier 25 Oct audit; they are not measurements from a newly approved corpus. Source registration, human language review, and the final research report still require the team's work.
 
 ---
 
@@ -405,22 +405,25 @@ python scripts/fetch_epaper.py ocr --pdf-dir data/raw/03_education_science --out
 
 `fetch_epaper.py` keeps only Konkani titles; the site's Marathi and English papers and magazines are skipped. It downloads only issues the site offers as free downloads (Apr 2025 onwards), and paid archive issues are skipped. It waits 1 s between requests. Page PDFs go to `data/raw/02_news_and_media/epaper/`, which is git-ignored. Text goes to `data/interim/02_news_and_media/epaper/<title>/<date>_<id>.txt`, and per-issue metadata to `metadata/epaper_issues.csv`. One issue gives about 16k tokens.
 
-**Planned:** the other scripts are still placeholders. The commands below are their intended interface.
+**Phase 1 pipeline (implemented):** run these from the repository root after installing `requirements.txt`. The default extraction directory is now `data/raw_txt/`. Existing `data/interim/` files and collection helpers remain available. The stage manifests retain document boundaries and provenance.
 
 ```bash
-# also install Tesseract + hin/mar traineddata for OCR
+# Start with the collected text files. Omit --extensions to process all formats;
+# scanned/legacy-font PDFs additionally need --ocr and a local Tesseract install.
+python scripts/extract_text.py --extensions txt
+python scripts/clean_text.py
 
-python scripts/extract_text.py   --in data/raw --out data/interim
-python scripts/clean_text.py     --in data/interim --out data/processed/by_category
-python scripts/validate_konkani.py --in data/processed/by_category --report metadata/quality_checks.csv
-python scripts/deduplicate.py    --in data/processed/by_category --log metadata/excluded_documents.csv
-python scripts/segment_sentences.py --in data/processed/by_category --out data/processed/combined
-python scripts/analyze_corpus.py --in data/processed/combined --out results/
+# Review sources.csv: review_status=accepted AND language_status=konkani.
+# Leave uncertain documents pending; they are excluded from final exports.
+python scripts/validate_konkani.py
+python scripts/deduplicate.py
+python scripts/segment_sentences.py
+python scripts/analyze_corpus.py
 
-file data/processed/combined/*.txt      # must say: UTF-8 text (no CRLF)
+python -m unittest discover -s tests -v
 ```
 
-Planned `requirements.txt`: `pymupdf`, `pdfplumber`, `pytesseract`, `pdf2image`, `beautifulsoup4`, `python-docx`, `regex` (for `\X` grapheme clusters), `indic-nlp-library`, `datasketch`, `pandas`, `matplotlib`, `tqdm`; Phase 2+: `sentencepiece`, `gensim`, `fasttext`, `kenlm`, `torch`, `transformers`, `sklearn-crfsuite`, `seqeval`.
+For an explicitly provisional exploratory run, use `python scripts/validate_konkani.py --include-pending`, then rerun deduplication, segmentation and analysis. This never changes the human review decisions. Use `python scripts/analyze_corpus.py --stage extracted` or `--stage cleaned` for separate before/after analyses. See [docs/pipeline.md](docs/pipeline.md) for OCR, incremental collection, existing OCR imports, cleaning options and the exact metadata policy.
 
 ---
 
