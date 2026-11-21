@@ -1,8 +1,8 @@
 SentencePiece normalisation check on train word types (identity is used):
-nmt_nfkc: alters 253 of 273462 train types (0.093%), 429 of 2763685 tokens (0.016%)
-    e.g. 'बदलप्\u200c' -> 'बदलप्'
-    e.g. 'उक्त्\u200cया' -> 'उक्त्▁या'
-    e.g. 'श्\u200c' -> 'श्'
-    e.g. 'स्पोर्टस्\u200c' -> 'स्पोर्टस्'
-    e.g. 'सर्\u200cगगुरू' -> 'सर्▁गगुरू'
-nfkc: alters 0 of 273462 train types (0.000%), 0 of 2763685 tokens (0.000%)
+nmt_nfkc: alters 436 of 350765 train types (0.124%), 861 of 4774124 tokens (0.018%)
+    e.g. 'उडय्\u200c' -> 'उडय्'
+    e.g. 'जावन्\u200c' -> 'जावन्'
+    e.g. 'श्रीमद्\u200c' -> 'श्रीमद्'
+    e.g. 'हप्त्\u200cयांनी' -> 'हप्त्▁यांनी'
+    e.g. 'कुशळटाय्\u200c' -> 'कुशळटाय्'
+nfkc: alters 0 of 350765 train types (0.000%), 0 of 4774124 tokens (0.000%)

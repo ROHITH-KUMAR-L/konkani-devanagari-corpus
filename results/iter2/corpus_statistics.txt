@@ -1,61 +1,61 @@
 Corpus statistics: iteration 2 (Konkani only)
 Input: data/interim/iter2
 
-Documents:            168
-Tokens (N):           3,793,518
-Types (V):            319,678
-Type-token ratio:     0.0843
-Root TTR (V/sqrt N):  164.13
-Hapax legomena:       194,450 (60.8% of types, 5.13% of tokens)
-Dis legomena:         42,906
-Token composition:    deva 96.39%, num 3.61%, latin 0.00%, other 0.00%
-Zipf slope (ranks 10-10000): -1.028
-Heaps' law V = K N^b: K = 4.82, b = 0.736
+Documents:            330
+Tokens (N):           6,412,954
+Types (V):            413,273
+Type-token ratio:     0.0644
+Root TTR (V/sqrt N):  163.20
+Hapax legomena:       247,492 (59.9% of types, 3.86% of tokens)
+Dis legomena:         54,571
+Token composition:    deva 96.38%, num 3.62%, latin 0.00%, other 0.00%
+Zipf slope (ranks 10-10000): -1.026
+Heaps' law V = K N^b: K = 5.53, b = 0.722
 
 Coverage (types needed for X% of tokens):
-   10%:        9 types (0.00% of vocabulary)
-   25%:      105 types (0.03% of vocabulary)
-   50%:    1,034 types (0.32% of vocabulary)
-   75%:    8,300 types (2.60% of vocabulary)
-   90%:   52,733 types (16.50% of vocabulary)
-   95%:  130,003 types (40.67% of vocabulary)
-   99%:  281,743 types (88.13% of vocabulary)
+   10%:       10 types (0.00% of vocabulary)
+   25%:      118 types (0.03% of vocabulary)
+   50%:    1,050 types (0.25% of vocabulary)
+   75%:    7,643 types (1.85% of vocabulary)
+   90%:   46,738 types (11.31% of vocabulary)
+   95%:  129,204 types (31.26% of vocabulary)
+   99%:  349,144 types (84.48% of vocabulary)
 
 category                  docs      tokens  share     types     TTR  hapax%  deva%
-01_literature               13     235,042   6.2%    47,285  0.2012   63.3%  99.6%
-02_news_media              128   2,022,187  53.3%   155,944  0.0771   56.0%  96.3%
+01_literature               13     235,042   3.7%    47,285  0.2012   63.3%  99.6%
+02_news_media              290   4,641,623  72.4%   265,258  0.0571   56.5%  96.3%
 03_education_science         1       5,177   0.1%     1,922  0.3713   64.2%  97.4%
-04_culture_history           6     155,544   4.1%    37,530  0.2413   62.3%  98.7%
-06_web_articles             20   1,375,568  36.3%   166,629  0.1211   64.4%  95.7%
+04_culture_history           6     155,544   2.4%    37,530  0.2413   62.3%  98.7%
+06_web_articles             20   1,375,568  21.4%   166,629  0.1211   64.4%  95.7%
 
 Top 30 types:
-    1. <NUM>	136,832
-    2. आनी	85,464
-    3. आसा	47,129
-    4. ह्या	29,824
-    5. ना	23,307
-    6. खातीर	18,963
-    7. ते	17,406
-    8. गांवांत	16,670
-    9. हे	15,828
-   10. उपलब्ध	15,039
-   11. सगळ्यांत	14,327
-   12. लागीं	14,151
-   13. एक	14,081
-   14. अंतराचेर	12,068
-   15. चड	11,299
-   16. अशें	10,791
-   17. हो	10,637
-   18. तो	10,580
-   19. हांणी	10,473
-   20. परस	10,247
-   21. ताका	9,695
-   22. ही	9,596
-   23. पूण	9,479
-   24. उपरांत	8,817
-   25. गोंय	8,728
-   26. करून	8,697
-   27. जाल्यार	8,213
-   28. वा	8,175
-   29. आसात	8,052
-   30. लागून	7,581
+    1. <NUM>	232,143
+    2. आनी	142,803
+    3. आसा	64,474
+    4. ह्या	49,435
+    5. खातीर	39,336
+    6. ना	31,935
+    7. ते	28,137
+    8. हे	26,804
+    9. हांणी	23,909
+   10. एक	22,824
+   11. अशें	18,144
+   12. हो	17,681
+   13. गोंय	17,389
+   14. ही	17,154
+   15. गांवांत	17,118
+   16. उपलब्ध	16,212
+   17. करून	15,937
+   18. चड	15,705
+   19. उपरांत	15,648
+   20. पूण	15,508
+   21. तो	15,238
+   22. सगळ्यांत	14,911
+   23. लागीं	14,799
+   24. जाल्यार	14,768
+   25. लागून	14,667
+   26. ताका	14,191
+   27. वा	13,689
+   28. तशेंच	13,298
+   29. परस	12,509
+   30. वर्सा	12,216

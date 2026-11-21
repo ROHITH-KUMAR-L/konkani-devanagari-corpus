@@ -3,30 +3,30 @@
  "max_share": 0.6,
  "splits": {
   "train": {
-   "documents": 133,
-   "sentences": 291106,
-   "tokens": 2763685
+   "documents": 263,
+   "sentences": 501782,
+   "tokens": 4774124
   },
   "dev": {
-   "documents": 17,
-   "sentences": 39489,
-   "tokens": 383610
+   "documents": 33,
+   "sentences": 69390,
+   "tokens": 640177
   },
   "test": {
-   "documents": 17,
-   "sentences": 32775,
-   "tokens": 326175
+   "documents": 33,
+   "sentences": 66240,
+   "tokens": 643969
   }
  },
  "balanced": {
-  "documents": 167,
-  "tokens": 3473470,
+  "documents": 177,
+  "tokens": 3639742,
   "category_tokens": {
    "01_literature": 234999,
-   "02_news_media": 1999204,
+   "02_news_media": 2165505,
    "03_education_science": 5177,
-   "04_culture_history": 154942,
-   "06_web_articles": 1079148
+   "04_culture_history": 154935,
+   "06_web_articles": 1079126
   }
  }
 }
