@@ -1,0 +1,3 @@
+model,unit,params,steps,epochs,train_targets_seen,train_minutes,best_dev_sample_ppl_per_word,stop_reason,test_units,test_word_units,test_ppl_per_unit,test_ppl_per_word,test_bpc,test_ppl_per_word_invocab,test_ppl_per_word_oov_only,eval_minutes
+lstm,spm-unigram-16k,9200850,5375,3.13,21937751,25.02,2281.92,time budget,979220,710209,311.3195,2738.9,1.9357,775.817,1619317591.0489,0.31
+transformer,spm-unigram-16k,9004242,3037,1.77,12394723,25.02,2421.55,time budget,979220,710209,321.9092,2868.1758,1.947,811.3699,1719359518.9794,0.42

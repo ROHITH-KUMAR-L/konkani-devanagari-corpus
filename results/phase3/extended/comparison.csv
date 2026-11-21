@@ -1,0 +1,8 @@
+model,unit,test_ppl_per_word,test_ppl_per_unit,test_bpc,test_ppl_per_word_invocab,test_ppl_per_word_oov_only
+mKN 3-gram,spm-unigram-16k,2895.28,324.11,1.9493,778.54,2961419137.64
+mKN 4-gram,spm-unigram-16k,2691.3,307.39,1.9315,727.13,2618493696.66
+mKN 5-gram,spm-unigram-16k,2656.91,304.53,1.9283,717.9,2582662462.81
+mKN 3-gram,"word (count>=2, OOV->UNK)",567.27,567.27,,785.0,
+mKN 4-gram,"word (count>=2, OOV->UNK)",553.89,553.89,,765.65,
+lstm,spm-unigram-16k,2738.9,311.32,1.9357,775.82,1619317591.05
+transformer,spm-unigram-16k,2868.18,321.91,1.947,811.37,1719359518.98
