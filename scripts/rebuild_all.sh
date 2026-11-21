@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.."
 rm -f rebuild_all.done
 
 if [ "${WAIT_FOR_FETCH:-0}" = 1 ]; then
-    while pgrep -f "fetch_epaper.py fetch" >/dev/null; do sleep 300; done
+    while pgrep -f "python.* scripts/fetch_epaper.py fetch" >/dev/null; do sleep 300; done
     echo "fetch finished $(date)"
 fi
 
