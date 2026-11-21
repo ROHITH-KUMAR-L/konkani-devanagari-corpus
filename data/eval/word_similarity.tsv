@@ -1,0 +1,214 @@
+word1	word2	score	note
+भास	भाशा	9.5	synonym (form variant of 'language')
+शिकप	शिक्षण	9.0	synonym (education)
+उत्सव	सुवाळो	8.5	synonym (festival/celebration)
+मोग	प्रेम	9.0	synonym (love)
+भंय	भिरांत	9.0	synonym (fear)
+जय	जैत	8.5	synonym (victory)
+दोतोर	डॉक्टर	9.5	synonym (doctor; Konkani vs English loan)
+मार्ग	वाट	8.5	synonym (way/path)
+रस्तो	वाट	8.0	synonym (road/way)
+इश्ट	मित्र	9.0	synonym (friend)
+दर्या	समुद्र	9.0	synonym (sea)
+न्हंय	नदी	9.0	synonym (river)
+आनंद	खोशी	9.0	synonym (joy)
+गिरेस्त	श्रीमंत	9.0	synonym (rich)
+देवूळ	मंदीर	9.5	synonym (temple)
+इगर्ज	चर्च	9.5	synonym (church)
+खबर	बातमी	9.0	synonym (news)
+पयशे	दुडू	8.5	synonym (money)
+सरकार	शासन	8.5	synonym (government)
+अन्न	जेवण	7.5	near-synonym (food/meal)
+लेखक	बरोवपी	9.0	synonym (writer)
+झूज	युध्द	9.0	synonym (war)
+आवय	बापूय	7.5	kinship
+भाव	भयण	7.5	kinship
+पूत	धूव	7.5	kinship
+आजो	आजी	7.5	kinship
+मामा	मामी	7.0	kinship
+घोव	बायल	7.5	kinship (husband/wife)
+आवय	आजी	6.5	kinship
+बापूय	पूत	6.5	kinship
+भाव	पूत	5.0	kinship
+सून	जांवय	6.5	kinship (in-laws)
+चलो	चली	7.5	kinship/gender (boy/girl)
+दादलो	बायलमनीस	7.0	gender (man/woman)
+आवय	मावशी	6.0	kinship
+काकी	मामी	7.0	kinship
+भयण	धूव	5.0	kinship
+भुरगें	भुरगीं	8.5	inflection (child sg/pl)
+एक	दोन	7.0	numbers
+दोन	तीन	7.5	numbers
+तीन	चार	7.5	numbers
+पांच	स	7.5	numbers
+सात	आठ	7.5	numbers
+णव	धा	7.5	numbers
+हजार	लाख	7.5	numbers
+वीस	पन्नास	6.5	numbers
+शंबर	हजार	7.0	numbers
+पयलो	दुसरो	7.5	ordinals
+दुसरो	तिसरो	7.5	ordinals
+पयलो	पयली	8.5	ordinal gender forms
+एक	पयलो	6.5	cardinal/ordinal
+दोन	दुसरो	6.5	cardinal/ordinal
+तीन	तिसरो	6.5	cardinal/ordinal
+सोमार	मंगळार	8.0	days
+बुधवार	बिरेस्तार	8.0	days
+शुक्रार	शेनवार	8.0	days
+आयतार	शेनवार	8.0	days
+सोमार	आयतार	7.5	days
+जानेवारी	फेब्रुवारी	8.0	months
+मार्च	एप्रील	8.0	months
+एप्रील	एप्रिल	10.0	spelling variant (April)
+जून	जुलय	8.0	months
+ऑगस्ट	सप्टेंबर	8.0	months
+ऑक्टोबर	नोव्हेंबर	8.0	months
+नोव्हेंबर	डिसेंबर	8.0	months
+दीस	रात	6.5	time (day/night)
+दीस	म्हयनो	6.0	time units
+म्हयनो	वर्स	6.5	time units
+सकाळ	सांज	6.0	time of day
+सोमार	दीस	5.5	time
+आयतार	जानेवारी	4.0	time (day vs month)
+तांबडो	काळो	6.5	colours
+धवो	काळो	6.5	colours
+निळो	तांबडो	6.5	colours
+पाचवो	हळडुवो	6.5	colours (green/yellow)
+धवो	पाचवो	6.0	colours
+गुलाबी	तांबडो	6.5	colours
+तांबडो	रंग	6.5	colour/hypernym
+काळो	रंग	6.0	colour/hypernym
+हात	पाय	7.5	body parts
+दोळे	कान	7.0	body parts
+नाक	तोंड	7.0	body parts
+तकली	केंस	7.0	body parts
+दांत	जीब	7.0	body parts
+तोंड	दांत	7.0	body parts
+पोट	काळीज	5.5	body parts
+आंग	हात	6.0	body parts
+हात	बोटां	7.5	body parts
+दोळो	दोळे	9.0	inflection (eye sg/pl)
+पणजी	मडगांव	7.5	Goa towns
+म्हापशें	फोंडें	7.5	Goa towns
+वास्को	मुरगांव	8.0	Goa (town/taluka)
+मडगांव	साश्टी	7.5	Goa (town/taluka)
+म्हापशें	बार्देस	7.5	Goa (town/taluka)
+पणजी	तिसवाडी	7.5	Goa (town/taluka)
+वाळपय	सत्तरी	7.5	Goa (town/taluka)
+पेडणें	काणकोण	6.5	Goa talukas
+गोंय	पणजी	7.5	Goa state/capital
+गोंय	महाराष्ट्र	6.0	states
+गोंय	कर्नाटक	6.0	states
+बेळगांव	कारवार	6.5	neighbouring towns
+मुंबय	दिल्ली	7.0	cities
+भारत	देश	6.5	country/hypernym
+राज्य	देश	6.5	polity
+शार	गांव	7.0	settlement
+गोंय	कोंकणी	5.5	place/language
+कोंकणी	मराठी	7.5	languages
+हिंदी	इंग्लीश	7.0	languages
+इंग्लीश	इंग्लिश	10.0	spelling variant (English)
+कन्नड	मराठी	7.0	languages
+भास	कोंकणी	6.5	language/hypernym
+साहित्य	कविता	7.0	literature
+कविता	कवी	7.5	literature
+कादंबरी	काणी	7.5	literature
+नाटक	कादंबरी	6.5	literature
+लेख	लेखक	7.0	literature
+गेलो	गेली	8.5	inflection (went m/f)
+आयलो	आयली	8.5	inflection (came m/f)
+गेलो	आयलो	6.5	verbs (went/came)
+वचप	वता	8.0	inflection (go: verbal noun/present)
+करता	करतात	8.5	inflection (does sg/pl)
+केलो	केली	8.5	inflection (did m/f)
+करून	करपाक	7.5	inflection (having done/to do)
+सांगलें	सांगता	8.0	inflection (said/says)
+सांगून	सांगपाक	7.5	inflection (say)
+बरोवप	बरयलें	8.0	inflection (write)
+बरोवप	वाचप	6.5	verbs (write/read)
+खावप	जेवण	7.0	eat/meal
+जालो	जाली	8.5	inflection (became m/f)
+बसलो	उबो	5.5	posture (sat/standing)
+येता	येतात	8.5	inflection (comes sg/pl)
+वता	येता	6.5	verbs (goes/comes)
+घर	घरांत	8.0	case form (locative)
+घर	घराक	8.0	case form (dative)
+घर	घरा	8.5	case form (oblique)
+शाळा	शाळेंत	8.0	case form (locative)
+शाळा	शाळेक	8.0	case form (dative)
+गांव	गांवांत	8.0	case form (locative)
+शार	शारांत	8.0	case form (locative)
+देश	देशांत	8.0	case form (locative)
+राज्य	राज्यांत	8.0	case form (locative)
+देवूळ	देवळांत	8.0	case form (locative)
+पुस्तक	पुस्तकांत	8.0	case form (locative)
+पुस्तक	पुस्तकां	8.5	inflection (book sg/pl)
+घर	शाळा	5.5	related places
+घरांत	शाळेंत	5.5	related places (locative)
+व्हड	ल्हान	5.5	antonym (big/small)
+बरो	वायट	5.5	antonym (good/bad)
+वयर	सकयल	5.5	antonym (up/down)
+भितर	भायर	5.5	antonym (inside/outside)
+थंड	गरम	5.5	antonym (cold/hot)
+सुख	दुख्ख	5.5	antonym (happiness/sorrow)
+जय	हार	5.5	antonym (victory/defeat)
+सत्य	फट	5.0	antonym (truth/lie)
+गरीब	गिरेस्त	5.5	antonym (poor/rich)
+जीवन	मरण	5.5	antonym (life/death)
+उदेंत	अस्त	5.0	antonym (rise/set)
+उजवो	दावो	5.5	antonym (right/left)
+पुलीस	गुन्यांव	6.5	related (police/crime)
+चोर	चोरी	7.5	related (thief/theft)
+पुलीस	चोर	6.0	related
+मंत्री	मुख्यमंत्री	7.5	related (minister/chief minister)
+आमदार	खासदार	7.5	related (MLA/MP)
+आमदार	वेंचणूक	6.5	related (MLA/election)
+काँग्रेस	भाजप	7.5	related (political parties)
+पक्ष	वेंचणूक	6.5	related (party/election)
+सरकार	मंत्री	7.0	related
+शिक्षक	विद्यार्थी	7.5	related
+शिक्षक	शाळा	7.0	related
+शिक्षक	शिक्षिका	8.5	gender pair (teacher)
+लेखक	लेखिका	8.5	gender pair (writer)
+कवी	लेखक	7.5	related
+दोतोर	हॉस्पिटल	7.5	related
+बस	गाडी	7.0	vehicles
+मोटार	गाडी	8.0	vehicles
+रेल्वे	बस	6.5	transport
+विमान	रेल्वे	6.0	transport
+बोट	दर्या	6.0	related (boat/sea)
+पावस	उदक	6.5	related (rain/water)
+न्हंय	उदक	6.5	related (river/water)
+दूद	उदक	5.0	liquids
+भात	नुस्तें	6.5	food (rice/fish)
+जेवण	भात	6.5	food
+शेतकार	शेत	7.5	related (farmer/field)
+शेतकार	शेतकी	7.0	related (farmer/agriculture)
+बाजार	वेपार	6.5	related (market/trade)
+नोकरी	काम	7.5	related (job/work)
+कामगार	काम	7.0	related (worker/work)
+राजा	राणी	7.5	gender pair (king/queen)
+देव	देवी	7.5	gender pair (god/goddess)
+झाड	फूल	6.5	nature
+रान	झाड	6.5	nature (forest/tree)
+सूर्य	चंद्र	7.0	nature (sun/moon)
+आवय	रेल्वे	0.5	unrelated
+दांत	वेंचणूक	0.3	unrelated
+सोमार	कविता	0.5	unrelated
+तांबडो	आमदार	0.5	unrelated
+हात	कायदो	1.0	unrelated
+काणकोण	दूद	0.5	unrelated
+पुस्तक	गाय	0.5	unrelated
+न्हंय	कादंबरी	0.5	unrelated
+भाव	विमान	0.5	unrelated
+सूर्य	हॉस्पिटल	0.5	unrelated
+मास्तर	मोटार	0.5	unrelated
+चोरी	जानेवारी	0.5	unrelated
+भास	पूल	0.5	unrelated
+काळीज	बाजार	0.5	unrelated
+उदक	मंत्री	0.5	unrelated
+लाख	नाक	0.3	unrelated
+कविता	पुलीस	1.0	unrelated
+शिक्षक	पावस	1.0	unrelated
+जैत	दुकान	0.5	unrelated
+फूल	नोकरी	0.5	unrelated
