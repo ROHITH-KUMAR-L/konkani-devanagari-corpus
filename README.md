@@ -4,7 +4,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 > **Requirements:** see [PRD.md](PRD.md) for goals, numbered requirements, acceptance criteria and risks.
 >
-> **Status (20 Nov 2026):** Phase 1 pipeline complete and runnable end to end (`scripts/run_phase1.sh`). Clean corpus at the last run: **3.47M tokens**, 5 domains (live numbers: [docs/report.md](docs/report.md), regenerated on every run). The full e-paper fetch is still running; when it finishes, re-run the pipeline, zip `data/processed` + `data/splits` for the team, then tag `corpus-v1.0`. See [Progress and remaining work](#progress-and-remaining-work).
+> **Status (21 Nov 2026):** Phase 1 done: **6.06M clean tokens**, 5 domains (live numbers: [docs/report.md](docs/report.md)). Phase 2 (tokenisers, n-gram LMs, embeddings) done. Phase 3 started: neural LMs and an NER setup with a silver set. E-paper collection is complete (573 issues); 284 of them still need one pipeline re-run to enter the corpus. Stage-by-stage change list: [docs/progress_log.md](docs/progress_log.md). See [Progress and remaining work](#progress-and-remaining-work).
 
 ---
 
@@ -26,13 +26,13 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 ## Progress and remaining work
 
-*Last updated: 20 Nov 2026. Tick items here as they are finished.*
+*Last updated: 21 Nov 2026. Tick items here as they are finished. Full change list by stage: [docs/progress_log.md](docs/progress_log.md).*
 
 | Phase | Status | Summary |
 |---|---|---|
-| **Phase 1:** corpus building and analysis | 🟢 About 90% | Pipeline, analyses, segmentation, splits and auto-generated report done (3.47M clean tokens at the last run). Remaining: finish e-paper fetch, re-run, team verification, tag v1.0 |
-| **Phase 2:** tokenisers, n-gram LMs, embeddings | ⚪ Not started | Starts once corpus v1.0 is frozen |
-| **Phase 3:** neural LMs, NER | ⚪ Not started | Starts after Phase 2 |
+| **Phase 1:** corpus building and analysis | 🟢 About 95% | Pipeline, analyses, segmentation, splits and auto-generated report done; 6.06M clean tokens. Remaining: one re-run with the last 284 e-paper issues, team verification, tag v1.0 |
+| **Phase 2:** tokenisers, n-gram LMs, embeddings | 🟢 Done (draft) | Modified-KN 4-gram test perplexity 554; FastText best embeddings (ρ 0.47–0.50). Test sets need team verification |
+| **Phase 3:** neural LMs, NER | 🟡 Started | LSTM / Transformer LMs (25-min LSTM within 3% of KN); NER guidelines, 300-sentence silver set, gazetteer and CRF baselines |
 
 ### Phase 1: done ✅
 
@@ -64,28 +64,33 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 - [x] Category 05 tried: Goa government press releases are unreachable (DIP site down, `goa.gov.in` blocks automated access) and in English; documented in the report
 
 ### Phase 1: remaining ⏳
-- [ ] Let `python scripts/fetch_epaper.py fetch` finish (about 527 issues, resumable), then re-run `scripts/run_phase1.sh` (the report and cleaning log update themselves)
+- [x] E-paper fetch ran to the paywall: 573 Bhaangarbhuin issues (2 Apr 2025 – 20 Nov 2026)
+- [ ] Re-run `scripts/rebuild_all.sh` (Phase 1 + Phase 2 + zip) so the 284 issues fetched after the last run enter the corpus
 - [ ] Team: verify `data/eval/segmentation_gold.txt`, `segmentation_gold_heldout.txt` and `language_audit_sample.tsv` (all first-pass annotated by Claude)
 - [ ] Team: fill the blank author/year fields in `metadata/sources.csv`
 - [ ] Newspaper OCR CER: hand-type about 3 e-paper pages as gold (FR-E6)
 - [ ] Optional: categories 05/07 if a reachable Konkani source turns up. Anusvara post-correction (FR-N9) deliberately skipped: both forms are often real words
 - [x] Sharing decided: processed corpus and splits stay out of GitHub and go to the team as a zip
-- [ ] After the final re-run: zip `data/processed` + `data/splits` for the team, then tag `corpus-v1.0`
+- [x] Teammate zip of `data/processed` + `data/splits` (6.06M-token snapshot); usage guide inside it (`TEAM_README.md`)
+- [ ] After the final re-run: new zip, then tag `corpus-v1.0`
 
-### Phase 2: remaining (all) ⚪
-*Proposed; revise when the official brief arrives. Details in [§5](#5-phase-2-representations-and-language-models).*
-- [ ] Tokenisers: whitespace baseline + SentencePiece BPE/Unigram; fertility and OOV rate
-- [ ] N-gram LMs (1–5-gram) with Laplace, Good-Turing, Kneser-Ney; test perplexity
-- [ ] Word embeddings: word2vec (CBOW, skip-gram), FastText, GloVe
-- [ ] Konkani word-similarity and analogy test sets; nearest neighbours; t-SNE/UMAP plots
-- [ ] Learning curves with 10/25/50/100% of the corpus
-- [ ] Phase 2 report
+### Phase 2 ✅
+*Details in [§5](#5-phase-2-representations-and-language-models).*
+- [x] Tokenisers: whitespace baseline + SentencePiece BPE/Unigram; fertility and OOV rate ([docs/phase2_lm.md](docs/phase2_lm.md))
+- [x] N-gram LMs (1–5-gram) with Laplace, add-k, Katz/Good-Turing, Kneser-Ney; test perplexity
+- [x] Word embeddings: word2vec (CBOW, skip-gram), FastText, GloVe (`scripts/run_phase2_embeddings.sh`)
+- [x] Konkani word-similarity (213 pairs) and analogy (118) test sets; nearest neighbours; t-SNE plots
+- [x] Learning curves with 10/25/50/100% of the corpus
+- [ ] Team: verify `data/eval/word_similarity.tsv` and `analogies.tsv` (drafted by Claude)
+- [ ] Phase 2 report: refresh `docs/phase2_lm.md` tables to the final splits; write `docs/phase2_embeddings.md` (results are in `results/phase2/`)
 
-### Phase 3: remaining (all) ⚪
-*Proposed; details in [§6](#6-phase-3-neural-models-and-applications).*
-- [ ] Neural LMs: feed-forward → LSTM/GRU → small Transformer; perplexity compared with n-gram models
-- [ ] NER annotation guidelines + 2–3k annotated sentences (PER, LOC, ORG, MISC, DATE); Cohen's κ
-- [ ] NER models: CRF → BiLSTM-CRF (FastText) → fine-tuned MuRIL/IndicBERT; P/R/F1
+### Phase 3: in progress 🟡
+*Details in [§6](#6-phase-3-neural-models-and-applications).*
+- [x] Neural LMs: feed-forward, LSTM, small Transformer, char LSTM vs n-gram ([docs/phase3_neural_lm.md](docs/phase3_neural_lm.md))
+- [x] NER annotation guidelines ([docs/ner_guidelines.md](docs/ner_guidelines.md)), 3,000-sentence pool, 300-sentence AI silver set
+- [ ] NER: team verifies the silver set, grows it to 2–3k sentences; 200 double-annotated for Cohen's κ
+- [x] NER baselines: gazetteer + rules, CRF ([docs/phase3_ner.md](docs/phase3_ner.md))
+- [ ] NER models: BiLSTM-CRF (FastText) → fine-tuned MuRIL/IndicBERT; P/R/F1
 - [ ] Optional: POS tagging, domain classification, OCR spell-corrector
 - [ ] Final report and presentation
 
