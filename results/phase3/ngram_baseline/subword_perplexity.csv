@@ -1,0 +1,6 @@
+n,smoothing,unit,dev_ppl_per_word,dev_ppl_per_piece,dev_pieces_per_word,test_ppl_per_word,test_ppl_per_piece,test_pieces_per_word,test_ppl_per_word_invocab,test_ppl_per_word_oov_only
+1,mkn,spm-unigram-16k,37318.92,2524.98,1.3438,49280.4,2532.24,1.3788,12565.54,88241315800.07
+2,mkn,spm-unigram-16k,3423.39,426.78,1.3438,4554.19,450.17,1.3788,1200.14,5762579656.05
+3,mkn,spm-unigram-16k,2218.5,309.04,1.3438,2895.28,324.11,1.3788,778.54,2961419137.64
+4,mkn,spm-unigram-16k,2074.22,293.95,1.3438,2691.3,307.39,1.3788,727.13,2618493696.66
+5,mkn,spm-unigram-16k,2049.42,291.33,1.3438,2656.91,304.53,1.3788,717.9,2582662462.81

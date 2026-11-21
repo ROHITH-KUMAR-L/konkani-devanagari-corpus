@@ -8,7 +8,7 @@ data/interim/iter3/
 __pycache__/
 .venv/
 data/processed/
-data/splits/
+data/splits
 fetch_epaper.log
 .venv-phase2/
 .claude/
