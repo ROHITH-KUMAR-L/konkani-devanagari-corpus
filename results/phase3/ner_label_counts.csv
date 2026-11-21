@@ -1,0 +1,4 @@
+split,sentences,tokens,sentences_with_entity,PER,LOC,ORG,MISC,DATE,total_entities
+all,300,3595,143,114,114,37,54,31,350
+dev,151,1824,77,52,55,13,33,14,167
+test,149,1771,66,62,59,24,21,17,183

@@ -1,0 +1,5 @@
+# Phase 3 NER (Python 3.12): scripts/phase3/ner_baselines.py
+sklearn-crfsuite==0.5.0
+python-crfsuite==0.9.12
+seqeval==1.2.2
+scikit-learn==1.9.1
