@@ -1,0 +1,151 @@
+# Hand-curated seed gazetteer for the rule-based NER baseline (TYPE<TAB>entry).
+# Entries are base forms; attached case suffixes (गोंयांत, भारताचो) are matched
+# by scripts/phase3/ner_common.strip_suffix. Extend freely; keep one entry per line.
+# --- Goa: state, talukas, towns, villages frequent in the news
+LOC	गोंय
+LOC	गोंयां
+LOC	पणजी
+LOC	म्हापशें
+LOC	म्हापसा
+LOC	मडगांव
+LOC	मडगाव
+LOC	वास्को
+LOC	फोंडें
+LOC	फोंडे
+LOC	फोंडा
+LOC	काणकोण
+LOC	सांगें
+LOC	केपें
+LOC	सासश्टी
+LOC	सत्तरी
+LOC	वाळपय
+LOC	डिचोली
+LOC	दिवचल
+LOC	पेडणें
+LOC	पेडणे
+LOC	बार्देश
+LOC	तिसवाडी
+LOC	मुरगांव
+LOC	धारबांदोडा
+LOC	कळंगूट
+LOC	कळंगुट
+LOC	हणजूण
+LOC	पर्वरी
+LOC	ताळगांव
+LOC	साखळी
+LOC	कुडचडें
+LOC	कुंकळ्ळी
+LOC	शिरोडा
+LOC	बांबोळी
+LOC	जुवारी
+LOC	मांडवी
+# --- India: country, states, big cities
+LOC	भारत
+LOC	हिंदुस्तान
+LOC	महाराष्ट्र
+LOC	कर्नाटक
+LOC	केरळ
+LOC	तामिळनाडू
+LOC	गुजरात
+LOC	राजस्थान
+LOC	उत्तर प्रदेश
+LOC	मध्य प्रदेश
+LOC	बिहार
+LOC	बंगाल
+LOC	पश्चिम बंगाल
+LOC	आसाम
+LOC	पंजाब
+LOC	काश्मीर
+LOC	तेलंगणा
+LOC	आंध्र प्रदेश
+LOC	ओडिशा
+LOC	दिल्ली
+LOC	नवी दिल्ली
+LOC	मुंबय
+LOC	मुंबै
+LOC	मुंबई
+LOC	पुणें
+LOC	पुणे
+LOC	बेळगांव
+LOC	बेळगाव
+LOC	बंगळुरू
+LOC	बेंगळुरू
+LOC	कारवार
+LOC	कोल्हापूर
+LOC	सावंतवाडी
+LOC	वेंगुर्ला
+LOC	रत्नागिरी
+LOC	कोंकण
+LOC	चेन्नई
+LOC	कोलकाता
+LOC	हैदराबाद
+# --- world
+LOC	अमेरिका
+LOC	चीन
+LOC	जपान
+LOC	रशिया
+LOC	पाकिस्तान
+LOC	बांगलादेश
+LOC	श्रीलंका
+LOC	नेपाळ
+LOC	अफगाणिस्तान
+LOC	इराण
+LOC	इराक
+LOC	इस्राएल
+LOC	ब्रिटन
+LOC	इंग्लंड
+LOC	फ्रांस
+LOC	जर्मनी
+LOC	पुर्तुगाल
+LOC	ऑस्ट्रेलिया
+LOC	न्यूझीलंड
+LOC	दक्षिण आफ्रिका
+LOC	आफ्रिका
+LOC	युरोप
+LOC	आशिया
+# --- organisations
+ORG	भाजप
+ORG	काँग्रेस
+ORG	मगो
+ORG	आप
+ORG	भारत सरकार
+ORG	गोंय सरकार
+ORG	गोंय विद्यापीठ
+ORG	कोंकणी अकादमी
+ORG	कोंकणी भाशा मंडळ
+ORG	कोंकणी परिशद
+ORG	गोंय पुलीस
+ORG	गोंय पुलिस
+ORG	पीडब्ल्यूडी
+ORG	भौशीक बांदकाम खातें
+ORG	शिक्षण संचालनालय
+ORG	इस्रो
+ORG	युनेस्को
+ORG	बीसीसीआय
+# --- MISC: languages, religions, demonyms
+MISC	कोंकणी
+MISC	मराठी
+MISC	हिंदी
+MISC	इंग्लीश
+MISC	इंग्लिश
+MISC	कन्नड
+MISC	संस्कृत
+MISC	पुर्तुगेज
+MISC	हिंदू
+MISC	हिंदु
+MISC	ख्रिस्ती
+MISC	क्रिस्तांव
+MISC	मुसलमान
+MISC	गोंयकार
+MISC	भारतीय
+MISC	दिवाळी
+MISC	चवथ
+MISC	नाताळ
+MISC	शिगमो
+MISC	इंत्रूज
+MISC	नवरात्र
+# --- people: very frequent public figures
+PER	प्रमोद सावंत
+PER	नरेंद्र मोदी
+PER	महात्मा गांधी
+PER	गांधी

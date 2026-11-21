@@ -1,0 +1,2669 @@
+# SILVER NER DATA: AI first-pass annotation (Claude), NOT gold.
+# Every sentence must be verified by a team annotator before use as gold.
+# Guidelines: docs/ner_guidelines.md. Tags: BIO over PER LOC ORG MISC DATE.
+
+# sent_id = ner00003
+# source = news_bhaangarbhuin_2026_04_28_4145443:1002
+# category = 02_news_media
+# text = ह्या हायस्कुलाचो 100 खके निकाल लागपाची सुरवात राष्ट्रीय
+# annotation = silver-ai-first-pass
+ह्या	O
+हायस्कुलाचो	O
+100	O
+खके	O
+निकाल	O
+लागपाची	O
+सुरवात	O
+राष्ट्रीय	O
+
+# sent_id = ner00004
+# source = cult_konkani_katha_sangrah:4924
+# category = 04_culture_history
+# text = पोरूं वर्सा दोन बैलांचे जोत आशिल्लें.
+# annotation = silver-ai-first-pass
+पोरूं	O
+वर्सा	O
+दोन	O
+बैलांचे	O
+जोत	O
+आशिल्लें	O
+
+# sent_id = ner00005
+# source = lit_ghanaghainiyatiche:4899
+# category = 01_literature
+# text = आनी तेखातीर बायलेच्या सांगण्याभायर वचपाचे धाडस ताणें केन्ना केलेच ना.
+# annotation = silver-ai-first-pass
+आनी	O
+तेखातीर	O
+बायलेच्या	O
+सांगण्याभायर	O
+वचपाचे	O
+धाडस	O
+ताणें	O
+केन्ना	O
+केलेच	O
+ना	O
+
+# sent_id = ner00007
+# source = edu_fkokb1ps:128
+# category = 03_education_science
+# text = 11. निमरत कौर, प्राध्यापक, अझीम प्रेमजी विद्यापीठ, बंगळुरू, कर्नाटक
+# annotation = silver-ai-first-pass
+11	O
+निमरत	B-PER
+कौर	I-PER
+प्राध्यापक	O
+अझीम	B-ORG
+प्रेमजी	I-ORG
+विद्यापीठ	I-ORG
+बंगळुरू	B-LOC
+कर्नाटक	B-LOC
+
+# sent_id = ner00008
+# source = news_bhaangarbhuin_2026_02_08_4115204:365
+# category = 02_news_media
+# text = यार पळोवया कितें पा लिए: मानवतली होवूय एक व्हड प्रस्न आसतलो.
+# annotation = silver-ai-first-pass
+यार	O
+पळोवया	O
+कितें	O
+पा	O
+लिए	O
+मानवतली	O
+होवूय	O
+एक	O
+व्हड	O
+प्रस्न	O
+आसतलो	O
+
+# sent_id = ner00010
+# source = news_bhaangarbhuin_2026_10_26_4213910:367
+# category = 02_news_media
+# text = हेर लोकांनी जितलो अन्याय सोंसूक ना, तितलो अन्याय गोंयकारांनी सोंसला.
+# annotation = silver-ai-first-pass
+हेर	O
+लोकांनी	O
+जितलो	O
+अन्याय	O
+सोंसूक	O
+ना	O
+तितलो	O
+अन्याय	O
+गोंयकारांनी	B-MISC
+सोंसला	O
+
+# sent_id = ner00012
+# source = wiki_gom_08:3854
+# category = 06_web_articles
+# text = धेणल्या बरोबर आयल्ले वांगडी गोठ्यातली गोरवां म्हळ्यार काट्ट्यापासुन तयार केल्ली गोरवां काडटा, भातोण्याचो राखणो काडुन घरार मारता आनी धेणलो घेवन वचपी मनश्याच्या फाटीर काट्टी मारता.
+# annotation = silver-ai-first-pass
+धेणल्या	O
+बरोबर	O
+आयल्ले	O
+वांगडी	O
+गोठ्यातली	O
+गोरवां	O
+म्हळ्यार	O
+काट्ट्यापासुन	O
+तयार	O
+केल्ली	O
+गोरवां	O
+काडटा	O
+भातोण्याचो	O
+राखणो	O
+काडुन	O
+घरार	O
+मारता	O
+आनी	O
+धेणलो	O
+घेवन	O
+वचपी	O
+मनश्याच्या	O
+फाटीर	O
+काट्टी	O
+मारता	O
+
+# sent_id = ner00013
+# source = news_bhaangarbhuin_2026_06_06_4160380:810
+# category = 02_news_media
+# text = देवकी कृष्ण किर्तन विद्यालय माशेल राष्ट्रीय कीर्तनकार ह भ प
+# annotation = silver-ai-first-pass
+देवकी	B-ORG
+कृष्ण	I-ORG
+किर्तन	I-ORG
+विद्यालय	I-ORG
+माशेल	B-LOC
+राष्ट्रीय	O
+कीर्तनकार	O
+ह	O
+भ	O
+प	O
+
+# sent_id = ner00019
+# source = wiki_gom_15:2866
+# category = 06_web_articles
+# text = काडून लग्ना-जेवणाच्या कारभाऱ्याक व्हरुन दियात".
+# annotation = silver-ai-first-pass
+काडून	O
+लग्ना	O
+जेवणाच्या	O
+कारभाऱ्याक	O
+व्हरुन	O
+दियात	O
+
+# sent_id = ner00022
+# source = wiki_gom_07:2149
+# category = 06_web_articles
+# text = पुण्यवचनांत यजमान दांपत्याक आनीलग्नांत नवऱ्या व्हंकलेचेर अभिषेक करतात.
+# annotation = silver-ai-first-pass
+पुण्यवचनांत	O
+यजमान	O
+दांपत्याक	O
+आनीलग्नांत	O
+नवऱ्या	O
+व्हंकलेचेर	O
+अभिषेक	O
+करतात	O
+
+# sent_id = ner00026
+# source = wiki_gom_16:20
+# category = 06_web_articles
+# text = आपलो पूत अश्या कार्याक लागून हातांतलो सुटत म्हूण तांच्या बापायन बाळाचें सान पिरायेचेर लग्न केलें.
+# annotation = silver-ai-first-pass
+आपलो	O
+पूत	O
+अश्या	O
+कार्याक	O
+लागून	O
+हातांतलो	O
+सुटत	O
+म्हूण	O
+तांच्या	O
+बापायन	O
+बाळाचें	O
+सान	O
+पिरायेचेर	O
+लग्न	O
+केलें	O
+
+# sent_id = ner00029
+# source = news_bhaangarbhuin_2026_09_09_4196894:1124
+# category = 02_news_media
+# text = ' अन्ना विणें आमची परिस्थिती बिकट कितें गो, पीशें जालां काय कुट्ट मारलां।
+# annotation = silver-ai-first-pass
+अन्ना	O
+विणें	O
+आमची	O
+परिस्थिती	O
+बिकट	O
+कितें	O
+गो	O
+पीशें	O
+जालां	O
+काय	O
+कुट्ट	O
+मारलां	O
+
+# sent_id = ner00032
+# source = news_bhaangarbhuin_2026_07_17_4176204:1096
+# category = 02_news_media
+# text = उरफाटें मतभेदांचेर उक्त्या मनान भासाभास करप आनी तांतुल्यान एकवट सादप होच तर कोंकणी चळवळीतल्या लोकशाय
+# annotation = silver-ai-first-pass
+उरफाटें	O
+मतभेदांचेर	O
+उक्त्या	O
+मनान	O
+भासाभास	O
+करप	O
+आनी	O
+तांतुल्यान	O
+एकवट	O
+सादप	O
+होच	O
+तर	O
+कोंकणी	B-MISC
+चळवळीतल्या	O
+लोकशाय	O
+
+# sent_id = ner00034
+# source = news_bhaangarbhuin_2026_09_26_4203088:1114
+# category = 02_news_media
+# text = निमाणें जेन्ना नाना आसोलकारांच्या गळ्यांतल्यान 'गुरुचरणी ठेविशी भाव, आपोआप भेटे देव' हे भैरवीचे सूर उसळ्ळे, तेन्ना थंय हाजीर आशिल्ल्या दरेकल्याचो जीव कासावीस जालो.
+# annotation = silver-ai-first-pass
+निमाणें	O
+जेन्ना	O
+नाना	B-PER
+आसोलकारांच्या	I-PER
+गळ्यांतल्यान	O
+गुरुचरणी	B-MISC
+ठेविशी	I-MISC
+भाव	I-MISC
+आपोआप	I-MISC
+भेटे	I-MISC
+देव	I-MISC
+हे	O
+भैरवीचे	O
+सूर	O
+उसळ्ळे	O
+तेन्ना	O
+थंय	O
+हाजीर	O
+आशिल्ल्या	O
+दरेकल्याचो	O
+जीव	O
+कासावीस	O
+जालो	O
+
+# sent_id = ner00036
+# source = wiki_gom_04:2510
+# category = 06_web_articles
+# text = एक किलोम्टराची चडटी चलत देवस्थाच्या व्हड प्रवेशदाराकडेन पावतात आनी रसत्याच्या उजव्या वाटेन दैवज्ञ महाजनाच्यो अग्रशाळा दिसतात.
+# annotation = silver-ai-first-pass
+एक	O
+किलोम्टराची	O
+चडटी	O
+चलत	O
+देवस्थाच्या	O
+व्हड	O
+प्रवेशदाराकडेन	O
+पावतात	O
+आनी	O
+रसत्याच्या	O
+उजव्या	O
+वाटेन	O
+दैवज्ञ	O
+महाजनाच्यो	O
+अग्रशाळा	O
+दिसतात	O
+
+# sent_id = ner00038
+# source = news_bhaangarbhuin_2026_03_18_4129773:1117
+# category = 02_news_media
+# text = तांचे खातीर तर तो एक आंबो एके आंबो!
+# annotation = silver-ai-first-pass
+तांचे	O
+खातीर	O
+तर	O
+तो	O
+एक	O
+आंबो	O
+एके	O
+आंबो	O
+
+# sent_id = ner00039
+# source = news_bhaangarbhuin_2026_04_06_4137042:452
+# category = 02_news_media
+# text = सुमार 1.40 लाख रुपयांची मालमत्ता सुरक्षीत उरली.
+# annotation = silver-ai-first-pass
+सुमार	O
+1.40	O
+लाख	O
+रुपयांची	O
+मालमत्ता	O
+सुरक्षीत	O
+उरली	O
+
+# sent_id = ner00041
+# source = wiki_gom_13:268
+# category = 06_web_articles
+# text = तशेंच लग्ना वेळार ते गंगेची पुजा करतात.
+# annotation = silver-ai-first-pass
+तशेंच	O
+लग्ना	O
+वेळार	O
+ते	O
+गंगेची	B-LOC
+पुजा	O
+करतात	O
+
+# sent_id = ner00044
+# source = wiki_gom_03:20
+# category = 06_web_articles
+# text = काव्याचे दृश्य काव्य आनी श्रव्य काव्य अशें दोन फांटे जाले।
+# annotation = silver-ai-first-pass
+काव्याचे	O
+दृश्य	O
+काव्य	O
+आनी	O
+श्रव्य	O
+काव्य	O
+अशें	O
+दोन	O
+फांटे	O
+जाले	O
+
+# sent_id = ner00045
+# source = news_bhaangarbhuin_2026_07_19_4176987:1667
+# category = 02_news_media
+# text = ते उपरांत भारताची मदली फळी गडगडली आनी पंगडाक हार घेवची पडली.
+# annotation = silver-ai-first-pass
+ते	O
+उपरांत	O
+भारताची	B-LOC
+मदली	O
+फळी	O
+गडगडली	O
+आनी	O
+पंगडाक	O
+हार	O
+घेवची	O
+पडली	O
+
+# sent_id = ner00046
+# source = cult_konkani_mhabharot_adi_porv:1166
+# category = 04_culture_history
+# text = ऐसी ही कथा सुख इन्द्रान जल्मजयाक आदि पर्विची भारतिची सांगिली.
+# annotation = silver-ai-first-pass
+ऐसी	O
+ही	O
+कथा	O
+सुख	O
+इन्द्रान	O
+जल्मजयाक	B-PER
+आदि	O
+पर्विची	O
+भारतिची	O
+सांगिली	O
+
+# sent_id = ner00047
+# source = news_bhaangarbhuin_2026_09_07_4196142:663
+# category = 02_news_media
+# text = आतां युट्यूबाचेर सोंपे पद्दतीन गणित शिकपाच्यो नव्या नव्यो युक्‍त्यो आयल्यात.
+# annotation = silver-ai-first-pass
+आतां	O
+युट्यूबाचेर	B-ORG
+सोंपे	O
+पद्दतीन	O
+गणित	O
+शिकपाच्यो	O
+नव्या	O
+नव्यो	O
+युक्‍त्यो	O
+आयल्यात	O
+
+# sent_id = ner00051
+# source = news_bhaangarbhuin_2026_11_19_4222497:765
+# category = 02_news_media
+# text = देखीक कोंकणांत वेंगुर्ल्यांतल्या देव वेतोबा पंचायतनांत देव रवळनाथ भूतनाथ आनी
+# annotation = silver-ai-first-pass
+देखीक	O
+कोंकणांत	B-LOC
+वेंगुर्ल्यांतल्या	B-LOC
+देव	O
+वेतोबा	B-PER
+पंचायतनांत	O
+देव	O
+रवळनाथ	B-PER
+भूतनाथ	B-PER
+आनी	O
+
+# sent_id = ner00053
+# source = wiki_gom_13:3884
+# category = 06_web_articles
+# text = तशेंच तांच्यो कथा, लेख आनी निबंध वेगवेगळ्या नेमाळ्यांनी उजवाडाक आशिल्यात 1984 ते 1986 मेरेन ते कोंकणी भाशा मंडळाचे अध्यक्ष आशिल्ले.
+# annotation = silver-ai-first-pass
+तशेंच	O
+तांच्यो	O
+कथा	O
+लेख	O
+आनी	O
+निबंध	O
+वेगवेगळ्या	O
+नेमाळ्यांनी	O
+उजवाडाक	O
+आशिल्यात	O
+1984	B-DATE
+ते	O
+1986	B-DATE
+मेरेन	O
+ते	O
+कोंकणी	B-ORG
+भाशा	I-ORG
+मंडळाचे	I-ORG
+अध्यक्ष	O
+आशिल्ले	O
+
+# sent_id = ner00054
+# source = lit_palatadanche_tarum:2994
+# category = 01_literature
+# text = गेल्ली बत्तीस वर्मा म्हजे कलामोगी मन एका चेपणाखाला चेंचत चेपत आशिल्लें.
+# annotation = silver-ai-first-pass
+गेल्ली	O
+बत्तीस	O
+वर्मा	O
+म्हजे	O
+कलामोगी	O
+मन	O
+एका	O
+चेपणाखाला	O
+चेंचत	O
+चेपत	O
+आशिल्लें	O
+
+# sent_id = ner00056
+# source = news_bhaangarbhuin_2026_07_04_4171269:392
+# category = 02_news_media
+# text = 1 जून ते 3 जुलय ह्या काळांत काणकोणां सगल्यांत चड 46.73 इंच पावस पडला.
+# annotation = silver-ai-first-pass
+1	B-DATE
+जून	I-DATE
+ते	O
+3	B-DATE
+जुलय	I-DATE
+ह्या	O
+काळांत	O
+काणकोणां	B-LOC
+सगल्यांत	O
+चड	O
+46.73	O
+इंच	O
+पावस	O
+पडला	O
+
+# sent_id = ner00058
+# source = news_bhaangarbhuin_2026_05_30_4157671:1181
+# category = 02_news_media
+# text = तांतूंत डॉ. अंतोनियो कुलासो आनी डॉ. पुंडलिक डी. गायतोंडे हांची संसदेचेर नेमणूक जाली.
+# annotation = silver-ai-first-pass
+तांतूंत	O
+डॉ	O
+अंतोनियो	B-PER
+कुलासो	I-PER
+आनी	O
+डॉ	O
+पुंडलिक	B-PER
+डी	I-PER
+गायतोंडे	I-PER
+हांची	O
+संसदेचेर	O
+नेमणूक	O
+जाली	O
+
+# sent_id = ner00060
+# source = edu_fkokb1ps:56
+# category = 03_education_science
+# text = सेंद्रीय शेतीच्या म्हत्वाचेर भर दिवन ते शेत भेटी वरवीं आनी हातान शिकपा वरवीं वेगवेगळ्या शेतकी पद्दती विशीं शिकतले.
+# annotation = silver-ai-first-pass
+सेंद्रीय	O
+शेतीच्या	O
+म्हत्वाचेर	O
+भर	O
+दिवन	O
+ते	O
+शेत	O
+भेटी	O
+वरवीं	O
+आनी	O
+हातान	O
+शिकपा	O
+वरवीं	O
+वेगवेगळ्या	O
+शेतकी	O
+पद्दती	O
+विशीं	O
+शिकतले	O
+
+# sent_id = ner00063
+# source = lit_umajani:349
+# category = 01_literature
+# text = काळेकिट्ट म्हणपासारकें नासले तरी मंगल काळेंच.
+# annotation = silver-ai-first-pass
+काळेकिट्ट	O
+म्हणपासारकें	O
+नासले	O
+तरी	O
+मंगल	O
+काळेंच	O
+
+# sent_id = ner00065
+# source = news_bhaangarbhuin_2026_09_13_4198403:1306
+# category = 02_news_media
+# text = प्रेसिडेंशियल कलर्साचो भोबमान गोंय पुलिसांक मेळिल्ल्यान तांचेंय अभिनंदन करपी थाराव घेतलो.
+# annotation = silver-ai-first-pass
+प्रेसिडेंशियल	B-MISC
+कलर्साचो	I-MISC
+भोबमान	O
+गोंय	B-ORG
+पुलिसांक	I-ORG
+मेळिल्ल्यान	O
+तांचेंय	O
+अभिनंदन	O
+करपी	O
+थाराव	O
+घेतलो	O
+
+# sent_id = ner00066
+# source = wiki_gom_12:1625
+# category = 06_web_articles
+# text = तांचीं देवां आड बारा झुजां जालीं.
+# annotation = silver-ai-first-pass
+तांचीं	O
+देवां	O
+आड	O
+बारा	O
+झुजां	O
+जालीं	O
+
+# sent_id = ner00067
+# source = edu_fkokb1ps:36
+# category = 03_education_science
+# text = तशेंच येता त्या वर्सानी आनीक सुदारणा करपा खातीर हांव ताच्या सगल्या वापरप्यां कडल्यान सुचोवण्यो आनी अभिप्राय मागतां.
+# annotation = silver-ai-first-pass
+तशेंच	O
+येता	O
+त्या	O
+वर्सानी	O
+आनीक	O
+सुदारणा	O
+करपा	O
+खातीर	O
+हांव	O
+ताच्या	O
+सगल्या	O
+वापरप्यां	O
+कडल्यान	O
+सुचोवण्यो	O
+आनी	O
+अभिप्राय	O
+मागतां	O
+
+# sent_id = ner00069
+# source = wiki_gom_05:4971
+# category = 06_web_articles
+# text = आनी ताका लागून जायत्या लोकांचे मन तीणे जिकून घेतलें.
+# annotation = silver-ai-first-pass
+आनी	O
+ताका	O
+लागून	O
+जायत्या	O
+लोकांचे	O
+मन	O
+तीणे	O
+जिकून	O
+घेतलें	O
+
+# sent_id = ner00071
+# source = news_bhaangarbhuin_2026_10_25_4213532:1559
+# category = 02_news_media
+# text = : राष्ट्रीय आनी आंतरराष्ट्रीय : बाजारांत हळदीक मागणी
+# annotation = silver-ai-first-pass
+राष्ट्रीय	O
+आनी	O
+आंतरराष्ट्रीय	O
+बाजारांत	O
+हळदीक	O
+मागणी	O
+
+# sent_id = ner00073
+# source = news_bhaangarbhuin_2026_10_17_4210843:890
+# category = 02_news_media
+# text = सरस्वती पुजनाची कार्याबळ स्वामी विवेकानंद सभाघरांत जातली.
+# annotation = silver-ai-first-pass
+सरस्वती	B-MISC
+पुजनाची	I-MISC
+कार्याबळ	O
+स्वामी	B-LOC
+विवेकानंद	I-LOC
+सभाघरांत	I-LOC
+जातली	O
+
+# sent_id = ner00076
+# source = news_bhaangarbhuin_2026_03_14_4128270:295
+# category = 02_news_media
+# text = 17. जिओविनो फर्नांडीस, रा. घर क्र. 135/28-ए, मोखार्ड, वडामळ, श्रीस्थळ, काणकोण-गोंय.
+# annotation = silver-ai-first-pass
+17	O
+जिओविनो	B-PER
+फर्नांडीस	I-PER
+रा	O
+घर	O
+क्र	O
+135/28	O
+ए	O
+मोखार्ड	B-LOC
+वडामळ	B-LOC
+श्रीस्थळ	B-LOC
+काणकोण	B-LOC
+गोंय	B-LOC
+
+# sent_id = ner00078
+# source = wiki_gom_18:630
+# category = 06_web_articles
+# text = मोतीबिंदू उण्याप्रमाणांत आसल्यार नदर उणीं जायना आनी दुयेंतीकय मोतीबिंदूची जाण आसना.
+# annotation = silver-ai-first-pass
+मोतीबिंदू	O
+उण्याप्रमाणांत	O
+आसल्यार	O
+नदर	O
+उणीं	O
+जायना	O
+आनी	O
+दुयेंतीकय	O
+मोतीबिंदूची	O
+जाण	O
+आसना	O
+
+# sent_id = ner00080
+# source = news_bhaangarbhuin_2026_06_18_4165049:3466
+# category = 02_news_media
+# text = पूण, फकत पुस्तकां वाचिल्ल्यान वा वयलें सगलें केल्ल्यान समस्या सुटतल्योच अशें ना.
+# annotation = silver-ai-first-pass
+पूण	O
+फकत	O
+पुस्तकां	O
+वाचिल्ल्यान	O
+वा	O
+वयलें	O
+सगलें	O
+केल्ल्यान	O
+समस्या	O
+सुटतल्योच	O
+अशें	O
+ना	O
+
+# sent_id = ner00084
+# source = cult_shennoi_goembab:44
+# category = 04_culture_history
+# text = दोनूय दरबारांत ताका वजनूय जायतें आसलें.
+# annotation = silver-ai-first-pass
+दोनूय	O
+दरबारांत	O
+ताका	O
+वजनूय	O
+जायतें	O
+आसलें	O
+
+# sent_id = ner00091
+# source = wiki_gom_03:189
+# category = 06_web_articles
+# text = सुवेच्या तेंपार सातवाहनाच्या शिलालेखांत दक्षिणापथ हया नांवाचो तर पांचव्या -सव्या शेंकडातल्या लेखांत मराठी हया शब्दाचो उल्लेक सांपडटा.
+# annotation = silver-ai-first-pass
+सुवेच्या	O
+तेंपार	O
+सातवाहनाच्या	B-ORG
+शिलालेखांत	O
+दक्षिणापथ	B-LOC
+हया	O
+नांवाचो	O
+तर	O
+पांचव्या	O
+सव्या	O
+शेंकडातल्या	O
+लेखांत	O
+मराठी	B-MISC
+हया	O
+शब्दाचो	O
+उल्लेक	O
+सांपडटा	O
+
+# sent_id = ner00099
+# source = wiki_gom_13:751
+# category = 06_web_articles
+# text = धनत्रयोदशी-पयली भटाक हाडून पूजा करताले पूण आता आपले आपूण मंत्र म्हणून पूजा करून लक्ष्मीपूजन करतात.
+# annotation = silver-ai-first-pass
+धनत्रयोदशी	B-MISC
+पयली	O
+भटाक	O
+हाडून	O
+पूजा	O
+करताले	O
+पूण	O
+आता	O
+आपले	O
+आपूण	O
+मंत्र	O
+म्हणून	O
+पूजा	O
+करून	O
+लक्ष्मीपूजन	B-MISC
+करतात	O
+
+# sent_id = ner00102
+# source = wiki_gom_08:3362
+# category = 06_web_articles
+# text = 1948 ते 1957 मेरेन ते लखनौ हांगसरल्या नवजीवन दैनिकाचे संपादक आसले.
+# annotation = silver-ai-first-pass
+1948	B-DATE
+ते	O
+1957	B-DATE
+मेरेन	O
+ते	O
+लखनौ	B-LOC
+हांगसरल्या	O
+नवजीवन	B-ORG
+दैनिकाचे	I-ORG
+संपादक	O
+आसले	O
+
+# sent_id = ner00104
+# source = news_bhaangarbhuin_2026_09_08_4196524:14
+# category = 02_news_media
+# text = बेंगळुरू स्पेस एक्स्पो (बीएसएक्स) च्या धाव्या आवृत्तीच्या उक्तावण सुवाळ्या उपरांत नारायणन पत्रकारां कडेन उलयताले.
+# annotation = silver-ai-first-pass
+बेंगळुरू	B-MISC
+स्पेस	I-MISC
+एक्स्पो	I-MISC
+बीएसएक्स	O
+च्या	O
+धाव्या	O
+आवृत्तीच्या	O
+उक्तावण	O
+सुवाळ्या	O
+उपरांत	O
+नारायणन	B-PER
+पत्रकारां	O
+कडेन	O
+उलयताले	O
+
+# sent_id = ner00106
+# source = wiki_gom_02:798
+# category = 06_web_articles
+# text = भारतीय झुजांत इकराव्या दिसा, भीष्माउपरांत दोर्णाचार्याकडेन सेनापतीपद आयलें.
+# annotation = silver-ai-first-pass
+भारतीय	B-MISC
+झुजांत	O
+इकराव्या	O
+दिसा	O
+भीष्माउपरांत	B-PER
+दोर्णाचार्याकडेन	B-PER
+सेनापतीपद	O
+आयलें	O
+
+# sent_id = ner00107
+# source = news_bhaangarbhuin_2026_10_22_4212455:1378
+# category = 02_news_media
+# text = नवरात्रीच्या सेगीत णव दिसांनी पाळी 'पंचक्रोशींतल्या वेगळ्यावेगळ्या क्षेत्रानी स्वकर्तृत्वान आपली वेगळी वळख निर्माण केल्ल्या णव स्वयंसिद्ध नारीशक्‍तींचो भोवमान करून तांचो प्रेरणादायी जिणेप्रवास विद्यार्थाक आनी पालकांक 'कव्ठोवन दिलो.
+# annotation = silver-ai-first-pass
+नवरात्रीच्या	B-MISC
+सेगीत	O
+णव	O
+दिसांनी	O
+पाळी	O
+पंचक्रोशींतल्या	O
+वेगळ्यावेगळ्या	O
+क्षेत्रानी	O
+स्वकर्तृत्वान	O
+आपली	O
+वेगळी	O
+वळख	O
+निर्माण	O
+केल्ल्या	O
+णव	O
+स्वयंसिद्ध	O
+नारीशक्‍तींचो	O
+भोवमान	O
+करून	O
+तांचो	O
+प्रेरणादायी	O
+जिणेप्रवास	O
+विद्यार्थाक	O
+आनी	O
+पालकांक	O
+कव्ठोवन	O
+दिलो	O
+
+# sent_id = ner00108
+# source = news_bhaangarbhuin_2026_02_04_4113571:492
+# category = 02_news_media
+# text = ह्या प्रकरणांत पुलिसांनी दुबावीत बायल रबीना सोनूनेक अटक केल्या.
+# annotation = silver-ai-first-pass
+ह्या	O
+प्रकरणांत	O
+पुलिसांनी	O
+दुबावीत	O
+बायल	O
+रबीना	B-PER
+सोनूनेक	I-PER
+अटक	O
+केल्या	O
+
+# sent_id = ner00109
+# source = wiki_gom_02:3403
+# category = 06_web_articles
+# text = विंगड विंगड प्रतिकांचो वापर करून आपल्या कथेची मांडणी करपाक तांचो यत्न आसतलो.
+# annotation = silver-ai-first-pass
+विंगड	O
+विंगड	O
+प्रतिकांचो	O
+वापर	O
+करून	O
+आपल्या	O
+कथेची	O
+मांडणी	O
+करपाक	O
+तांचो	O
+यत्न	O
+आसतलो	O
+
+# sent_id = ner00110
+# source = news_bhaangarbhuin_2026_04_10_4138581:687
+# category = 02_news_media
+# text = सगल्या उमेदवारांक ते जिखताच अर्श दिसतालें.
+# annotation = silver-ai-first-pass
+सगल्या	O
+उमेदवारांक	O
+ते	O
+जिखताच	O
+अर्श	O
+दिसतालें	O
+
+# sent_id = ner00111
+# source = cult_konkani_katha_sangrah:7629
+# category = 04_culture_history
+# text = पयल्याच म्हूर्ताक लग्न जावन बायलेक वास्को व्हरपाची उमळशीक मधूक लागिल्ली.
+# annotation = silver-ai-first-pass
+पयल्याच	O
+म्हूर्ताक	O
+लग्न	O
+जावन	O
+बायलेक	O
+वास्को	B-LOC
+व्हरपाची	O
+उमळशीक	O
+मधूक	B-PER
+लागिल्ली	O
+
+# sent_id = ner00117
+# source = wiki_gom_15:3049
+# category = 06_web_articles
+# text = "सायबा तेरा उदक म्हाका दी अशी म्हाका आनिंक तान लागचीना आनी उदक काडुंक
+# annotation = silver-ai-first-pass
+सायबा	O
+तेरा	O
+उदक	O
+म्हाका	O
+दी	O
+अशी	O
+म्हाका	O
+आनिंक	O
+तान	O
+लागचीना	O
+आनी	O
+उदक	O
+काडुंक	O
+
+# sent_id = ner00118
+# source = news_bhaangarbhuin_2026_02_06_4114367:607
+# category = 02_news_media
+# text = दिसभरांतले फोन कॉल्स सोशल मिडिया, इश्ट परिवार, नातें गोते, घरांतलें कुटुंबीय तांच्या तरेकवार विशयाचेर उलोवणें अभ्यासाक बादा हाडूं शकता.
+# annotation = silver-ai-first-pass
+दिसभरांतले	O
+फोन	O
+कॉल्स	O
+सोशल	O
+मिडिया	O
+इश्ट	O
+परिवार	O
+नातें	O
+गोते	O
+घरांतलें	O
+कुटुंबीय	O
+तांच्या	O
+तरेकवार	O
+विशयाचेर	O
+उलोवणें	O
+अभ्यासाक	O
+बादा	O
+हाडूं	O
+शकता	O
+
+# sent_id = ner00120
+# source = lit_manu:1931
+# category = 01_literature
+# text = उदकाच्या दुपेट वेगान तो मुखार पावलो.
+# annotation = silver-ai-first-pass
+उदकाच्या	O
+दुपेट	O
+वेगान	O
+तो	O
+मुखार	O
+पावलो	O
+
+# sent_id = ner00121
+# source = news_bhaangarbhuin_2026_08_05_4183848:841
+# category = 02_news_media
+# text = शेतांचो उपेग हेर कामां पासत केलो.
+# annotation = silver-ai-first-pass
+शेतांचो	O
+उपेग	O
+हेर	O
+कामां	O
+पासत	O
+केलो	O
+
+# sent_id = ner00122
+# source = cult_shennoi_goembab:1533
+# category = 04_culture_history
+# text = तिचो कोंकणी परिशदेचे तिसरे बसकेकडे तसो काय संबध ना.
+# annotation = silver-ai-first-pass
+तिचो	O
+कोंकणी	B-ORG
+परिशदेचे	I-ORG
+तिसरे	O
+बसकेकडे	O
+तसो	O
+काय	O
+संबध	O
+ना	O
+
+# sent_id = ner00124
+# source = news_bhaangarbhuin_2026_03_11_4127160:104
+# category = 02_news_media
+# text = फोंडेंच्याभाजप उमेदवाराचेर केंद्रीय फुडारीच मारतले म्होर
+# annotation = silver-ai-first-pass
+फोंडेंच्याभाजप	B-LOC
+उमेदवाराचेर	O
+केंद्रीय	O
+फुडारीच	O
+मारतले	O
+म्होर	O
+
+# sent_id = ner00126
+# source = edu_fkokb1ps:204
+# category = 03_education_science
+# text = 3. सुरक्षा उपाय आनी प्रोटोकॉल पाळटना साहित्य कशें तयार करप आनी साधनां आनी उपकरणां कशीं वापरप हें समजून घेवप
+# annotation = silver-ai-first-pass
+3	O
+सुरक्षा	O
+उपाय	O
+आनी	O
+प्रोटोकॉल	O
+पाळटना	O
+साहित्य	O
+कशें	O
+तयार	O
+करप	O
+आनी	O
+साधनां	O
+आनी	O
+उपकरणां	O
+कशीं	O
+वापरप	O
+हें	O
+समजून	O
+घेवप	O
+
+# sent_id = ner00127
+# source = wiki_gom_12:2212
+# category = 06_web_articles
+# text = पूण ह्या सर्तींत य़ेट नरोत्तम मोरारजी आनी वालचंद हिराचंद हांणी 1919 त थापणूक केल्ली ‘सिंदिया स्टीम नॅव्हिगेशन कंपनी’ तिगून उरली.
+# annotation = silver-ai-first-pass
+पूण	O
+ह्या	O
+सर्तींत	O
+य़ेट	O
+नरोत्तम	B-PER
+मोरारजी	I-PER
+आनी	O
+वालचंद	B-PER
+हिराचंद	I-PER
+हांणी	O
+1919	B-DATE
+त	O
+थापणूक	O
+केल्ली	O
+सिंदिया	B-ORG
+स्टीम	I-ORG
+नॅव्हिगेशन	I-ORG
+कंपनी	I-ORG
+तिगून	O
+उरली	O
+
+# sent_id = ner00129
+# source = lit_ghanaghainiyatiche:3340
+# category = 01_literature
+# text = दादून ती हातांत घेवन पळयली आनी हाताच्या तळव्याचेरूच जोखून अदमास करपाक लागलो.
+# annotation = silver-ai-first-pass
+दादून	O
+ती	O
+हातांत	O
+घेवन	O
+पळयली	O
+आनी	O
+हाताच्या	O
+तळव्याचेरूच	O
+जोखून	O
+अदमास	O
+करपाक	O
+लागलो	O
+
+# sent_id = ner00131
+# source = news_bhaangarbhuin_2026_05_30_4157671:1274
+# category = 02_news_media
+# text = एकचारान रावतात: आत्मनिर्भर गोंयची सत्यवान जांगळी
+# annotation = silver-ai-first-pass
+एकचारान	O
+रावतात	O
+आत्मनिर्भर	B-MISC
+गोंयची	I-MISC
+सत्यवान	B-PER
+जांगळी	I-PER
+
+# sent_id = ner00133
+# source = news_bhaangarbhuin_2026_02_02_4112808:966
+# category = 02_news_media
+# text = ; पुराण, सकाळीं 1230 वरांचेर: पालखी, उपरांत 7.30 वरांचेर
+# annotation = silver-ai-first-pass
+पुराण	O
+सकाळीं	O
+1230	O
+वरांचेर	O
+पालखी	O
+उपरांत	O
+7.30	O
+वरांचेर	O
+
+# sent_id = ner00134
+# source = news_bhaangarbhuin_2026_02_15_4117893:1547
+# category = 02_news_media
+# text = सर्वसामान्य ज्ञान आनी इंग्लीश विशयाची लेखी परिक्षा जातली.
+# annotation = silver-ai-first-pass
+सर्वसामान्य	O
+ज्ञान	O
+आनी	O
+इंग्लीश	B-MISC
+विशयाची	O
+लेखी	O
+परिक्षा	O
+जातली	O
+
+# sent_id = ner00135
+# source = wiki_gom_03:397
+# category = 06_web_articles
+# text = हया नियाळाप्रमाण भारतांतल्या वट्ट उत्पादनांत महाराष्ट्राचो सुमार २२ वांटो आसा.
+# annotation = silver-ai-first-pass
+हया	O
+नियाळाप्रमाण	O
+भारतांतल्या	B-LOC
+वट्ट	O
+उत्पादनांत	O
+महाराष्ट्राचो	B-LOC
+सुमार	O
+२२	O
+वांटो	O
+आसा	O
+
+# sent_id = ner00138
+# source = wiki_gom_03:2780
+# category = 06_web_articles
+# text = सदया भूंयमध्य दर्या, काळो दर्या, कॉकेशस पर्वत, कॅस्पियन दर्या, उराल न्हंय, उराल पर्वत, बॅरेंट्स दर्या, नॉर्वेजियन दर्या आनी उत्तर ऍटलांटीक म्हासागर हांणीं शिमीत केल्ल्या भूंयखंडाकूच युरोप खंड म्हण्टात.
+# annotation = silver-ai-first-pass
+सदया	O
+भूंयमध्य	B-LOC
+दर्या	I-LOC
+काळो	B-LOC
+दर्या	I-LOC
+कॉकेशस	B-LOC
+पर्वत	I-LOC
+कॅस्पियन	B-LOC
+दर्या	I-LOC
+उराल	B-LOC
+न्हंय	I-LOC
+उराल	B-LOC
+पर्वत	I-LOC
+बॅरेंट्स	B-LOC
+दर्या	I-LOC
+नॉर्वेजियन	B-LOC
+दर्या	I-LOC
+आनी	O
+उत्तर	B-LOC
+ऍटलांटीक	I-LOC
+म्हासागर	I-LOC
+हांणीं	O
+शिमीत	O
+केल्ल्या	O
+भूंयखंडाकूच	O
+युरोप	B-LOC
+खंड	I-LOC
+म्हण्टात	O
+
+# sent_id = ner00139
+# source = news_bhaangarbhuin_2026_03_25_4132435:1203
+# category = 02_news_media
+# text = "आजे हें पळय जें वाचलां तशें आमी करचें म्हूण
+# annotation = silver-ai-first-pass
+आजे	O
+हें	O
+पळय	O
+जें	O
+वाचलां	O
+तशें	O
+आमी	O
+करचें	O
+म्हूण	O
+
+# sent_id = ner00140
+# source = lit_tiatracho_ithihas:483
+# category = 01_literature
+# text = विंगड विंगड जाती, धर्म, वेवसाय हांचे ते नमुने.
+# annotation = silver-ai-first-pass
+विंगड	O
+विंगड	O
+जाती	O
+धर्म	O
+वेवसाय	O
+हांचे	O
+ते	O
+नमुने	O
+
+# sent_id = ner00141
+# source = news_bhaangarbhuin_2026_07_08_4172741:777
+# category = 02_news_media
+# text = तबल्यांतलें गणितीय समीकरण समेर कितले कलात्मकतायेन आनी सहजतायेन येता तें पळेलें.
+# annotation = silver-ai-first-pass
+तबल्यांतलें	O
+गणितीय	O
+समीकरण	O
+समेर	O
+कितले	O
+कलात्मकतायेन	O
+आनी	O
+सहजतायेन	O
+येता	O
+तें	O
+पळेलें	O
+
+# sent_id = ner00143
+# source = news_bhaangarbhuin_2026_04_10_4138581:804
+# category = 02_news_media
+# text = झूज बंदी जगा 'कारण इतले पाप हिटलरान लेगीत जाता की इराणाची भुगोलीक परिस्थितीच शाताराम वाघ केंगान दिल्ल्या अहवाला उपरांत तरा केल्ले नासुये ताचे परस हजार पटीन पाप।
+# annotation = silver-ai-first-pass
+झूज	O
+बंदी	O
+जगा	O
+कारण	O
+इतले	O
+पाप	O
+हिटलरान	B-PER
+लेगीत	O
+जाता	O
+की	O
+इराणाची	B-LOC
+भुगोलीक	O
+परिस्थितीच	O
+शाताराम	B-PER
+वाघ	I-PER
+केंगान	O
+दिल्ल्या	O
+अहवाला	O
+उपरांत	O
+तरा	O
+केल्ले	O
+नासुये	O
+ताचे	O
+परस	O
+हजार	O
+पटीन	O
+पाप	O
+
+# sent_id = ner00144
+# source = news_bhaangarbhuin_2026_06_24_4167303:1359
+# category = 02_news_media
+# text = म्हापशें: वेगान जावपी विकास आनी पर्यटनाक लागून थळाव्या संसाधनांचेर येवपी ताण मतींत घेवन कळंगूट पंचायतीन गांवाची क्षमता मुल्यांकन अभ्यास (कॅरिंग कॅपेसिटी स्टडी) करपाची तयारी सुरू केल्या.
+# annotation = silver-ai-first-pass
+म्हापशें	B-LOC
+वेगान	O
+जावपी	O
+विकास	O
+आनी	O
+पर्यटनाक	O
+लागून	O
+थळाव्या	O
+संसाधनांचेर	O
+येवपी	O
+ताण	O
+मतींत	O
+घेवन	O
+कळंगूट	B-ORG
+पंचायतीन	I-ORG
+गांवाची	O
+क्षमता	O
+मुल्यांकन	O
+अभ्यास	O
+कॅरिंग	O
+कॅपेसिटी	O
+स्टडी	O
+करपाची	O
+तयारी	O
+सुरू	O
+केल्या	O
+
+# sent_id = ner00147
+# source = news_bhaangarbhuin_2026_09_14_4198840:1531
+# category = 02_news_media
+# text = : सोंपणां चुकल्यात आनी तिच्या उजव्या खांदाक ते !
+# annotation = silver-ai-first-pass
+सोंपणां	O
+चुकल्यात	O
+आनी	O
+तिच्या	O
+उजव्या	O
+खांदाक	O
+ते	O
+
+# sent_id = ner00149
+# source = news_bhaangarbhuin_2026_05_24_4155432:569
+# category = 02_news_media
+# text = आनी खांद्यार घेवप, पयलीं कोणाकूय जाणा जावन त्रासांत घालप आनी मागीर
+# annotation = silver-ai-first-pass
+आनी	O
+खांद्यार	O
+घेवप	O
+पयलीं	O
+कोणाकूय	O
+जाणा	O
+जावन	O
+त्रासांत	O
+घालप	O
+आनी	O
+मागीर	O
+
+# sent_id = ner00152
+# source = lit_umajani:301
+# category = 01_literature
+# text = तातुंतलो एक गरो काडून मंदारान रिताच्या तोंडांत घालो आनी आपले दोनूय हात रिताच्या गळ्यात घालून म्हळे,
+# annotation = silver-ai-first-pass
+तातुंतलो	O
+एक	O
+गरो	O
+काडून	O
+मंदारान	B-PER
+रिताच्या	B-PER
+तोंडांत	O
+घालो	O
+आनी	O
+आपले	O
+दोनूय	O
+हात	O
+रिताच्या	B-PER
+गळ्यात	O
+घालून	O
+म्हळे	O
+
+# sent_id = ner00160
+# source = news_bhaangarbhuin_2026_05_22_4154653:1168
+# category = 02_news_media
+# text = माध्यमांच्या चेंपणाक लागून तपास परत नेटान जालो आनी आरोपींक ख्यास्त जाली.
+# annotation = silver-ai-first-pass
+माध्यमांच्या	O
+चेंपणाक	O
+लागून	O
+तपास	O
+परत	O
+नेटान	O
+जालो	O
+आनी	O
+आरोपींक	O
+ख्यास्त	O
+जाली	O
+
+# sent_id = ner00162
+# source = news_bhaangarbhuin_2026_10_08_4207850:993
+# category = 02_news_media
+# text = फुडल्या दोन दिसांत प्रत्यक्ष बसका घेवन तांकां तांच्या कर्तव्यांची म्हायती दिवपाचे निर्देश मतदार नोंदणी अधिकार्‌यांक दिले.
+# annotation = silver-ai-first-pass
+फुडल्या	O
+दोन	O
+दिसांत	O
+प्रत्यक्ष	O
+बसका	O
+घेवन	O
+तांकां	O
+तांच्या	O
+कर्तव्यांची	O
+म्हायती	O
+दिवपाचे	O
+निर्देश	O
+मतदार	O
+नोंदणी	O
+अधिकार्‌यांक	O
+दिले	O
+
+# sent_id = ner00164
+# source = wiki_gom_19:2383
+# category = 06_web_articles
+# text = सदांच पाचवीं चार आसपी रानांक ‘सेल्व्हा’ अशे नांव आसा.
+# annotation = silver-ai-first-pass
+सदांच	O
+पाचवीं	O
+चार	O
+आसपी	O
+रानांक	O
+सेल्व्हा	O
+अशे	O
+नांव	O
+आसा	O
+
+# sent_id = ner00165
+# source = news_bhaangarbhuin_2026_08_19_4189097:209
+# category = 02_news_media
+# text = आनी भोवजन समाजाचो समाजीक - अर्थीक पांवडो उंचावपांत भाऊसायबांचें योगदान अतुलनीय
+# annotation = silver-ai-first-pass
+आनी	O
+भोवजन	O
+समाजाचो	O
+समाजीक	O
+अर्थीक	O
+पांवडो	O
+उंचावपांत	O
+भाऊसायबांचें	B-PER
+योगदान	O
+अतुलनीय	O
+
+# sent_id = ner00166
+# source = lit_nirbala_ani_mukti:57
+# category = 01_literature
+# text = हांव आपूण जावन म्हजे कादंबरीचो उल्लेख करचेंना अशें था रावच गेल्लें आनी तशेच घडले.
+# annotation = silver-ai-first-pass
+हांव	O
+आपूण	O
+जावन	O
+म्हजे	O
+कादंबरीचो	O
+उल्लेख	O
+करचेंना	O
+अशें	O
+था	O
+रावच	O
+गेल्लें	O
+आनी	O
+तशेच	O
+घडले	O
+
+# sent_id = ner00168
+# source = wiki_gom_08:2059
+# category = 06_web_articles
+# text = हें लोकसेवा आयोगाचें मुश्वेल कार्य आसा.
+# annotation = silver-ai-first-pass
+हें	O
+लोकसेवा	B-ORG
+आयोगाचें	I-ORG
+मुश्वेल	O
+कार्य	O
+आसा	O
+
+# sent_id = ner00170
+# source = cult_konkani_katha_sangrah:5174
+# category = 04_culture_history
+# text = कोयसांवालों गोरवां दीस बुडून काळखाची भुतां घरांत भितर सल्ली.
+# annotation = silver-ai-first-pass
+कोयसांवालों	O
+गोरवां	O
+दीस	O
+बुडून	O
+काळखाची	O
+भुतां	O
+घरांत	O
+भितर	O
+सल्ली	O
+
+# sent_id = ner00171
+# source = news_bhaangarbhuin_2026_05_27_4156566:1479
+# category = 02_news_media
+# text = भारताचो कथा सांगपाचो अणभव एकठांय हाडपी हें पयलेंच म्हयनाळें आसा.
+# annotation = silver-ai-first-pass
+भारताचो	B-LOC
+कथा	O
+सांगपाचो	O
+अणभव	O
+एकठांय	O
+हाडपी	O
+हें	O
+पयलेंच	O
+म्हयनाळें	O
+आसा	O
+
+# sent_id = ner00172
+# source = lit_ghanaghainiyatiche:11042
+# category = 01_literature
+# text = विनोद, येतात आमी आं. बरो करून तूं. पुराय बरो जातकच यो कामार.”
+# annotation = silver-ai-first-pass
+विनोद	O
+येतात	O
+आमी	O
+आं	O
+बरो	O
+करून	O
+तूं	O
+पुराय	O
+बरो	O
+जातकच	O
+यो	O
+कामार	O
+
+# sent_id = ner00173
+# source = news_bhaangarbhuin_2026_11_20_4222913:1443
+# category = 02_news_media
+# text = पणजी, गोंय, शुक्रार, 20 नोव्हेंबर 2026 7 भौशीक बांदकाम खातें कार्यकारी अभियंत्याचें कार्यालय, काम विभाग (रस्ते), पीडब्ल्यूडी, दिवचल-गोंय,
+# annotation = silver-ai-first-pass
+पणजी	B-LOC
+गोंय	B-LOC
+शुक्रार	B-DATE
+20	I-DATE
+नोव्हेंबर	I-DATE
+2026	I-DATE
+7	O
+भौशीक	B-ORG
+बांदकाम	I-ORG
+खातें	I-ORG
+कार्यकारी	O
+अभियंत्याचें	O
+कार्यालय	O
+काम	O
+विभाग	O
+रस्ते	O
+पीडब्ल्यूडी	B-ORG
+दिवचल	B-LOC
+गोंय	B-LOC
+
+# sent_id = ner00174
+# source = wiki_gom_13:1841
+# category = 06_web_articles
+# text = उगडास आनी आपजीण बरोवप हातूंतय जायतें वेगळेपण आसता.
+# annotation = silver-ai-first-pass
+उगडास	O
+आनी	O
+आपजीण	O
+बरोवप	O
+हातूंतय	O
+जायतें	O
+वेगळेपण	O
+आसता	O
+
+# sent_id = ner00175
+# source = news_bhaangarbhuin_2026_04_26_4144697:487
+# category = 02_news_media
+# text = अशें आसलें तरीं, ह्या बिलांतलो सगळ्यांत कठीण वांटो म्हणल्यार राज्यांचे प्रतिनिधीत्व आनी उत्तर- दक्षीण राजकी समतोल.
+# annotation = silver-ai-first-pass
+अशें	O
+आसलें	O
+तरीं	O
+ह्या	O
+बिलांतलो	O
+सगळ्यांत	O
+कठीण	O
+वांटो	O
+म्हणल्यार	O
+राज्यांचे	O
+प्रतिनिधीत्व	O
+आनी	O
+उत्तर	O
+दक्षीण	O
+राजकी	O
+समतोल	O
+
+# sent_id = ner00177
+# source = edu_fkokb1ps:177
+# category = 03_education_science
+# text = 6. विद्यार्थ्यांची मालकी: क्रियाकलाप पुस्तकान विद्यार्थ्यां कडेन 'उलोवप' गरजेचें.
+# annotation = silver-ai-first-pass
+6	O
+विद्यार्थ्यांची	O
+मालकी	O
+क्रियाकलाप	O
+पुस्तकान	O
+विद्यार्थ्यां	O
+कडेन	O
+उलोवप	O
+गरजेचें	O
+
+# sent_id = ner00179
+# source = news_bhaangarbhuin_2026_04_28_4145443:456
+# category = 02_news_media
+# text = हे विशीं जायते 'फावटीं याद करून दिवन आनी नोटीस धाडून लेगीत, कांय
+# annotation = silver-ai-first-pass
+हे	O
+विशीं	O
+जायते	O
+फावटीं	O
+याद	O
+करून	O
+दिवन	O
+आनी	O
+नोटीस	O
+धाडून	O
+लेगीत	O
+कांय	O
+
+# sent_id = ner00180
+# source = news_bhaangarbhuin_2026_03_21_4130902:1424
+# category = 02_news_media
+# text = वाडटें उदक प्रदूशण आनी उदकाचो गैरवापर हाका लागून 'फुडाराक उदकाचो उणाव निर्माण जावंक शकता म्हणून नितळ आनी पियेवपाक योग्य उदकाचें जतन
+# annotation = silver-ai-first-pass
+वाडटें	O
+उदक	O
+प्रदूशण	O
+आनी	O
+उदकाचो	O
+गैरवापर	O
+हाका	O
+लागून	O
+फुडाराक	O
+उदकाचो	O
+उणाव	O
+निर्माण	O
+जावंक	O
+शकता	O
+म्हणून	O
+नितळ	O
+आनी	O
+पियेवपाक	O
+योग्य	O
+उदकाचें	O
+जतन	O
+
+# sent_id = ner00181
+# source = lit_palatadanche_tarum:1746
+# category = 01_literature
+# text = पूण भोव नमळकायूय आशिल्ली अशें म्हणूं नज.
+# annotation = silver-ai-first-pass
+पूण	O
+भोव	O
+नमळकायूय	O
+आशिल्ली	O
+अशें	O
+म्हणूं	O
+नज	O
+
+# sent_id = ner00183
+# source = cult_konkani_katha_sangrah:345
+# category = 04_culture_history
+# text = अश्या अवस्थेत तो लोकांची कामां करून पोट भरता.
+# annotation = silver-ai-first-pass
+अश्या	O
+अवस्थेत	O
+तो	O
+लोकांची	O
+कामां	O
+करून	O
+पोट	O
+भरता	O
+
+# sent_id = ner00184
+# source = news_bhaangarbhuin_2026_11_17_4221732:28
+# category = 02_news_media
+# text = म्हजो फ्लॅट खातीर ठोनवारा सहकार खात्याची कार्यालयां आसतली उक्तीं
+# annotation = silver-ai-first-pass
+म्हजो	O
+फ्लॅट	O
+खातीर	O
+ठोनवारा	O
+सहकार	B-ORG
+खात्याची	I-ORG
+कार्यालयां	O
+आसतली	O
+उक्तीं	O
+
+# sent_id = ner00187
+# source = news_bhaangarbhuin_2026_11_18_4222171:228
+# category = 02_news_media
+# text = ताची वेबसायीक सडा-मुरणांवां बेगिनूच आमी
+# annotation = silver-ai-first-pass
+ताची	O
+वेबसायीक	O
+सडा	O
+मुरणांवां	O
+बेगिनूच	O
+आमी	O
+
+# sent_id = ner00188
+# source = news_bhaangarbhuin_2026_07_31_4181900:1482
+# category = 02_news_media
+# text = राष्ट्रीय कंपनी कायदो न्यायाधिकरण, मुंबय खंडपीठ- ५४] एमटीएनएल एक्सचेंज इमारत, 44, जी. डी. सोमाणी शाळे लागसार, जी. डी. सोमाणी मार्ग, कफ परेड, मुंबय, महाराष्ट्र 400005.
+# annotation = silver-ai-first-pass
+राष्ट्रीय	B-ORG
+कंपनी	I-ORG
+कायदो	I-ORG
+न्यायाधिकरण	I-ORG
+मुंबय	B-LOC
+खंडपीठ	O
+५४	O
+एमटीएनएल	B-ORG
+एक्सचेंज	O
+इमारत	O
+44	O
+जी	B-ORG
+डी	I-ORG
+सोमाणी	I-ORG
+शाळे	I-ORG
+लागसार	O
+जी	B-LOC
+डी	I-LOC
+सोमाणी	I-LOC
+मार्ग	I-LOC
+कफ	B-LOC
+परेड	I-LOC
+मुंबय	B-LOC
+महाराष्ट्र	B-LOC
+400005	O
+
+# sent_id = ner00194
+# source = news_bhaangarbhuin_2026_02_01_4112361:957
+# category = 02_news_media
+# text = पयल्या अंतराळांतल्या प्रवासांत कल्पनान धर्तरे भोंवतणी 252 प्रदक्षिणा घालीत 35 वरांची भोंवंडी केली.
+# annotation = silver-ai-first-pass
+पयल्या	O
+अंतराळांतल्या	O
+प्रवासांत	O
+कल्पनान	B-PER
+धर्तरे	O
+भोंवतणी	O
+252	O
+प्रदक्षिणा	O
+घालीत	O
+35	O
+वरांची	O
+भोंवंडी	O
+केली	O
+
+# sent_id = ner00196
+# source = cult_konkani_katha_sangrah:4891
+# category = 04_culture_history
+# text = काय भूकच लागली ना आजून तांकां!
+# annotation = silver-ai-first-pass
+काय	O
+भूकच	O
+लागली	O
+ना	O
+आजून	O
+तांकां	O
+
+# sent_id = ner00198
+# source = news_bhaangarbhuin_2026_10_02_4205300:6
+# category = 02_news_media
+# text = भारत, ऑस्ट्रेलिया, पाकिस्तान, अफगाणिस्तान, झिंबाब्वे आनी एक असोसिएट पंगड अशें 6 पंगड अ गटांत आसात.
+# annotation = silver-ai-first-pass
+भारत	B-LOC
+ऑस्ट्रेलिया	B-LOC
+पाकिस्तान	B-LOC
+अफगाणिस्तान	B-LOC
+झिंबाब्वे	B-LOC
+आनी	O
+एक	O
+असोसिएट	O
+पंगड	O
+अशें	O
+6	O
+पंगड	O
+अ	O
+गटांत	O
+आसात	O
+
+# sent_id = ner00202
+# source = wiki_gom_11:1350
+# category = 06_web_articles
+# text = मूलशंकर अंबाशंकर नांवाच्या एका भुरग्यान स्वामी दयानंद सरस्वती हें नांव धारण करुन संन्यास घेतलो.
+# annotation = silver-ai-first-pass
+मूलशंकर	B-PER
+अंबाशंकर	I-PER
+नांवाच्या	O
+एका	O
+भुरग्यान	O
+स्वामी	O
+दयानंद	B-PER
+सरस्वती	I-PER
+हें	O
+नांव	O
+धारण	O
+करुन	O
+संन्यास	O
+घेतलो	O
+
+# sent_id = ner00203
+# source = news_bhaangarbhuin_2026_02_09_4115525:1742
+# category = 02_news_media
+# text = मात, व्हडल्या सर्तींनी, व्हडल्या पंगडा आड खेळपाचो अणभव नाशिल्ल्यान जिखपा वेळार
+# annotation = silver-ai-first-pass
+मात	O
+व्हडल्या	O
+सर्तींनी	O
+व्हडल्या	O
+पंगडा	O
+आड	O
+खेळपाचो	O
+अणभव	O
+नाशिल्ल्यान	O
+जिखपा	O
+वेळार	O
+
+# sent_id = ner00204
+# source = wiki_gom_04:1386
+# category = 06_web_articles
+# text = उठून थंय गेलों, दांत घासपाक काथो काडून गुळी करपाक लागलों (तेन्ना टूथ ब्रश नाशिल्लें).
+# annotation = silver-ai-first-pass
+उठून	O
+थंय	O
+गेलों	O
+दांत	O
+घासपाक	O
+काथो	O
+काडून	O
+गुळी	O
+करपाक	O
+लागलों	O
+तेन्ना	O
+टूथ	O
+ब्रश	O
+नाशिल्लें	O
+
+# sent_id = ner00205
+# source = news_bhaangarbhuin_2026_10_17_4210843:259
+# category = 02_news_media
+# text = लाव मेळपा खातीर अटी काडून उडोवच्यो, अशी मागणी तांणी केली.
+# annotation = silver-ai-first-pass
+लाव	O
+मेळपा	O
+खातीर	O
+अटी	O
+काडून	O
+उडोवच्यो	O
+अशी	O
+मागणी	O
+तांणी	O
+केली	O
+
+# sent_id = ner00206
+# source = news_bhaangarbhuin_2026_09_12_4198047:469
+# category = 02_news_media
+# text = आदले आमदार पांडुरंग मडकयकार हांचे भाव धाकू मडकयकार वावुरपाक लागल्यात.
+# annotation = silver-ai-first-pass
+आदले	O
+आमदार	O
+पांडुरंग	B-PER
+मडकयकार	I-PER
+हांचे	O
+भाव	O
+धाकू	B-PER
+मडकयकार	I-PER
+वावुरपाक	O
+लागल्यात	O
+
+# sent_id = ner00207
+# source = wiki_gom_04:531
+# category = 06_web_articles
+# text = ह्यो सगळ्यो कथा वैविध्यतायेन भरलेल्यो आसा.
+# annotation = silver-ai-first-pass
+ह्यो	O
+सगळ्यो	O
+कथा	O
+वैविध्यतायेन	O
+भरलेल्यो	O
+आसा	O
+
+# sent_id = ner00209
+# source = news_bhaangarbhuin_2026_04_04_4136262:1092
+# category = 02_news_media
+# text = हाका राज्य फुलपाखो म्हूण घोशीत केलो.
+# annotation = silver-ai-first-pass
+हाका	O
+राज्य	O
+फुलपाखो	O
+म्हूण	O
+घोशीत	O
+केलो	O
+
+# sent_id = ner00210
+# source = lit_nirbala_ani_mukti:2804
+# category = 01_literature
+# text = " जयंतिचे सोयरिकेचे खंय जमलां हय रे? "
+# annotation = silver-ai-first-pass
+जयंतिचे	B-PER
+सोयरिकेचे	O
+खंय	O
+जमलां	O
+हय	O
+रे	O
+
+# sent_id = ner00216
+# source = news_bhaangarbhuin_2026_10_12_4208974:1464
+# category = 02_news_media
+# text = तिलक वर्मान 28, अक्षर पटेलान 20, नितीश कुमार रेड्टीन 21, अर्शदीपान 11, प्रिन्स यादवान नाबाद 13 धांवड्यो काडीत भारताक आव्हानात्मक धांवड्यां मेरेन व्हेलें.
+# annotation = silver-ai-first-pass
+तिलक	B-PER
+वर्मान	I-PER
+28	O
+अक्षर	B-PER
+पटेलान	I-PER
+20	O
+नितीश	B-PER
+कुमार	I-PER
+रेड्टीन	I-PER
+21	O
+अर्शदीपान	B-PER
+11	O
+प्रिन्स	B-PER
+यादवान	I-PER
+नाबाद	O
+13	O
+धांवड्यो	O
+काडीत	O
+भारताक	B-LOC
+आव्हानात्मक	O
+धांवड्यां	O
+मेरेन	O
+व्हेलें	O
+
+# sent_id = ner00218
+# source = news_bhaangarbhuin_2026_06_28_4168939:260
+# category = 02_news_media
+# text = तिच्या सोदांत तिचे कडल्यान 80 हजार रुपया मोलाचें 8.45 ग्राम मेथॅमफेटामाइन जप्त केलां.
+# annotation = silver-ai-first-pass
+तिच्या	O
+सोदांत	O
+तिचे	O
+कडल्यान	O
+80	O
+हजार	O
+रुपया	O
+मोलाचें	O
+8.45	O
+ग्राम	O
+मेथॅमफेटामाइन	O
+जप्त	O
+केलां	O
+
+# sent_id = ner00220
+# source = news_bhaangarbhuin_2026_06_05_4160008:1217
+# category = 02_news_media
+# text = प्रत्यक्षांत भितरल्यान अस्वस्थ आसतात, पूण साक्ष मात्र फट दितात.
+# annotation = silver-ai-first-pass
+प्रत्यक्षांत	O
+भितरल्यान	O
+अस्वस्थ	O
+आसतात	O
+पूण	O
+साक्ष	O
+मात्र	O
+फट	O
+दितात	O
+
+# sent_id = ner00224
+# source = news_bhaangarbhuin_2026_11_13_4220272:20
+# category = 02_news_media
+# text = 60 टक्‍्क्यां वयर न्हय, 56- 57 टक्के कर्मचारी 'कामचुकार आसत.
+# annotation = silver-ai-first-pass
+60	O
+टक्‍्क्यां	O
+वयर	O
+न्हय	O
+56	O
+57	O
+टक्के	O
+कर्मचारी	O
+कामचुकार	O
+आसत	O
+
+# sent_id = ner00225
+# source = wiki_gom_14:3101
+# category = 06_web_articles
+# text = सोदैव जावं जेजू आलतारावयल्या भव पवित्र साकरामेंतांत,
+# annotation = silver-ai-first-pass
+सोदैव	O
+जावं	O
+जेजू	B-PER
+आलतारावयल्या	O
+भव	O
+पवित्र	O
+साकरामेंतांत	O
+
+# sent_id = ner00226
+# source = cult_konkani_katha_sangrah:5064
+# category = 04_culture_history
+# text = कोयसांवाक मानवचेंना म्हूण येदो वेळ तो सुचोवपाक फाटी फुडें करतालो.
+# annotation = silver-ai-first-pass
+कोयसांवाक	O
+मानवचेंना	O
+म्हूण	O
+येदो	O
+वेळ	O
+तो	O
+सुचोवपाक	O
+फाटी	O
+फुडें	O
+करतालो	O
+
+# sent_id = ner00227
+# source = lit_umajani:1718
+# category = 01_literature
+# text = फांतोडेर उठचेखातीर बेगीन न्हिदचें म्हळे तरी राती न्हिदूंक बारा जाल्लींच.
+# annotation = silver-ai-first-pass
+फांतोडेर	O
+उठचेखातीर	O
+बेगीन	O
+न्हिदचें	O
+म्हळे	O
+तरी	O
+राती	O
+न्हिदूंक	O
+बारा	O
+जाल्लींच	O
+
+# sent_id = ner00229
+# source = news_bhaangarbhuin_2026_07_17_4176204:446
+# category = 02_news_media
+# text = निवृत्ती उपरांत चड गेल्ले 3 लाख 68 हजार 729 रुपया खात्यान ग्रॅच्युईटींतल्यान वसूल केले.
+# annotation = silver-ai-first-pass
+निवृत्ती	O
+उपरांत	O
+चड	O
+गेल्ले	O
+3	O
+लाख	O
+68	O
+हजार	O
+729	O
+रुपया	O
+खात्यान	O
+ग्रॅच्युईटींतल्यान	O
+वसूल	O
+केले	O
+
+# sent_id = ner00230
+# source = wiki_gom_15:5065
+# category = 06_web_articles
+# text = थयचीं दारां जुदेवांचे भिरांतीन बंद करुन दवरलेलीं; जेजू भितर
+# annotation = silver-ai-first-pass
+थयचीं	O
+दारां	O
+जुदेवांचे	B-MISC
+भिरांतीन	O
+बंद	O
+करुन	O
+दवरलेलीं	O
+जेजू	B-PER
+भितर	O
+
+# sent_id = ner00236
+# source = news_bhaangarbhuin_2026_03_26_4132830:1607
+# category = 02_news_media
+# text = डब्ल्यूडी 2९11, पीडब्ल्यूडी, दिवचल डीआय/एडिक्हिटी/2658/2026 भौशीक बांदकाम खातें
+# annotation = silver-ai-first-pass
+डब्ल्यूडी	O
+2९11	O
+पीडब्ल्यूडी	B-ORG
+दिवचल	B-LOC
+डीआय	O
+एडिक्हिटी	O
+2658/2026	O
+भौशीक	B-ORG
+बांदकाम	I-ORG
+खातें	I-ORG
+
+# sent_id = ner00238
+# source = news_bhaangarbhuin_2026_11_03_4216841:348
+# category = 02_news_media
+# text = रेंट ए कार गाडयांक जीपीएस यंत्रणा बसोवपाचो सल्लो पुलिसांनी दिलो.
+# annotation = silver-ai-first-pass
+रेंट	O
+ए	O
+कार	O
+गाडयांक	O
+जीपीएस	O
+यंत्रणा	O
+बसोवपाचो	O
+सल्लो	O
+पुलिसांनी	O
+दिलो	O
+
+# sent_id = ner00240
+# source = news_bhaangarbhuin_2026_05_11_4150449:923
+# category = 02_news_media
+# text = हातूंत मृदा कला, चित्रकला (2 दीस), पायप क्लीनर सावन फुलां तयार आनी कागदाची
+# annotation = silver-ai-first-pass
+हातूंत	O
+मृदा	O
+कला	O
+चित्रकला	O
+2	O
+दीस	O
+पायप	O
+क्लीनर	O
+सावन	O
+फुलां	O
+तयार	O
+आनी	O
+कागदाची	O
+
+# sent_id = ner00241
+# source = wiki_gom_17:4663
+# category = 06_web_articles
+# text = ह्या नाटकांत तिणे इतले बरो अभिनय केलो की तिच्या कामा खातीर खुबश्या लोकांनी तिची तोखणाय केली.
+# annotation = silver-ai-first-pass
+ह्या	O
+नाटकांत	O
+तिणे	O
+इतले	O
+बरो	O
+अभिनय	O
+केलो	O
+की	O
+तिच्या	O
+कामा	O
+खातीर	O
+खुबश्या	O
+लोकांनी	O
+तिची	O
+तोखणाय	O
+केली	O
+
+# sent_id = ner00242
+# source = cult_konkani_katha_sangrah:855
+# category = 04_culture_history
+# text = एके नदरेन हे सगळे कोंकणीतले प्रस्थापित कथाकार - म्हणू येत.
+# annotation = silver-ai-first-pass
+एके	O
+नदरेन	O
+हे	O
+सगळे	O
+कोंकणीतले	O
+प्रस्थापित	O
+कथाकार	O
+म्हणू	O
+येत	O
+
+# sent_id = ner00243
+# source = lit_nirbala_ani_mukti:1720
+# category = 01_literature
+# text = पूण तोंड घेवन तरी खंय वतले?
+# annotation = silver-ai-first-pass
+पूण	O
+तोंड	O
+घेवन	O
+तरी	O
+खंय	O
+वतले	O
+
+# sent_id = ner00245
+# source = wiki_gom_16:2185
+# category = 06_web_articles
+# text = १९ व्या शतमानाचे सुर्वेक अँग्लो इंडियन साहित्यांत भर घालपी म्हत्वाच्या बरोवप्यां मदीं जॉन लिडेन (१७७५-१८११), ह्यू बॉयड, फ्रॅन्कोटर्क रेमण्ड, हेन्ऱी टॉमस कोलब्रूक, जेम्स टॉड, मार्क विल्क्स, एलिझा फे, मेरी मार्था शेरवूड हांचो आस्पाव जाता.
+# annotation = silver-ai-first-pass
+१९	B-DATE
+व्या	I-DATE
+शतमानाचे	I-DATE
+सुर्वेक	O
+अँग्लो	B-MISC
+इंडियन	I-MISC
+साहित्यांत	O
+भर	O
+घालपी	O
+म्हत्वाच्या	O
+बरोवप्यां	O
+मदीं	O
+जॉन	B-PER
+लिडेन	I-PER
+१७७५	B-DATE
+१८११	B-DATE
+ह्यू	B-PER
+बॉयड	I-PER
+फ्रॅन्कोटर्क	B-PER
+रेमण्ड	I-PER
+हेन्ऱी	B-PER
+टॉमस	I-PER
+कोलब्रूक	I-PER
+जेम्स	B-PER
+टॉड	I-PER
+मार्क	B-PER
+विल्क्स	I-PER
+एलिझा	B-PER
+फे	I-PER
+मेरी	B-PER
+मार्था	I-PER
+शेरवूड	I-PER
+हांचो	O
+आस्पाव	O
+जाता	O
+
+# sent_id = ner00246
+# source = news_bhaangarbhuin_2026_03_03_4124221:285
+# category = 02_news_media
+# text = पट तालुक प (ब) गांव: सुर्ला (एफ) शिमो.
+# annotation = silver-ai-first-pass
+पट	O
+तालुक	O
+प	O
+ब	O
+गांव	O
+सुर्ला	B-LOC
+एफ	O
+शिमो	O
+
+# sent_id = ner00248
+# source = wiki_gom_08:1312
+# category = 06_web_articles
+# text = हाताकः गोट, तोडो, पाटल्यो आनी कांकणां.
+# annotation = silver-ai-first-pass
+हाताकः	O
+गोट	O
+तोडो	O
+पाटल्यो	O
+आनी	O
+कांकणां	O
+
+# sent_id = ner00250
+# source = edu_fkokb1ps:55
+# category = 03_education_science
+# text = विद्यार्थी शाळेच्या मैदानाचेर वा मडक्‍्यांत किचन गार्डन तयार करपाक आनी ताची देखरेख करपाक वावुरतले.
+# annotation = silver-ai-first-pass
+विद्यार्थी	O
+शाळेच्या	O
+मैदानाचेर	O
+वा	O
+मडक्‍्यांत	O
+किचन	O
+गार्डन	O
+तयार	O
+करपाक	O
+आनी	O
+ताची	O
+देखरेख	O
+करपाक	O
+वावुरतले	O
+
+# sent_id = ner00252
+# source = news_bhaangarbhuin_2026_09_08_4196524:312
+# category = 02_news_media
+# text = मेसर्स इमॅजिको इंडिया प्रा. लि., प्रतिनिधी।
+# annotation = silver-ai-first-pass
+मेसर्स	O
+इमॅजिको	B-ORG
+इंडिया	I-ORG
+प्रा	I-ORG
+लि	I-ORG
+प्रतिनिधी	O
+
+# sent_id = ner00253
+# source = lit_ghanaghainiyatiche:2715
+# category = 01_literature
+# text = पयसुल्ल्यान विष्णू येता तो ताका दिसलो.
+# annotation = silver-ai-first-pass
+पयसुल्ल्यान	O
+विष्णू	B-PER
+येता	O
+तो	O
+ताका	O
+दिसलो	O
+
+# sent_id = ner00254
+# source = cult_konkani_katha_sangrah:890
+# category = 04_culture_history
+# text = नातू जाला म्हणून शापशणै आनी उमाबाय हया संवसारांत नासली.
+# annotation = silver-ai-first-pass
+नातू	O
+जाला	O
+म्हणून	O
+शापशणै	B-PER
+आनी	O
+उमाबाय	B-PER
+हया	O
+संवसारांत	O
+नासली	O
+
+# sent_id = ner00257
+# source = news_bhaangarbhuin_2026_03_20_4130563:843
+# category = 02_news_media
+# text = परंपरीक मराठी संगीत नाट्य परंपरेची सुरेल परंपरा प्रभावीपणान साकारली.
+# annotation = silver-ai-first-pass
+परंपरीक	O
+मराठी	B-MISC
+संगीत	O
+नाट्य	O
+परंपरेची	O
+सुरेल	O
+परंपरा	O
+प्रभावीपणान	O
+साकारली	O
+
+# sent_id = ner00258
+# source = lit_umajani:3464
+# category = 01_literature
+# text = “ए अवी, ही शांताबाय मनीस काय दुकरीण रे ही?
+# annotation = silver-ai-first-pass
+ए	O
+अवी	O
+ही	O
+शांताबाय	B-PER
+मनीस	O
+काय	O
+दुकरीण	O
+रे	O
+ही	O
+
+# sent_id = ner00260
+# source = news_bhaangarbhuin_2026_08_17_4188391:1173
+# category = 02_news_media
+# text = दंडात्मक कारवाय हांची संतुळा राखप : गरजेचे.
+# annotation = silver-ai-first-pass
+दंडात्मक	O
+कारवाय	O
+हांची	O
+संतुळा	O
+राखप	O
+गरजेचे	O
+
+# sent_id = ner00261
+# source = wiki_gom_12:5197
+# category = 06_web_articles
+# text = पर्सिव्हल इवो विटाल ई नोरोन्हा (२६ जुलय १९२३ - १९ ऑगस्ट २०१९) हो गोंयचो भारतीय इतिहासकार, दायज संवर्धन आनी नोकरशाही.
+# annotation = silver-ai-first-pass
+पर्सिव्हल	B-PER
+इवो	I-PER
+विटाल	I-PER
+ई	I-PER
+नोरोन्हा	I-PER
+२६	B-DATE
+जुलय	I-DATE
+१९२३	I-DATE
+१९	B-DATE
+ऑगस्ट	I-DATE
+२०१९	I-DATE
+हो	O
+गोंयचो	B-LOC
+भारतीय	B-MISC
+इतिहासकार	O
+दायज	O
+संवर्धन	O
+आनी	O
+नोकरशाही	O
+
+# sent_id = ner00265
+# source = news_bhaangarbhuin_2026_01_25_4109798:1573
+# category = 02_news_media
+# text = परिसंवादाचें उक्तावण कार्मेल म्हाविद्यालयाची प्राचार्य प्रा. डॉ. आल्दीना ब्रांगाझा इ गोम्स, उपप्राचार्य आनी कोंकणी विभाग मुखेली क्विनी व्हियेगश, कोंकणी अकादमीचे अध्यक्ष सेल्सो फर्नांडीस, कवी आनी कविता ट्रस्टाचे कार्यदर्शी एड्रय्रूएल डिकुन्हा आनी आशावादी प्रकाशनाचे वल्ली क्वाड्स हांचे हस्तुकीं दिवली पेटोवन जालें.
+# annotation = silver-ai-first-pass
+परिसंवादाचें	O
+उक्तावण	O
+कार्मेल	B-ORG
+म्हाविद्यालयाची	I-ORG
+प्राचार्य	O
+प्रा	O
+डॉ	O
+आल्दीना	B-PER
+ब्रांगाझा	I-PER
+इ	I-PER
+गोम्स	I-PER
+उपप्राचार्य	O
+आनी	O
+कोंकणी	O
+विभाग	O
+मुखेली	O
+क्विनी	B-PER
+व्हियेगश	I-PER
+कोंकणी	B-ORG
+अकादमीचे	I-ORG
+अध्यक्ष	O
+सेल्सो	B-PER
+फर्नांडीस	I-PER
+कवी	B-ORG
+आनी	I-ORG
+कविता	I-ORG
+ट्रस्टाचे	I-ORG
+कार्यदर्शी	O
+एड्रय्रूएल	B-PER
+डिकुन्हा	I-PER
+आनी	O
+आशावादी	B-ORG
+प्रकाशनाचे	I-ORG
+वल्ली	B-PER
+क्वाड्स	I-PER
+हांचे	O
+हस्तुकीं	O
+दिवली	O
+पेटोवन	O
+जालें	O
+
+# sent_id = ner00267
+# source = news_bhaangarbhuin_2026_05_25_4155787:765
+# category = 02_news_media
+# text = दिग्दर्शन म्हणल्यार शिकोवप; आपल्या लागीं आशिल्ले गिन्यान दुसऱ्याक दिवप.
+# annotation = silver-ai-first-pass
+दिग्दर्शन	O
+म्हणल्यार	O
+शिकोवप	O
+आपल्या	O
+लागीं	O
+आशिल्ले	O
+गिन्यान	O
+दुसऱ्याक	O
+दिवप	O
+
+# sent_id = ner00268
+# source = news_bhaangarbhuin_2026_05_02_4147049:280
+# category = 02_news_media
+# text = सांजे वेळार आयोजीत केल्ले स्नेहभोजन कार्याबळीक आदले नगराध्यक्ष विजयकुमार नाटेकार, ज्येश्ठ नागरीक विजय तेलंग, नारायण बेतकीकार, विश्वास गांवस, अरूण मांजरेकार, समरेश काणेकार उपस्थीत आशिल्ले.
+# annotation = silver-ai-first-pass
+सांजे	O
+वेळार	O
+आयोजीत	O
+केल्ले	O
+स्नेहभोजन	O
+कार्याबळीक	O
+आदले	O
+नगराध्यक्ष	O
+विजयकुमार	B-PER
+नाटेकार	I-PER
+ज्येश्ठ	O
+नागरीक	O
+विजय	B-PER
+तेलंग	I-PER
+नारायण	B-PER
+बेतकीकार	I-PER
+विश्वास	B-PER
+गांवस	I-PER
+अरूण	B-PER
+मांजरेकार	I-PER
+समरेश	B-PER
+काणेकार	I-PER
+उपस्थीत	O
+आशिल्ले	O
+
+# sent_id = ner00269
+# source = lit_nataka:71
+# category = 01_literature
+# text = नाटकांतल्या स्त्री पात्राक जो मान दिवपाक जाय ताचो अभाव जायते कडेन जाणवता.
+# annotation = silver-ai-first-pass
+नाटकांतल्या	O
+स्त्री	O
+पात्राक	O
+जो	O
+मान	O
+दिवपाक	O
+जाय	O
+ताचो	O
+अभाव	O
+जायते	O
+कडेन	O
+जाणवता	O
+
+# sent_id = ner00271
+# source = news_bhaangarbhuin_2026_02_18_4119100:445
+# category = 02_news_media
+# text = भुरण्यांनी खूबच सुंदर नाच सादरीकरण केलें.
+# annotation = silver-ai-first-pass
+भुरण्यांनी	O
+खूबच	O
+सुंदर	O
+नाच	O
+सादरीकरण	O
+केलें	O
+
+# sent_id = ner00273
+# source = wiki_gom_11:197
+# category = 06_web_articles
+# text = 1510 ते 1540 च्या अदमासांत गोंयांत ख्रिस्ती धर्मगुरू आयलें.
+# annotation = silver-ai-first-pass
+1510	B-DATE
+ते	O
+1540	B-DATE
+च्या	O
+अदमासांत	O
+गोंयांत	B-LOC
+ख्रिस्ती	B-MISC
+धर्मगुरू	O
+आयलें	O
+
+# sent_id = ner00274
+# source = news_bhaangarbhuin_2026_04_18_4141624:87
+# category = 02_news_media
+# text = 528 चीं दोन- तृतियांश म्हणल्यार 352 मतां.
+# annotation = silver-ai-first-pass
+528	O
+चीं	O
+दोन	O
+तृतियांश	O
+म्हणल्यार	O
+352	O
+मतां	O
+
+# sent_id = ner00275
+# source = news_bhaangarbhuin_2026_10_14_4209687:925
+# category = 02_news_media
+# text = तांचे: खाशेलपणां आशिल्ल्या वाहनांक: दुचाकी रिणकारी आपले पतसंबंद : (आवटस्टॅण्डिंग बॅलन्स) 176 लाख: पतवेव्हारां कडेन आशिल्ले नात॑: लागून वाहनांचे दर वाडल्यात ३ अदीक व्यापक करतात आनी प्रवासी : कोटी रुपयांचेर पावली, जी जून: अदीक व्यापक जायत चल्लां.
+# annotation = silver-ai-first-pass
+तांचे	O
+खाशेलपणां	O
+आशिल्ल्या	O
+वाहनांक	O
+दुचाकी	O
+रिणकारी	O
+आपले	O
+पतसंबंद	O
+आवटस्टॅण्डिंग	O
+बॅलन्स	O
+176	O
+लाख	O
+पतवेव्हारां	O
+कडेन	O
+आशिल्ले	O
+नात॑	O
+लागून	O
+वाहनांचे	O
+दर	O
+वाडल्यात	O
+३	O
+अदीक	O
+व्यापक	O
+करतात	O
+आनी	O
+प्रवासी	O
+कोटी	O
+रुपयांचेर	O
+पावली	O
+जी	O
+जून	O
+अदीक	O
+व्यापक	O
+जायत	O
+चल्लां	O
+
+# sent_id = ner00278
+# source = wiki_gom_07:4603
+# category = 06_web_articles
+# text = कांय तेपा उपरांत तो परत देवळाचो पुजारी जालो आनी रोखडोच संवसाराच्यो गजाली पुराय तरेन विसरुन गेलो.
+# annotation = silver-ai-first-pass
+कांय	O
+तेपा	O
+उपरांत	O
+तो	O
+परत	O
+देवळाचो	O
+पुजारी	O
+जालो	O
+आनी	O
+रोखडोच	O
+संवसाराच्यो	O
+गजाली	O
+पुराय	O
+तरेन	O
+विसरुन	O
+गेलो	O
+
+# sent_id = ner00280
+# source = wiki_gom_08:538
+# category = 06_web_articles
+# text = तेन्नासावन तुर्की गद्य साहित्याक नवो नेट आयलो.
+# annotation = silver-ai-first-pass
+तेन्नासावन	O
+तुर्की	B-MISC
+गद्य	O
+साहित्याक	O
+नवो	O
+नेट	O
+आयलो	O
+
+# sent_id = ner00281
+# source = news_bhaangarbhuin_2026_03_07_4125628:382
+# category = 02_news_media
+# text = केलो तेन्ना चालकान अरेरावीची भास काल (शुक्रा)) सकाळीं वापरिल्ल्याचें थळाव्यांनी सांगलें.
+# annotation = silver-ai-first-pass
+केलो	O
+तेन्ना	O
+चालकान	O
+अरेरावीची	O
+भास	O
+काल	O
+शुक्रा	B-DATE
+सकाळीं	O
+वापरिल्ल्याचें	O
+थळाव्यांनी	O
+सांगलें	O
+
+# sent_id = ner00282
+# source = news_bhaangarbhuin_2026_05_30_4157671:1571
+# category = 02_news_media
+# text = हंगामी जिल्हो न्यायाधीश ह्या पदाचेर बडटी मेळ्ळी.
+# annotation = silver-ai-first-pass
+हंगामी	O
+जिल्हो	O
+न्यायाधीश	O
+ह्या	O
+पदाचेर	O
+बडटी	O
+मेळ्ळी	O
+
+# sent_id = ner00285
+# source = news_bhaangarbhuin_2026_04_17_4141253:703
+# category = 02_news_media
+# text = करणेंत जमीन आसमानाचो फरक दिसून येता.
+# annotation = silver-ai-first-pass
+करणेंत	O
+जमीन	O
+आसमानाचो	O
+फरक	O
+दिसून	O
+येता	O
+
+# sent_id = ner00286
+# source = cult_some_aspects_of_konkani_culture_heritage:650
+# category = 04_culture_history
+# text = जाण की बहन कहाँ सीखती है?
+# annotation = silver-ai-first-pass
+जाण	O
+की	O
+बहन	O
+कहाँ	O
+सीखती	O
+है	O
+
+# sent_id = ner00289
+# source = wiki_gom_08:2847
+# category = 06_web_articles
+# text = दार्जिलिंग, जलपैगुरी, कुचबिहार, मेदिनीपूर वाठारांत व्हड रानां आसात.
+# annotation = silver-ai-first-pass
+दार्जिलिंग	B-LOC
+जलपैगुरी	B-LOC
+कुचबिहार	B-LOC
+मेदिनीपूर	B-LOC
+वाठारांत	O
+व्हड	O
+रानां	O
+आसात	O
+
+# sent_id = ner00290
+# source = news_bhaangarbhuin_2026_05_12_4150834:530
+# category = 02_news_media
+# text = 'पणजी: फाटल्या सप्तकाचे तुळेंत सोमारा पणजी बाजारांत भाजयांच्या दरांत परत वाड जाल्ली पळोवपाक मेळ्ळी.
+# annotation = silver-ai-first-pass
+पणजी	B-LOC
+फाटल्या	O
+सप्तकाचे	O
+तुळेंत	O
+सोमारा	B-DATE
+पणजी	B-LOC
+बाजारांत	O
+भाजयांच्या	O
+दरांत	O
+परत	O
+वाड	O
+जाल्ली	O
+पळोवपाक	O
+मेळ्ळी	O
+
+# sent_id = ner00293
+# source = edu_fkokb1ps:40
+# category = 03_education_science
+# text = राष्ट्रीय अभ्यासक्रम आराखडो 2023 (एनसीएफ-एसई 2023) हातूंत कामाचें तीन व्यापक प्रकारां खाला वर्गीकरण केलां: जिवीत प्रकारां वांगडा काम करप, यंत्रां आनी साहित्या वांगडा काम करप आनी मनीस सेवेंत काम करप.
+# annotation = silver-ai-first-pass
+राष्ट्रीय	B-MISC
+अभ्यासक्रम	I-MISC
+आराखडो	I-MISC
+2023	I-MISC
+एनसीएफ	B-MISC
+एसई	I-MISC
+2023	I-MISC
+हातूंत	O
+कामाचें	O
+तीन	O
+व्यापक	O
+प्रकारां	O
+खाला	O
+वर्गीकरण	O
+केलां	O
+जिवीत	O
+प्रकारां	O
+वांगडा	O
+काम	O
+करप	O
+यंत्रां	O
+आनी	O
+साहित्या	O
+वांगडा	O
+काम	O
+करप	O
+आनी	O
+मनीस	O
+सेवेंत	O
+काम	O
+करप	O
+
+# sent_id = ner00294
+# source = news_bhaangarbhuin_2026_03_23_4131672:1344
+# category = 02_news_media
+# text = तांची ममी थडग्यांत एका आयदनांत मेळिल्ली.
+# annotation = silver-ai-first-pass
+तांची	O
+ममी	O
+थडग्यांत	O
+एका	O
+आयदनांत	O
+मेळिल्ली	O
+
+# sent_id = ner00296
+# source = cult_shennoi_goembab:88
+# category = 04_culture_history
+# text = तांचें कुळदैवत कवळे ची शांतादुर्गा अथवा सांतेरी.
+# annotation = silver-ai-first-pass
+तांचें	O
+कुळदैवत	O
+कवळे	B-LOC
+ची	O
+शांतादुर्गा	B-PER
+अथवा	O
+सांतेरी	B-PER
+
+# sent_id = ner00297
+# source = lit_ghanaghainiyatiche:6453
+# category = 01_literature
+# text = आनी कोणाचीय जाल्यार भियेवन गुळी जातली आशिल्ली. "
+# annotation = silver-ai-first-pass
+आनी	O
+कोणाचीय	O
+जाल्यार	O
+भियेवन	O
+गुळी	O
+जातली	O
+आशिल्ली	O
+
+# sent_id = ner00298
+# source = wiki_gom_03:1966
+# category = 06_web_articles
+# text = आयुर्वेदाची आनीक एक तरेन वांटणी केल्ली आसा.
+# annotation = silver-ai-first-pass
+आयुर्वेदाची	O
+आनीक	O
+एक	O
+तरेन	O
+वांटणी	O
+केल्ली	O
+आसा	O
+

@@ -1,0 +1,29 @@
+system,training_data,entity,precision,recall,f1,support
+gaz_seed,none (seed lists + rules),PER,0.4615,0.0968,0.16,62
+gaz_seed,none (seed lists + rules),LOC,0.8824,0.5085,0.6452,59
+gaz_seed,none (seed lists + rules),ORG,1.0,0.3333,0.5,24
+gaz_seed,none (seed lists + rules),MISC,0.8,0.381,0.5161,21
+gaz_seed,none (seed lists + rules),DATE,0.7368,0.8235,0.7778,17
+gaz_seed,none (seed lists + rules),micro avg,0.7857,0.3607,0.4944,183
+gaz_seed,none (seed lists + rules),macro avg,0.7761,0.4286,0.5198,183
+gaz_seed_dev,dev lexicon,PER,0.4286,0.0968,0.1579,62
+gaz_seed_dev,dev lexicon,LOC,0.8571,0.5085,0.6383,59
+gaz_seed_dev,dev lexicon,ORG,1.0,0.3333,0.5,24
+gaz_seed_dev,dev lexicon,MISC,0.8333,0.4762,0.6061,21
+gaz_seed_dev,dev lexicon,DATE,0.8235,0.8235,0.8235,17
+gaz_seed_dev,dev lexicon,micro avg,0.7907,0.3716,0.5056,183
+gaz_seed_dev,dev lexicon,macro avg,0.7885,0.4477,0.5452,183
+crf_dev,silver_dev (151 sents) c1=0.05 c2=0.01,PER,0.4,0.0323,0.0597,62
+crf_dev,silver_dev (151 sents) c1=0.05 c2=0.01,LOC,0.8378,0.5254,0.6458,59
+crf_dev,silver_dev (151 sents) c1=0.05 c2=0.01,ORG,0.5,0.0833,0.1429,24
+crf_dev,silver_dev (151 sents) c1=0.05 c2=0.01,MISC,0.8333,0.4762,0.6061,21
+crf_dev,silver_dev (151 sents) c1=0.05 c2=0.01,DATE,0.5,0.2353,0.32,17
+crf_dev,silver_dev (151 sents) c1=0.05 c2=0.01,micro avg,0.7424,0.2678,0.3936,183
+crf_dev,silver_dev (151 sents) c1=0.05 c2=0.01,macro avg,0.6142,0.2705,0.3549,183
+crf_dev_weak,silver_dev + 1500 gazetteer-labelled pool sents,PER,0.5,0.0806,0.1389,62
+crf_dev_weak,silver_dev + 1500 gazetteer-labelled pool sents,LOC,0.8571,0.5085,0.6383,59
+crf_dev_weak,silver_dev + 1500 gazetteer-labelled pool sents,ORG,1.0,0.3333,0.5,24
+crf_dev_weak,silver_dev + 1500 gazetteer-labelled pool sents,MISC,0.8333,0.4762,0.6061,21
+crf_dev_weak,silver_dev + 1500 gazetteer-labelled pool sents,DATE,0.6842,0.7647,0.7222,17
+crf_dev_weak,silver_dev + 1500 gazetteer-labelled pool sents,micro avg,0.7857,0.3607,0.4944,183
+crf_dev_weak,silver_dev + 1500 gazetteer-labelled pool sents,macro avg,0.7749,0.4327,0.5211,183
