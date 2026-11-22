@@ -1,17 +1,17 @@
 tokenizer,algo,vocab_size,split,word_tokens,pieces,fertility,split_share,unk_piece_rate,oov_token_rate,oov_type_rate
-word (all train types),word,350765,dev,640177,640177,1.0,0.0,,0.0577,0.33333
-word (train count>=2),word,139403,dev,640177,640177,1.0,0.0,,0.07649,0.43148
-word (all train types),word,350765,test,643969,643969,1.0,0.0,,0.07576,0.34522
-word (train count>=2),word,139403,test,643969,643969,1.0,0.0,,0.0956,0.43963
-spm-bpe-8k,bpe,8000,dev,640177,999333,1.561,0.3724,0.0,,
-spm-bpe-8k,bpe,8000,test,643969,1026428,1.5939,0.3888,0.0,,
-spm-bpe-16k,bpe,16000,dev,640177,889159,1.3889,0.2789,0.0,,
-spm-bpe-16k,bpe,16000,test,643969,916773,1.4236,0.2971,0.0,,
-spm-bpe-32k,bpe,32000,dev,640177,812956,1.2699,0.2048,0.0,,
-spm-bpe-32k,bpe,32000,test,643969,838730,1.3024,0.225,0.0,,
-spm-unigram-8k,unigram,8000,dev,640177,985765,1.5398,0.347,0.0,,
-spm-unigram-8k,unigram,8000,test,643969,1013999,1.5746,0.3644,0.0,,
-spm-unigram-16k,unigram,16000,dev,640177,884121,1.3811,0.2664,0.0,,
-spm-unigram-16k,unigram,16000,test,643969,912980,1.4177,0.2859,0.0,,
-spm-unigram-32k,unigram,32000,dev,640177,814632,1.2725,0.2061,0.0,,
-spm-unigram-32k,unigram,32000,test,643969,842166,1.3078,0.2271,0.0,,
+word (all train types),word,472014,dev,1008663,1008663,1.0,0.0,,0.03908,0.29479
+word (train count>=2),word,192360,dev,1008663,1008663,1.0,0.0,,0.05222,0.38654
+word (all train types),word,472014,test,1036051,1036051,1.0,0.0,,0.04118,0.30314
+word (train count>=2),word,192360,test,1036051,1036051,1.0,0.0,,0.05491,0.39634
+spm-bpe-8k,bpe,8000,dev,1008663,1543379,1.5301,0.355,0.0,,
+spm-bpe-8k,bpe,8000,test,1036051,1591347,1.536,0.3597,0.0,,
+spm-bpe-16k,bpe,16000,dev,1008663,1372432,1.3606,0.26,0.0,,
+spm-bpe-16k,bpe,16000,test,1036051,1417014,1.3677,0.2658,0.0,,
+spm-bpe-32k,bpe,32000,dev,1008663,1256156,1.2454,0.1881,0.0,,
+spm-bpe-32k,bpe,32000,test,1036051,1297392,1.2522,0.1941,0.0,,
+spm-unigram-8k,unigram,8000,dev,1008663,1518929,1.5059,0.3277,0.0,,
+spm-unigram-8k,unigram,8000,test,1036051,1567985,1.5134,0.3329,0.0,,
+spm-unigram-16k,unigram,16000,dev,1008663,1362667,1.351,0.2478,0.0,,
+spm-unigram-16k,unigram,16000,test,1036051,1407929,1.3589,0.2535,0.0,,
+spm-unigram-32k,unigram,32000,dev,1008663,1257250,1.2465,0.1883,0.0,,
+spm-unigram-32k,unigram,32000,test,1036051,1299801,1.2546,0.1949,0.0,,

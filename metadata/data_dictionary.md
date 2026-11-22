@@ -7,7 +7,7 @@ All text files are UTF-8, LF line endings, Unicode NFC. "Document tree" means `<
 | Field | Meaning |
 |---|---|
 | `doc_id` | Stable document id: `lit_*` / `cult_*` (book OCR), `edu_*` (textbook OCR), `news_<title>_<date>_<issue>` (e-paper issue), `ldcil_ko0000N` (LDC-IL gold), `wiki_gom_NN` (Wikipedia shard of about 1/20 of the articles) |
-| `category` | One of `01_literature`, `02_news_media`, `03_education_science`, `04_culture_history`, `05_public_information`, `06_web_articles`, `07_oral_transcripts` |
+| `category` | One of `01_literature`, `02_news_media`, `03_education_science`, `04_culture_history`, `06_web_articles` (05 public information and 07 oral transcripts are planned categories with no data, so they have no folders) |
 | token | A word with punctuation removed; every number becomes `<NUM>` (`scripts/corpus_utils.py:tokenize`) |
 | akshara | An orthographic syllable: a consonant cluster with its vowel sign and anusvara/visarga (`corpus_utils.aksharas`) |
 

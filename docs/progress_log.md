@@ -33,7 +33,7 @@ Before these sessions the repo had: README, PRD, the LDC-IL gold sample and OCR 
 
 ### Stage 1.5: Sentence segmentation and evaluation
 - `segment_sentences.py`: rules for abbreviations, initials (Devanagari and English letter names), decimals, list numbers (also without a space, e.g. `2.त्या`), datelines, verse markers.
-- Gold sets (first pass by Claude, **team must verify**): `data/eval/segmentation_gold.txt` (40 dev paragraphs), `segmentation_gold_heldout.txt` (154 held-out paragraphs). Held-out F1 **0.992**.
+- Gold sets (first pass by Claude, **team must verify**): `data/eval/segmentation_gold.txt` (40 dev paragraphs), `segmentation_gold_heldout.txt` (154 held-out paragraphs). Held-out F1 **0.990** after an independent AI second-pass review (`data/eval/review/`).
 - Language audit: `data/eval/language_audit_sample.tsv`, 200 paragraphs, 1.0% non-Konkani (target < 2%).
 
 ### Stage 1.6: Splits, report, automation
@@ -53,7 +53,7 @@ Before these sessions the repo had: README, PRD, the LDC-IL gold sample and OCR 
 | Splits (tokens) | train 8.46M, dev 1.01M, test 1.04M (490/61/61 documents) |
 | Balanced subset | 3.66M tokens, news 59.7% |
 
-Held-out segmentation F1 0.992. The previous run (289 issues) gave 6.06M tokens; the Phase 2 and 3 results below still use those 6.06M-token splits.
+Held-out segmentation F1 0.990. The previous run (289 issues) gave 6.06M tokens. Phase 2 and 3 were re-run on the final splits on 22 Nov; the numbers below are final-corpus numbers.
 
 ---
 
@@ -62,16 +62,18 @@ Held-out segmentation F1 0.992. The previous run (289 issues) gave 6.06M tokens;
 ### Stage 2.1: Tokenisers and n-gram LMs
 - Code: `scripts/phase2/{common,tokenizers,ngram_lm}.py`, run with `scripts/run_phase2_lm.sh` (Python 3.12 venv `.venv-phase2`, because gensim does not build on 3.14).
 - Tokenisers: whitespace baseline and SentencePiece BPE/Unigram at 8k–32k; BPE-32k has the lowest fertility (1.29 pieces per word, earlier splits).
-- Word n-gram LMs, 1–4-gram, with Laplace, add-k, Katz (Good-Turing) and Kneser-Ney / modified KN. Best: **modified-KN 4-gram, test perplexity 554** (6.06M-token splits).
-- Subword n-gram LMs over SentencePiece pieces up to 5-gram: per-word perplexity 2,657.
+- Word n-gram LMs, 1–4-gram, with Laplace, add-k, Katz (Good-Turing) and Kneser-Ney / modified KN. Best: **modified-KN 4-gram, test perplexity 484**.
+- Subword n-gram LMs over SentencePiece pieces up to 5-gram: per-word perplexity 1,121. Unseen words in test: 4.1% of tokens with whole words, 0 with subwords.
 - Learning curve at 10/25/50/100% of the training data.
-- Write-up: [docs/phase2_lm.md](phase2_lm.md) (its tables still quote the earlier 3.47M-token splits; current numbers are in `results/phase2/*.csv`).
+- Learning curve: trigram perplexity 1,400 → 932 → 679 → 503 at 10/25/50/100% of the data (fixed vocabulary); not saturated.
+- Write-up: [docs/phase2_lm.md](phase2_lm.md).
 
 ### Stage 2.2: Word embeddings
 - Code: `scripts/phase2/{train_embeddings,eval_embeddings}.py`, run with `scripts/run_phase2_embeddings.sh` (about 23 min).
 - Models: word2vec CBOW and skip-gram, FastText, GloVe.
 - Test sets (draft by Claude, **team must verify**): `data/eval/word_similarity.tsv` (213 pairs), `data/eval/analogies.tsv` (118 analogies).
-- Results on the 6.06M-token splits: Spearman ρ CBOW 0.347, skip-gram 0.391, **FastText 0.473 (0.499 with min-count 25)**, GloVe 0.206. Analogy accuracy best for FastText (43–47 of 118).
+- Results: Spearman ρ CBOW 0.350, skip-gram 0.439, **FastText 0.466** (2–5-character pieces 0.447), GloVe 0.236. Analogies best for FastText with 2–5-character pieces (50 of 118). FastText keeps OCR-damaged words close to the original (cosine 0.73).
+- Write-up: [docs/phase2_embeddings.md](phase2_embeddings.md).
 - Nearest neighbours, t-SNE plots, OOV robustness and a learning curve in `results/phase2/`.
 
 ---
@@ -81,7 +83,7 @@ Held-out segmentation F1 0.992. The previous run (289 issues) gave 6.06M tokens;
 ### Stage 3.1: Neural language models
 - Code: `scripts/phase3/neural_lm.py`, run with `scripts/run_phase3_lm.sh` (PyTorch CPU; installs torch into `.venv-phase2` if missing).
 - Models: feed-forward (Bengio), LSTM, small Transformer, character LSTM; same splits and same per-word normalisation as the n-gram models.
-- Test per-word perplexity: LSTM trained 25 min **2,739**, Transformer 25 min 2,868, against the best subword KN 5-gram 2,657. The short default run (2.5–7 min per model) is worse than KN; dev perplexity was still falling, so longer training should pass KN.
+- Test per-word perplexity: LSTM trained 25 min **1,389**, Transformer 25 min 1,587, against the best subword KN 5-gram 1,121. The neural models are compute-bound on a CPU (dev perplexity still falling); KN profits from the larger corpus immediately.
 - Write-up: [docs/phase3_neural_lm.md](phase3_neural_lm.md).
 
 ### Stage 3.2: Named entity recognition
@@ -94,7 +96,7 @@ Held-out segmentation F1 0.992. The previous run (289 issues) gave 6.06M tokens;
 
 ## Still to do
 
-1. Re-run Phase 2 (`scripts/run_phase2_lm.sh`, `scripts/run_phase2_embeddings.sh`) and `scripts/run_phase3_lm.sh` on the final 10.51M-token splits; refresh the tables in the Phase 2/3 docs.
+1. Train the neural LMs longer (or on a GPU) to pass the KN baseline.
 2. Team verification of every AI-drafted set: segmentation gold, language audit, word similarity, analogies, NER silver (see each doc).
 3. NER: grow to 2–3k verified sentences, 200 double-annotated for Cohen's κ; BiLSTM-CRF and MuRIL/IndicBERT.
 4. Hand-typed gold for about 3 e-paper pages (newspaper OCR CER).

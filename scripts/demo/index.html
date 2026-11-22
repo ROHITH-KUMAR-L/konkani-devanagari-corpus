@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Konkani NLP</title>
+<style>
+/* Light, product-style layout: top bar, grouped sidebar by phase, content cards. System fonts (offline). */
+:root {
+  --bg: #f5f7fa; --surface: #ffffff; --fg: #1a2433; --muted: #5d6878; --line: #e2e7ee; --line-strong: #cfd7e2;
+  --accent: #0f5e78; --accent-ink: #0b4a5f; --accent-soft: #e6f1f5; --warn: #a33a1c; --warn-soft: #fbece7; --ok: #1d6b45; --ok-soft: #e5f3eb;
+  --per: #fde2c4; --loc: #d3eed6; --org: #d6e4fa; --misc: #eadcf7; --date: #fbefb3;
+  --deva: "Noto Sans Devanagari", "Nirmala UI", "Mangal", "Lohit Devanagari", sans-serif;
+  --ui: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, var(--deva);
+  --shadow: 0 1px 2px rgba(16, 24, 40, .05), 0 1px 3px rgba(16, 24, 40, .06);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body { margin: 0; color: var(--fg); font: 15px/1.6 var(--ui); -webkit-font-smoothing: antialiased; }
+.topbar { position: sticky; top: 0; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 1rem; padding: .7rem max(16px, 2.5vw); }
+.brand { display: flex; align-items: center; gap: .7rem; }
+.logo { width: 2.1rem; height: 2.1rem; border-radius: 8px; background: var(--accent); color: #fff; display: grid; place-items: center;
+  font: 700 1.05rem var(--deva); }
+.brand b { display: block; font-size: 1.02rem; letter-spacing: -.01em; }
+.brand small { display: block; color: var(--muted); font-size: .8rem; }
+.topbar .status { margin-left: auto; font-size: .8rem; color: var(--muted); display: flex; align-items: center; gap: .4rem; }
+.topbar .status i { width: .5rem; height: .5rem; border-radius: 50%; background: #22a06b; display: inline-block; }
+.layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); min-height: calc(100vh - 3.6rem); }
+nav.side { border-right: 1px solid var(--line); background: var(--surface); padding: 1rem .7rem; position: sticky; top: 3.6rem;
+  height: calc(100vh - 3.6rem); overflow-y: auto; }
+nav.side .grp { margin: .2rem 0 1rem; }
+nav.side .grp p { margin: 0 .5rem .3rem; font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+nav.side button { display: block; width: 100%; text-align: left; border: 0; background: none; color: var(--fg); font: 500 .92rem var(--ui);
+  padding: .45rem .6rem; border-radius: 6px; cursor: pointer; }
+nav.side button:hover { background: var(--bg); }
+nav.side button[aria-selected="true"] { background: var(--accent-soft); color: var(--accent-ink); font-weight: 600; }
+main { padding: 1.8rem max(16px, 3vw) 5rem; max-width: 1040px; min-width: 0; }
+@media (max-width: 860px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  nav.side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); display: flex; gap: .3rem; overflow-x: auto; padding: .5rem; }
+  nav.side .grp { display: flex; gap: .2rem; margin: 0; align-items: center; }
+  nav.side .grp p { display: none; }
+  nav.side button { white-space: nowrap; width: auto; }
+}
+section[hidden] { display: none; }
+h2 { margin: 0 0 .35rem; font-size: 1.45rem; letter-spacing: -.015em; }
+h3 { margin: 1.4rem 0 .5rem; font-size: 1.05rem; }
+.phase { margin: 0 0 .35rem; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.phase code { text-transform: none; letter-spacing: 0; font-weight: 500; background: var(--accent-soft); padding: .05em .35em; border-radius: 4px; }
+.info { margin: .8rem 0 1.1rem; display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
+.info > div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1rem; padding: .6rem 1rem; border-bottom: 1px solid var(--line); }
+.info > div:last-child { border-bottom: 0; }
+.info dt { font-weight: 600; font-size: .8rem; color: var(--muted); padding-top: .12rem; }
+.info dd { margin: 0; font-size: .93rem; }
+.info .d, .d { font-family: var(--deva); }
+@media (max-width: 640px) { .info > div { grid-template-columns: minmax(0, 1fr); gap: .1rem; } }
+code { font-family: ui-monospace, "JetBrains Mono", Consolas, monospace; font-size: .86em; }
+textarea, input[type=text] { width: 100%; font: 1.05rem/1.6 var(--deva); padding: .65rem .8rem; border: 1px solid var(--line-strong);
+  border-radius: 8px; background: var(--surface); color: var(--fg); box-shadow: inset 0 1px 2px rgba(16,24,40,.04); }
+textarea { min-height: 7.5rem; resize: vertical; }
+textarea:focus, input[type=text]:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+.row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin: .7rem 0; }
+.row input[type=text] { flex: 1 1 10rem; width: auto; }
+.row label { font-size: .88rem; color: var(--muted); }
+button.go { background: var(--accent); color: #fff; border: 1px solid var(--accent); border-radius: 8px; padding: .5rem 1rem;
+  font: 600 .9rem var(--ui); cursor: pointer; box-shadow: var(--shadow); }
+button.go:hover { background: var(--accent-ink); }
+button.go[data-tr] { background: var(--surface); color: var(--accent-ink); border-color: var(--line-strong); }
+button.go[data-tr]:hover { background: var(--accent-soft); }
+button.go:disabled { opacity: .6; cursor: wait; }
+button:focus-visible, nav.side button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.out { margin-top: 1rem; display: grid; gap: .6rem; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: .8rem 1rem; box-shadow: var(--shadow); }
+.deva { font-family: var(--deva); font-size: 1.06rem; }
+.pill { display: inline-block; padding: .08rem .6rem; border-radius: 999px; font-size: .78rem; font-weight: 600; margin-right: .4rem; }
+.pill.ok { background: var(--ok-soft); color: var(--ok); }
+.pill.bad { background: var(--warn-soft); color: var(--warn); }
+.meta { color: var(--muted); font-size: .84rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .4rem; }
+.chip { font-family: var(--deva); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: .08rem .45rem; }
+.chip.btn { cursor: pointer; background: var(--accent-soft); border-color: transparent; }
+.chip.btn:hover { border-color: var(--accent); }
+.ak i { font-style: normal; border-right: 1px dashed var(--line-strong); padding: 0 .14rem; }
+.ak i:last-child { border-right: 0; }
+table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+td, th { text-align: left; padding: .45rem .55rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { color: var(--muted); font-weight: 600; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }
+.ent { border-radius: 4px; padding: .02rem .25rem; font-family: var(--deva); }
+.ent sup { font: 700 .6rem var(--ui); margin-left: .18rem; color: var(--fg); opacity: .65; }
+.PER { background: var(--per); } .LOC { background: var(--loc); } .ORG { background: var(--org); }
+.MISC { background: var(--misc); } .DATE { background: var(--date); }
+.legend { display: flex; gap: .4rem; flex-wrap: wrap; font-size: .85rem; margin-bottom: .6rem; }
+.err { color: var(--warn); background: var(--warn-soft); border-color: #f3cfc4; }
+mark { background: var(--date); color: inherit; border-radius: 3px; padding: 0 .1rem; }
+.bar { height: 8px; background: var(--accent); border-radius: 4px; opacity: .85; }
+.tr { margin-top: .4rem; padding: .3rem .7rem; border-left: 3px solid var(--accent); background: var(--bg); border-radius: 0 6px 6px 0; font-size: .95rem; }
+/* overview */
+.lead { font-size: 1.05rem; color: var(--fg); max-width: 72ch; margin: .2rem 0 1.2rem; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .7rem; margin-bottom: 1.4rem; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: .8rem 1rem; box-shadow: var(--shadow); }
+.kpi b { display: block; font-size: 1.5rem; letter-spacing: -.02em; font-variant-numeric: tabular-nums; color: var(--accent-ink); }
+.kpi span { font-size: .82rem; color: var(--muted); }
+.phases { display: grid; gap: .8rem; }
+.ph { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem; box-shadow: var(--shadow); }
+.ph header { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; margin-bottom: .4rem; }
+.ph h3 { margin: 0; font-size: 1.05rem; }
+.tag { font-size: .72rem; font-weight: 700; padding: .1rem .55rem; border-radius: 999px; }
+.tag.done { background: var(--ok-soft); color: var(--ok); }
+.tag.prog { background: #fff4d6; color: #8a5a00; }
+.ph ul { margin: .2rem 0 0; padding-left: 1.1rem; }
+.ph li { margin: .2rem 0; }
+.ph .tabs { margin-top: .5rem; font-size: .82rem; color: var(--muted); }
+.ph .tabs a { color: var(--accent); cursor: pointer; text-decoration: none; font-weight: 600; }
+.ph .tabs a:hover { text-decoration: underline; }
+/* on-screen Konkani keyboard */
+.kb-toggle { position: fixed; right: max(16px, 2vw); bottom: 16px; z-index: 40; background: var(--accent); color: #fff;
+  border: 0; border-radius: 999px; padding: .6rem 1.1rem; font: 600 .9rem var(--ui); cursor: pointer; box-shadow: 0 4px 14px rgba(15, 94, 120, .3); }
+#kb { position: fixed; left: 0; right: 0; bottom: 0; z-index: 35; background: #eef2f6; border-top: 1px solid var(--line-strong);
+  box-shadow: 0 -6px 20px rgba(16, 24, 40, .1); padding: .5rem max(8px, 2vw) 3.6rem; max-height: 62vh; overflow-y: auto; }
+#kb .sugg { display: flex; gap: .35rem; overflow-x: auto; padding: .2rem 0 .5rem; min-height: 2.3rem; border-bottom: 1px solid var(--line-strong); margin-bottom: .4rem; }
+#kb .sugg button { flex: none; font: 1.05rem var(--deva); background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: .25rem .75rem; cursor: pointer; }
+#kb .krow { display: flex; flex-wrap: wrap; gap: .3rem; margin: .25rem 0; justify-content: center; }
+#kb .krow .lab { width: 100%; text-align: center; font-size: .68rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; font-weight: 700; }
+#kb .key { min-width: 2.5rem; height: 2.6rem; font: 1.2rem var(--deva); background: var(--surface); color: var(--fg);
+  border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 7px; cursor: pointer; padding: 0 .35rem; }
+#kb .key:active { background: var(--accent-soft); }
+#kb .key.wide { min-width: 9rem; font: .88rem var(--ui); }
+#kb .key.act { min-width: 4.4rem; font: .82rem var(--ui); }
+body.kb-open main { padding-bottom: 62vh; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand"><div class="logo">को</div><div><b>Konkani NLP</b><small>NLP Experiential Learning · Konkani (Devanagari) corpus and models</small></div></div>
+  <div class="status"><i></i>Running locally · nothing leaves this computer</div>
+</div>
+<div class="layout">
+<nav class="side" aria-label="Sections"></nav>
+<main>
+
+<section data-tab="Overview" data-group="Project">
+  <p class="phase">Project overview</p>
+  <h2>A Konkani corpus, and NLP built on it</h2>
+  <p class="lead">Konkani, the official language of Goa, has almost no usable digital text. We built a clean Konkani (Devanagari) corpus, measured it, and used it to train language tools.</p>
+  <div class="kpis">
+    <div class="kpi"><b>10.51M</b><span>clean words</span></div>
+    <div class="kpi"><b>1.11M</b><span>sentences</span></div>
+    <div class="kpi"><b>613</b><span>documents, 5 domains</span></div>
+    <div class="kpi"><b>573</b><span>newspaper issues by OCR</span></div>
+  </div>
+  <div class="phases">
+    <article class="ph"><header><h3>Phase 1 · Corpus</h3><span class="tag done">Done</span></header>
+      <ul>
+        <li><b>Collected</b> 573 <span class="d">भांगरभूंय</span> newspaper issues, Konkani Wikipedia, 15 books, an NCERT textbook.</li>
+        <li><b>OCR measured</b>: 4.8% character errors on books, about 1% on newspaper text.</li>
+        <li><b>Cleaned in 3 rounds</b>: 11.62M → 10.51M words (junk, Marathi/Hindi, duplicates removed).</li>
+        <li><b>Analysed</b>: Zipf slope −1.02, Heaps b 0.71; 1,087 words cover half of all text.</li>
+        <li><b>Sentences</b> split with F1 0.990; train / dev / test split by document (8.46M / 1.01M / 1.04M).</li>
+      </ul>
+      <div class="tabs">Try: <a data-go="Language check">Language check</a> · <a data-go="Sentences">Sentences</a> · <a data-go="Corpus search">Corpus search</a></div>
+    </article>
+    <article class="ph"><header><h3>Phase 2 · Classic NLP</h3><span class="tag done">Done</span></header>
+      <ul>
+        <li><b>Tokenisers</b>: BPE / Unigram pieces remove unknown words (whole words: 4–5% unseen).</li>
+        <li><b>N-gram language models</b>: 5 smoothing methods; Kneser-Ney 4-gram best, perplexity 484.</li>
+        <li><b>Word embeddings</b>: word2vec, FastText, GloVe; FastText best (similarity ρ 0.47).</li>
+      </ul>
+      <div class="tabs">Try: <a data-go="Tokenisers">Tokenisers</a> · <a data-go="Autocomplete">Autocomplete</a> · <a data-go="Similar words">Similar words</a></div>
+    </article>
+    <article class="ph"><header><h3>Phase 3 · Neural models and NER</h3><span class="tag prog">In progress</span></header>
+      <ul>
+        <li><b>Neural language models</b>: feed-forward, LSTM, Transformer trained from scratch; best LSTM perplexity 1,389 vs n-gram 1,121, still improving.</li>
+        <li><b>Named entity recognition</b>: Konkani guidelines, 300 labelled sentences, baseline F1 0.49.</li>
+        <li><b>Next</b>: grow and verify NER data, fine-tune MuRIL / IndicBERT.</li>
+      </ul>
+      <div class="tabs">Try: <a data-go="Generate">Generate</a> · <a data-go="Names (NER)">Names (NER)</a></div>
+    </article>
+  </div>
+  <p class="meta" style="margin-top:1rem">English translation buttons use AI4Bharat's IndicTrans2, a pretrained model from outside this project.</p>
+</section>
+
+
+<section data-tab="Language check" data-group="Phase 1 · Corpus">
+  <h2>Is it Konkani?</h2>
+  <p class="phase">Phase 1 · Cleaning, iteration 2 · <code>validate_konkani.py</code></p>
+  <dl class="info"><div><dt>What it is</dt><dd>The filter that keeps Marathi and Hindi out of our Konkani corpus. All three languages use the same Devanagari script, so the computer cannot tell them apart by the letters alone.</dd></div><div><dt>How it works</dt><dd>Every paragraph is scanned for small, very common words that only one language uses: Konkani <span class="d">आसा, आनी, हांव</span>; Marathi <span class="d">आहे, आणि, मी</span>; Hindi <span class="d">है, और, में</span>. If at least 2 Marathi/Hindi markers appear and they outnumber the Konkani ones, the paragraph is dropped. It also drops OCR garbage (words that start with a vowel sign, or more than 15% broken words) and number tables.</dd></div><div><dt>NLP concept</dt><dd>Language identification, rule-based with marker words. A random check of 200 final paragraphs found only 1% non-Konkani left.</dd></div><div><dt>Try this</dt><dd>Click <b>Check</b> on the example: one Konkani, one Marathi and one Hindi sentence saying the same thing. Then paste any text, one paragraph per line.</dd></div></dl>
+  <textarea id="lang-in">हांव आयज घरा आसां आनी म्हाका बरें दिसता.
+मी आज घरी आहे आणि मला बरे वाटते.
+मैं आज घर पर हूँ और मुझे अच्छा लग रहा है।
+एक दीस नवी दिल्लींत म्हाका एका पायलट इश्टान भोव रंजक माहिती दिली.</textarea>
+  <div class="row"><button class="go" data-run="lang">Check</button></div>
+  <div class="out" id="lang-out"></div>
+</section>
+
+<section data-tab="Sentences" data-group="Phase 1 · Corpus">
+  <h2>Sentence splitter</h2>
+  <p class="phase">Phase 1 · Sentence segmentation (brief step 8) · <code>segment_sentences.py</code></p>
+  <dl class="info"><div><dt>What it is</dt><dd>Cuts running text into sentences, one per line, which every later model needs.</dd></div><div><dt>How it works</dt><dd>A full stop is not always the end of a sentence. The rules skip abbreviations (<span class="d">डॉ.</span>, <span class="d">श्री.</span>), initials (<span class="d">डी.</span>, any one-syllable word), decimals (3.5) and list numbers, and start a new sentence at a newspaper dateline such as <span class="d">मडगांव:</span>. Under each sentence, words are shown split into <b>aksharas</b> (written syllables), the unit we use for word length.</dd></div><div><dt>NLP concept</dt><dd>Sentence boundary detection, measured with precision, recall and F1 against a hand-checked test set: F1 0.990 on 154 paragraphs it never saw during development.</dd></div><div><dt>Try this</dt><dd>Click <b>Split</b>: the example has <span class="d">डॉ.</span> twice, an initial <span class="d">डी.</span>, the number 3.5 and a dateline. Then <b>Translate to English</b> to read each sentence.</dd></div></dl>
+  <textarea id="seg-in">तांतूंत डॉ. अंतोनियो कुलासो आनी डॉ. पुंडलिक डी. गायतोंडे हांची संसदेचेर नेमणूक जाली. पावस 3.5 सेंमी पडलो! मडगांव: सरकारी नोकरी सांबाळून सुटयेच्या दिसांनी पर्यटकां मेरेन पावोवपाचें काम तो करता.</textarea>
+  <div class="row"><button class="go" data-run="seg">Split</button><button class="go" type="button" data-tr="#seg-out">Translate to English</button></div>
+  <div class="out" id="seg-out"></div>
+</section>
+
+<section data-tab="Tokenisers" data-group="Phase 2 · Classic NLP">
+  <h2>How models see words</h2>
+  <p class="phase">Phase 2 · Tokenisation · SentencePiece models trained on our corpus</p>
+  <dl class="info"><div><dt>What it is</dt><dd>Shows how a sentence is broken into the units a model actually reads: whole words, or smaller learned pieces.</dd></div><div><dt>How it works</dt><dd>A whole-word model only knows words it saw in training; 4–5% of words in new text are unseen. Subword tokenisers (BPE and Unigram) learned frequent pieces from our corpus, so any word, even a new one, can be built from pieces such as <span class="d">घर + ांत</span>. ▁ marks the start of a word. <b>Pieces per word</b> (fertility) shows the cost: smaller vocabularies cut words into more pieces.</dd></div><div><dt>NLP concept</dt><dd>Subword tokenisation (BPE, Unigram LM), vocabulary size, out-of-vocabulary words. Important for Konkani because grammar is glued onto words.</dd></div><div><dt>Try this</dt><dd>Click <b>Tokenise</b>, then compare BPE 8k (many cuts) with BPE 32k (few cuts). Try a long or made-up word.</dd></div></dl>
+  <input type="text" id="tok-in" value="घरांतल्यान भायर सरतना ताणें आवयबापायक उलो मारलो">
+  <div class="row"><button class="go" data-run="tok">Tokenise</button></div>
+  <div class="out" id="tok-out"></div>
+</section>
+
+<section data-tab="Autocomplete" data-group="Phase 2 · Classic NLP">
+  <h2>Next-word suggestions</h2>
+  <p class="phase">Phase 2 · N-gram language model · counted on our 8.5M-word training split</p>
+  <dl class="info"><div><dt>What it is</dt><dd>A phone-keyboard style autocomplete for Konkani.</dd></div><div><dt>How it works</dt><dd>The model counted every sequence of 3 words in the training text. Given the last two words you typed, it suggests the words that most often came next (trigram). If that context is rare, it falls back to the last word only (bigram, weight 0.4), then to the most common words (weight 0.16); this is called <b>stupid backoff</b>. If you stop in the middle of a word, it completes that word instead.</dd></div><div><dt>NLP concept</dt><dd>Language modelling with n-grams: predicting the next word from the previous ones. The same idea, with proper smoothing (Kneser-Ney), gives our best perplexity of 484.</dd></div><div><dt>Try this</dt><dd>Type <span class="d">मुख्यमंत्री प्रमोद</span> and a space (→ <span class="d">सावंत</span>), or type <span class="d">कोंक</span>. Click a suggestion to add it. The ⌨ keyboard at the bottom right uses the same model.</dd></div></dl>
+  <input type="text" id="ac-in" value="गोंय सरकारान ">
+  <div class="out" id="ac-out"></div>
+</section>
+
+<section data-tab="Similar words" data-group="Phase 2 · Classic NLP">
+  <h2>Word meaning from vectors</h2>
+  <p class="phase">Phase 2 · Word embeddings · FastText trained on our corpus</p>
+  <dl class="info"><div><dt>What it is</dt><dd>Finds words with similar meaning, learned only from how words are used, with no dictionary.</dd></div><div><dt>How it works</dt><dd>Each word is turned into a list of 100 numbers (a vector) so that words used in similar contexts get similar vectors. <b>Neighbours</b> are the words whose vectors point in the closest direction (cosine similarity, 1.0 = identical). <b>Analogy</b> does arithmetic on meanings: a : b :: c : ? is answered by the word nearest to b − a + c. FastText builds vectors from character pieces, so it also handles word endings and misspellings, and can place words it never saw.</dd></div><div><dt>NLP concept</dt><dd>Distributional semantics, word2vec/FastText embeddings, cosine similarity, analogies. FastText scored best of five models (similarity ρ 0.47; 42% of analogies with 2–5-character pieces).</dd></div><div><dt>Try this</dt><dd>Neighbours of <span class="d">आवय</span> (mother): the model finds father and parents. Then solve brother : sister :: son : ?</dd></div></dl>
+  <div class="row"><input type="text" id="sim-in" value="आवय"><button class="go" data-run="sim">Find neighbours</button></div>
+  <div class="row"><input type="text" id="an-a" value="भाव"><span>:</span><input type="text" id="an-b" value="भयण"><span>::</span><input type="text" id="an-c" value="पूत"><span>: ?</span><button class="go" data-run="ana">Solve</button></div>
+  <div class="out" id="sim-out"></div>
+</section>
+
+<section data-tab="Generate" data-group="Phase 3 · Neural and NER">
+  <h2>Neural text generation</h2>
+  <p class="phase">Phase 3 · Neural language model · LSTM trained on our corpus</p>
+  <dl class="info"><div><dt>What it is</dt><dd>A small neural network that writes Konkani: it continues the sentence you start.</dd></div><div><dt>How it works</dt><dd>The text is split into SentencePiece pieces. The LSTM reads them one by one, keeps a memory of what came before, and gives a probability for every possible next piece. One of the 40 most likely pieces is picked at random, added, and the process repeats until the model ends the sentence. <b>Temperature</b> controls the randomness: low = safe and repetitive, high = varied and less sensible.</dd></div><div><dt>NLP concept</dt><dd>Recurrent neural networks (LSTM), language modelling, sampling with temperature and top-k. The same model family as early neural machine translation and text generation.</dd></div><div><dt>Try this</dt><dd>Click <b>Generate 3</b> on the newspaper-style prompt, then try 0.5 and 1.2 temperature.</dd></div><div><dt>Keep in mind</dt><dd>It learned mostly from newspapers, so it writes like a newspaper, and <span class="d">&lt;NUM&gt;</span> stands for any number. It is small and trained for 25 minutes on a laptop CPU, so sentences are fluent in places but not always meaningful.</dd></div></dl>
+  <input type="text" id="gen-in" value="पणजी: राज्य सरकारान">
+  <div class="row"><label for="gen-t">Temperature</label><input type="range" id="gen-t" min="0.3" max="1.5" step="0.1" value="0.8"><span id="gen-tv">0.8</span><button class="go" data-run="gen">Generate 3</button></div>
+  <div class="out" id="gen-out"></div>
+</section>
+
+<section data-tab="Names (NER)" data-group="Phase 3 · Neural and NER">
+  <h2>Named entity recognition</h2>
+  <p class="phase">Phase 3 · Named Entity Recognition · baseline tagger <code>ner_baselines.py</code></p>
+  <dl class="info"><div><dt>What it is</dt><dd>Finds names in text and labels them: people, places, organisations, dates and other names.</dd></div><div><dt>How it works</dt><dd>Two parts. A <b>gazetteer</b> (list of known names) matched even when Konkani adds a case ending, so <span class="d">गोंयांत</span> (in Goa) still matches <span class="d">गोंय</span>. Then <b>rules</b>: up to 3 words after an honorific (<span class="d">डॉ., श्री</span>) or before a respectful verb form (<span class="d">हांणी, हांचे</span>) are a person; number + month + year is a date.</dd></div><div><dt>NLP concept</dt><dd>Named entity recognition, BIO tagging, gazetteers and rules as a baseline before machine-learned models (CRF, then MuRIL/IndicBERT).</dd></div><div><dt>Try this</dt><dd>Click <b>Find names</b>. Notice what it misses: Devanagari has no capital letters, so unknown person names are hard; that is why this baseline scores F1 ≈ 0.49 and why we are building an annotated dataset.</dd></div></dl>
+  <div class="legend"><span class="ent PER">person<sup>PER</sup></span><span class="ent LOC">place<sup>LOC</sup></span><span class="ent ORG">organisation<sup>ORG</sup></span><span class="ent MISC">other<sup>MISC</sup></span><span class="ent DATE">date<sup>DATE</sup></span></div>
+  <textarea id="ner-in">तांतूंत डॉ. अंतोनियो कुलासो आनी डॉ. पुंडलिक डी. गायतोंडे हांची संसदेचेर नेमणूक जाली.
+मडगांवांत 15 ऑगस्ट 2025 दिसा मुख्यमंत्री प्रमोद सावंत हांणी भाशण केलें.
+पणजेंतल्या कला अकादमींत गोंय कोंकणी अकादमीचो कार्यक्रम जालो.</textarea>
+  <div class="row"><button class="go" data-run="ner">Find names</button></div>
+  <div class="out" id="ner-out"></div>
+</section>
+
+<section data-tab="Corpus search" data-group="Phase 1 · Corpus">
+  <h2>Search the corpus</h2>
+  <p class="phase">Phase 1 · The finished corpus · 1.11 million sentences, 10.51 million words</p>
+  <dl class="info"><div><dt>What it is</dt><dd>A search engine over the corpus we built, showing how often a word is used and where.</dd></div><div><dt>How it works</dt><dd>Shows the word's <b>frequency rank</b> (rank 1 = most common word) and count from the Phase 1 frequency list, how many sentences contain it, and up to 25 example sentences. The grey label under each sentence is the source document: <span class="d">news_bhaangarbhuin_2026_…</span> is a newspaper issue and its date, <span class="d">lit_…</span> a book, <span class="d">wiki_…</span> Wikipedia.</dd></div><div><dt>NLP concept</dt><dd>Corpus, frequency lists, concordance (keyword in context). These counts are what Zipf's law and the coverage analysis are built on.</dd></div><div><dt>Try this</dt><dd>Search <span class="d">मोगाचो</span> (of love), then a common word like <span class="d">आसा</span> and a place like <span class="d">मडगांव</span>. Click <b>Translate to English</b> to read the examples.</dd></div></dl>
+  <div class="row"><input type="text" id="cs-in" value="मोगाचो"><button class="go" data-run="cs">Search</button><button class="go" type="button" data-tr="#cs-out">Translate to English</button></div>
+  <div class="out" id="cs-out"></div>
+</section>
+
+</main>
+</div>
+<button class="kb-toggle" id="kb-toggle" aria-expanded="false" aria-controls="kb">⌨ कोंकणी keyboard</button>
+<div id="kb" hidden aria-label="Konkani keyboard">
+  <div class="sugg" id="kb-sugg" aria-label="Next-word suggestions"></div>
+  <div id="kb-keys"></div>
+</div>
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+async function api(name, body) {
+  const r = await fetch("/api/" + name, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const j = await r.json();
+  if (j.error) throw new Error(j.error);
+  return j;
+}
+async function run(btn, outSel, fn) {
+  const out = $(outSel);
+  if (btn) btn.disabled = true;
+  out.innerHTML = '<div class="meta">Working… (the first run of a tool loads its model)</div>';
+  try { out.innerHTML = await fn(); } catch (e) { out.innerHTML = '<div class="card err">' + esc(e.message) + "</div>"; }
+  if (btn) btn.disabled = false;
+}
+
+// navigation: sidebar grouped by phase
+const sections = [...document.querySelectorAll("section[data-tab]")];
+const nav = $("nav.side");
+const ORDER = ["Project", "Phase 1 · Corpus", "Phase 2 · Classic NLP", "Phase 3 · Neural and NER"];
+const navBtns = {};
+ORDER.forEach((g) => {
+  const box = document.createElement("div"); box.className = "grp";
+  box.innerHTML = `<p>${g}</p>`;
+  sections.filter((s) => s.dataset.group === g).forEach((s) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = s.dataset.tab; b.onclick = () => show(s.dataset.tab);
+    navBtns[s.dataset.tab] = b; box.appendChild(b);
+  });
+  nav.appendChild(box);
+});
+function show(name) {
+  if (!navBtns[name]) name = "Overview";
+  sections.forEach((s) => (s.hidden = s.dataset.tab !== name));
+  Object.entries(navBtns).forEach(([k, b]) => b.setAttribute("aria-selected", k === name));
+  try { localStorage.setItem("tab-name", name); } catch (e) {}
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll("[data-go]").forEach((a) => (a.onclick = () => show(a.dataset.go)));
+let start = "Overview"; try { start = localStorage.getItem("tab-name") || "Overview"; } catch (e) {}
+show(start);
+
+const R = {
+  lang: async () => (await api("langid", { text: $("#lang-in").value })).paragraphs.map((p) =>
+    `<div class="card"><span class="pill ${p.kept ? "ok" : "bad"}">${esc(p.label)}</span>
+     <span class="meta">${p.kept ? "kept" : "dropped"} · markers Konkani ${p.konkani}, Marathi ${p.marathi}, Hindi ${p.hindi} · ${p.tokens} tokens · ${p.invalid} malformed · Devanagari ${p.deva}%</span>
+     <div class="deva">${esc(p.text)}</div></div>`).join(""),
+  seg: async () => (await api("segment", { text: $("#seg-in").value })).sentences.map((s, i) =>
+    `<div class="card"><span class="meta">Sentence ${i + 1} · ${s.tokens} tokens</span><div class="deva tr-src">${esc(s.text)}</div>
+     <div class="chips">${s.aksharas.map((w) => `<span class="chip ak">${w.a.map((a) => "<i>" + esc(a) + "</i>").join("")}</span>`).join("")}</div></div>`).join(""),
+  tok: async () => {
+    const j = await api("tokenize", { text: $("#tok-in").value });
+    return `<div class="card"><table><tr><th>Tokeniser</th><th>Pieces per word</th><th>Pieces</th></tr>${j.rows.map((r) =>
+      `<tr><td>${esc(r.name)}</td><td>${r.fertility}</td><td><div class="chips">${r.pieces.map((p) => `<span class="chip">${esc(p)}</span>`).join("")}</div></td></tr>`).join("")}</table>
+      <div class="meta">▁ marks the start of a word.</div></div>`;
+  },
+  ac: async () => {
+    const j = await api("complete", { text: $("#ac-in").value });
+    const max = j.suggestions[0] ? j.suggestions[0].score : 1;
+    return `<div class="card"><div class="meta">${j.prefix ? "Completing “" + esc(j.prefix) + "” · " : ""}used: ${j.backoff.join(" → ")}</div>
+      <table>${j.suggestions.map((s) => `<tr><td style="width:40%"><span class="chip btn" data-w="${esc(s.word)}">${esc(s.word)}</span></td>
+      <td><div class="bar" style="width:${Math.max(3, 100 * s.score / max)}%"></div></td><td class="meta">${s.score}</td></tr>`).join("")}</table></div>`;
+  },
+  sim: async () => {
+    const j = await api("similar", { word: $("#sim-in").value });
+    return `<div class="card"><div class="meta">${j.known ? "In the vocabulary" : "Not seen in training: vector built from character pieces"}</div>
+      <table>${j.neighbours.map((n) => `<tr><td class="deva">${esc(n.word)}</td><td class="meta">${n.sim}</td></tr>`).join("")}</table></div>`;
+  },
+  ana: async () => {
+    const j = await api("similar", { word: "", a: $("#an-a").value, b: $("#an-b").value, c: $("#an-c").value });
+    return `<div class="card"><div class="meta">${esc($("#an-a").value)} : ${esc($("#an-b").value)} :: ${esc($("#an-c").value)} : ?</div>
+      <table>${j.analogy.map((n, i) => `<tr><td class="deva">${i === 0 ? "<b>" + esc(n.word) + "</b>" : esc(n.word)}</td><td class="meta">${n.sim}</td></tr>`).join("")}</table></div>`;
+  },
+  gen: async () => {
+    const j = await api("generate", { prompt: $("#gen-in").value, temperature: $("#gen-t").value });
+    return j.continuations.map((c) => `<div class="card deva"><b>${esc(j.prompt)}</b> ${esc(c)}</div>`).join("") +
+      `<div class="meta">Model: ${esc(j.checkpoint)}. &lt;NUM&gt; stands for any number.</div>`;
+  },
+  ner: async () => {
+    const j = await api("ner", { text: $("#ner-in").value });
+    return j.sentences.map((toks) => {
+      let html = "", i = 0;
+      while (i < toks.length) {
+        const t = toks[i];
+        if (t.tag.startsWith("B-")) {
+          const typ = t.tag.slice(2); let span = [t.t]; i++;
+          while (i < toks.length && toks[i].tag === "I-" + typ) { span.push(toks[i].t); i++; }
+          html += `<span class="ent ${typ}">${esc(span.join(" "))}<sup>${typ}</sup></span> `;
+        } else { html += esc(t.t) + " "; i++; }
+      }
+      return `<div class="card deva">${html}</div>`;
+    }).join("") + `<div class="meta">Gazetteer entries: ${j.gazetteer_entries}</div>`;
+  },
+  cs: async () => {
+    const j = await api("search", { word: $("#cs-in").value });
+    const re = new RegExp(j.word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g");
+    return `<div class="card">${j.rank ? `Rank <b>${j.rank.toLocaleString()}</b> · ${j.count.toLocaleString()} occurrences` : "Not in the frequency list"}
+      · in ${j.sentences_total.toLocaleString()} of ${j.corpus_sentences.toLocaleString()} sentences</div>` +
+      j.hits.map((h) => `<div class="card"><div class="deva tr-src" data-src="${esc(h.text)}">${esc(h.text).replace(re, (m) => "<mark>" + m + "</mark>")}</div><div class="meta">${esc(h.doc)}</div></div>`).join("");
+  },
+};
+const OUT = { lang: "#lang-out", seg: "#seg-out", tok: "#tok-out", ac: "#ac-out", sim: "#sim-out", ana: "#sim-out", gen: "#gen-out", ner: "#ner-out", cs: "#cs-out" };
+document.querySelectorAll("[data-run]").forEach((b) => (b.onclick = () => run(b, OUT[b.dataset.run], R[b.dataset.run])));
+// autocomplete as you type
+let acTimer;
+$("#ac-in").addEventListener("input", () => { clearTimeout(acTimer); acTimer = setTimeout(() => run(null, "#ac-out", R.ac), 250); });
+$("#ac-out").addEventListener("click", (e) => {
+  const w = e.target.dataset && e.target.dataset.w; if (!w) return;
+  const v = $("#ac-in").value; const cut = /\s$/.test(v) ? v : v.replace(/\S+$/, "");
+  $("#ac-in").value = cut + w + " "; $("#ac-in").focus(); run(null, "#ac-out", R.ac);
+});
+$("#gen-t").addEventListener("input", (e) => ($("#gen-tv").textContent = e.target.value));
+
+
+// ---------------------------------------------------------------- English translation (outside model: IndicTrans2)
+document.querySelectorAll("[data-tr]").forEach((b) => (b.onclick = async () => {
+  const out = $(b.dataset.tr);
+  const nodes = [...out.querySelectorAll(".tr-src")].slice(0, 40);
+  if (!nodes.length) { out.insertAdjacentHTML("afterbegin", '<div class="meta">Run the tool first, then translate its sentences.</div>'); return; }
+  b.disabled = true; const label = b.textContent; b.textContent = "Translating…";
+  out.querySelectorAll(".tr").forEach((n) => n.remove());
+  try {
+    const j = await api("translate", { sentences: nodes.map((n) => n.dataset.src || n.textContent) });
+    nodes.forEach((n, i) => n.insertAdjacentHTML("afterend", `<div class="tr">${esc(j.translations[i] || "")}</div>`));
+    out.insertAdjacentHTML("beforeend", `<div class="meta">English by ${esc(j.model)} (AI4Bharat IndicTrans2, a pretrained model from outside this project; machine translation, may be wrong).</div>`);
+  } catch (e) { out.insertAdjacentHTML("afterbegin", '<div class="card err">' + esc(e.message) + "</div>"); }
+  b.disabled = false; b.textContent = label;
+}));
+// ---------------------------------------------------------------- Konkani keyboard
+const KB_ROWS = [
+  ["Vowels", "अ आ इ ई उ ऊ ऋ ए ऐ ओ औ ॲ ऑ"],
+  ["Vowel signs", "ा ि ी ु ू ृ े ै ो ौ ॅ ॉ ं ँ ः ् ़"],
+  ["Consonants", "क ख ग घ ङ च छ ज झ ञ ट ठ ड ढ ण"],
+  ["", "त थ द ध न प फ ब भ म य र ल ळ व"],
+  ["", "श ष स ह क्ष ज्ञ त्र श्र ऱ्"],
+  ["Numbers & punctuation", "० १ २ ३ ४ ५ ६ ७ ८ ९ । ॥ , . ? ! : “ ”"],
+];
+let kbTarget = $("#ac-in");
+document.addEventListener("focusin", (e) => {
+  if (e.target.matches("textarea, input[type=text]")) kbTarget = e.target;
+});
+function kbInsert(s) {
+  const el = kbTarget; el.focus();
+  const a = el.selectionStart ?? el.value.length, b = el.selectionEnd ?? a;
+  el.value = el.value.slice(0, a) + s + el.value.slice(b);
+  el.selectionStart = el.selectionEnd = a + s.length;
+  el.dispatchEvent(new Event("input", { bubbles: true }));
+}
+function kbBackspace() {
+  const el = kbTarget; el.focus();
+  let a = el.selectionStart ?? el.value.length, b = el.selectionEnd ?? a;
+  if (a === b && a > 0) a -= 1;                 // one code point: removes a vowel sign or virama on its own
+  el.value = el.value.slice(0, a) + el.value.slice(b);
+  el.selectionStart = el.selectionEnd = a;
+  el.dispatchEvent(new Event("input", { bubbles: true }));
+}
+const keys = $("#kb-keys");
+KB_ROWS.forEach(([label, chars]) => {
+  const row = document.createElement("div"); row.className = "krow";
+  if (label) { const l = document.createElement("div"); l.className = "lab"; l.textContent = label; row.appendChild(l); }
+  chars.split(" ").forEach((c) => {
+    const k = document.createElement("button"); k.className = "key"; k.type = "button";
+    k.textContent = /^[ािीुूृेैोौॅॉंँः़्]$/.test(c) ? "◌" + c : c;   // show signs on a dotted circle
+    k.dataset.ch = c; row.appendChild(k);
+  });
+  keys.appendChild(row);
+});
+const act = document.createElement("div"); act.className = "krow";
+act.innerHTML = '<button class="key act" type="button" data-act="bs">⌫ Delete</button>' +
+  '<button class="key wide" type="button" data-act="sp">space</button>' +
+  '<button class="key act" type="button" data-act="nl">↵ Enter</button>';
+keys.appendChild(act);
+keys.addEventListener("mousedown", (e) => e.preventDefault());   // keep the text box focused
+keys.addEventListener("click", (e) => {
+  const k = e.target.closest(".key"); if (!k) return;
+  if (k.dataset.ch) kbInsert(k.dataset.ch);
+  else if (k.dataset.act === "bs") kbBackspace();
+  else if (k.dataset.act === "sp") kbInsert(" ");
+  else if (k.dataset.act === "nl") kbInsert(kbTarget.tagName === "TEXTAREA" ? "\n" : " ");
+});
+// suggestion strip: same trigram model as the Autocomplete tab
+let kbTimer;
+async function kbSuggest() {
+  const strip = $("#kb-sugg");
+  try {
+    const j = await api("complete", { text: kbTarget.value.slice(0, kbTarget.selectionStart ?? kbTarget.value.length) });
+    strip.innerHTML = j.suggestions.slice(0, 8).filter((s) => s.word !== "<NUM>")
+      .map((s) => `<button type="button" data-w="${esc(s.word)}">${esc(s.word)}</button>`).join("");
+  } catch (e) { strip.innerHTML = '<span class="meta">' + esc(e.message) + "</span>"; }
+}
+document.addEventListener("input", (e) => {
+  if ($("#kb").hidden || !e.target.matches("textarea, input[type=text]")) return;
+  clearTimeout(kbTimer); kbTimer = setTimeout(kbSuggest, 200);
+});
+$("#kb-sugg").addEventListener("mousedown", (e) => e.preventDefault());
+$("#kb-sugg").addEventListener("click", (e) => {
+  const w = e.target.dataset && e.target.dataset.w; if (!w) return;
+  const el = kbTarget, pos = el.selectionStart ?? el.value.length;
+  const before = el.value.slice(0, pos), start = /\s$/.test(before) || !before ? pos : before.search(/\S+$/);
+  el.selectionStart = start; el.selectionEnd = pos;
+  kbInsert(w + " ");
+});
+$("#kb-toggle").onclick = () => {
+  const kb = $("#kb"); kb.hidden = !kb.hidden;
+  document.body.classList.toggle("kb-open", !kb.hidden);
+  $("#kb-toggle").setAttribute("aria-expanded", !kb.hidden);
+  $("#kb-toggle").textContent = kb.hidden ? "⌨ कोंकणी keyboard" : "✕ Close keyboard";
+  if (!kb.hidden) { kbTarget.focus(); kbSuggest(); }
+};
+["#sim-in", "#cs-in", "#tok-in", "#gen-in"].forEach((s) => $(s).addEventListener("keydown", (e) => {
+  if (e.key === "Enter") ({ "#sim-in": () => run(null, "#sim-out", R.sim), "#cs-in": () => run(null, "#cs-out", R.cs),
+    "#tok-in": () => run(null, "#tok-out", R.tok), "#gen-in": () => run(null, "#gen-out", R.gen) })[s]();
+}));
+</script>
+</body>
+</html>

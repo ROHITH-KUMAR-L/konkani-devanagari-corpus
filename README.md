@@ -4,7 +4,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 > **Requirements:** see [PRD.md](PRD.md) for goals, numbered requirements, acceptance criteria and risks.
 >
-> **Status (22 Nov 2026):** Phase 1 done (`corpus-v1.0`): **10.51M clean tokens**, 613 documents, 5 domains, all 573 e-paper issues included (live numbers: [docs/report.md](docs/report.md)). Phase 2 (tokenisers, n-gram LMs, embeddings) done on the earlier 6.06M-token splits; a re-run on the final splits is pending. Phase 3 started: neural LMs and an NER setup with a silver set. Stage-by-stage change list: [docs/progress_log.md](docs/progress_log.md). See [Progress and remaining work](#progress-and-remaining-work).
+> **Status (22 Nov 2026):** Phase 1 done (`corpus-v1.0`): **10.51M clean tokens**, 613 documents, 5 domains, all 573 e-paper issues included (live numbers: [docs/report.md](docs/report.md)). Phase 2 (tokenisers, n-gram LMs, embeddings) done on the final splits. Phase 3 started: neural LMs and an NER setup with a silver set. Live demo: `scripts/demo/` (see [§8](#8-how-to-run)). Stage-by-stage change list: [docs/progress_log.md](docs/progress_log.md). See [Progress and remaining work](#progress-and-remaining-work).
 
 ---
 
@@ -31,8 +31,8 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 | Phase | Status | Summary |
 |---|---|---|
 | **Phase 1:** corpus building and analysis | ✅ Done | Final run on all 573 e-paper issues: 10.51M clean tokens, splits 8.46M / 1.01M / 1.04M, held-out segmentation F1 0.990; tagged `corpus-v1.0`. Team checks of the AI-drafted gold sets still open |
-| **Phase 2:** tokenisers, n-gram LMs, embeddings | 🟢 Done (draft) | Modified-KN 4-gram test perplexity 554; FastText best embeddings (ρ 0.47–0.50). Test sets need team verification |
-| **Phase 3:** neural LMs, NER | 🟡 Started | LSTM / Transformer LMs (25-min LSTM within 3% of KN); NER guidelines, 300-sentence silver set, gazetteer and CRF baselines |
+| **Phase 2:** tokenisers, n-gram LMs, embeddings | 🟢 Done | Modified-KN 4-gram test perplexity 484; FastText best embeddings (ρ 0.47, 42% analogies). Test sets need team verification |
+| **Phase 3:** neural LMs, NER | 🟡 Started | LSTM / Transformer LMs (25-min LSTM 1,389 vs KN 1,121 per-word perplexity, still improving); NER guidelines, 300-sentence silver set, gazetteer and CRF baselines |
 
 ### Phase 1: done ✅
 
@@ -82,7 +82,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 - [x] Konkani word-similarity (213 pairs) and analogy (118) test sets; nearest neighbours; t-SNE plots
 - [x] Learning curves with 10/25/50/100% of the corpus
 - [ ] Team: verify `data/eval/word_similarity.tsv` and `analogies.tsv` (drafted by Claude)
-- [ ] Phase 2 report: refresh `docs/phase2_lm.md` tables to the final splits; write `docs/phase2_embeddings.md` (results are in `results/phase2/`)
+- [x] Phase 2 reports on the final splits: [docs/phase2_lm.md](docs/phase2_lm.md), [docs/phase2_embeddings.md](docs/phase2_embeddings.md)
 
 ### Phase 3: in progress 🟡
 *Details in [§6](#6-phase-3-neural-models-and-applications).*
@@ -404,6 +404,14 @@ file data/processed/combined/*.txt                # must say: UTF-8 text (no CRL
 ```
 
 `fetch_epaper.py` keeps only Konkani titles, downloads only issues the site offers free, waits 1 s between requests, and git-ignores the page PDFs. `data/interim/iter*`, `data/processed/` and `data/splits/` are build outputs and are not committed.
+
+**Live demo.** After Phase 2 and 3 have been run (models in `data/models/`), a local web app shows the work interactively: language check, sentence splitter, tokenisers, autocomplete, similar words, LSTM text generation, NER, corpus search, an on-screen Konkani keyboard and English translation of sentences.
+
+```bash
+.venv-phase2/bin/python scripts/demo/app.py --warm    # open http://127.0.0.1:8050
+```
+
+Translation uses AI4Bharat's IndicTrans2 (`ai4bharat/indictrans2-indic-en-dist-200M`), an outside pretrained model: install `transformers<4.50` and `IndicTransToolkit` into `.venv-phase2`, accept the model's terms on Hugging Face and run `.venv-phase2/bin/hf auth login`. Without it, every other tab still works.
 
 ---
 

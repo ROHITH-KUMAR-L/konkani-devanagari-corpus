@@ -108,28 +108,37 @@ def split_sentences(para):
 def build(inp, out):
     out = Path(out)
     comb = out / "combined"
-    files = {}
-    for c in CATEGORIES:
+    header = "doc_id\tsent_id\tn_tokens\tsentence\n"
+    files = {}                       # per-category files, opened only for categories that have text
+    for c in CATEGORIES:             # clear old outputs so empty categories leave no empty files behind
         d = out / "by_category" / c
-        d.mkdir(parents=True, exist_ok=True)
-        files[c] = (open(d / "corpus_clean.txt", "w", encoding="utf-8", newline="\n"),
-                    open(d / "sentences.tsv", "w", encoding="utf-8", newline="\n"))
+        for name in ("corpus_clean.txt", "sentences.tsv"):
+            (d / name).unlink(missing_ok=True)
+        if d.is_dir() and not any(d.iterdir()):
+            d.rmdir()
+
+    def cat_files(c):
+        if c not in files:
+            d = out / "by_category" / c
+            d.mkdir(parents=True, exist_ok=True)
+            files[c] = (open(d / "corpus_clean.txt", "w", encoding="utf-8", newline="\n"),
+                        open(d / "sentences.tsv", "w", encoding="utf-8", newline="\n"))
+            files[c][1].write(header)
+        return files[c]
+
     comb.mkdir(parents=True, exist_ok=True)
     f_clean = open(comb / "konkani_devanagari_clean.txt", "w", encoding="utf-8", newline="\n")
     f_sent = open(comb / "sentences.txt", "w", encoding="utf-8", newline="\n")
     f_tsv = open(comb / "sentences.tsv", "w", encoding="utf-8", newline="\n")
     f_docs = open(comb / "documents.jsonl", "w", encoding="utf-8", newline="\n")
-    header = "doc_id\tsent_id\tn_tokens\tsentence\n"
     f_tsv.write(header)
-    for _, tsv in files.values():
-        tsv.write(header)
     n_sent = 0
     for cat, doc_id, path in iter_docs(inp):
         text = read_doc(path).strip()
         if not text:
             continue
         f_docs.write(json.dumps({"doc_id": doc_id, "category": cat, "text": text}, ensure_ascii=False) + "\n")
-        clean, tsv = files[cat]
+        clean, tsv = cat_files(cat)
         clean.write(text + "\n")
         f_clean.write(text + "\n")
         sid = 0

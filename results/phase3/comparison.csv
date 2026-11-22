@@ -1,10 +1,10 @@
 model,unit,test_ppl_per_word,test_ppl_per_unit,test_bpc,test_ppl_per_word_invocab,test_ppl_per_word_oov_only
-mKN 3-gram,spm-unigram-16k,2895.28,324.11,1.9493,778.54,2961419137.64
-mKN 4-gram,spm-unigram-16k,2691.3,307.39,1.9315,727.13,2618493696.66
-mKN 5-gram,spm-unigram-16k,2656.91,304.53,1.9283,717.9,2582662462.81
-mKN 3-gram,"word (count>=2, OOV->UNK)",567.27,567.27,,785.0,
-mKN 4-gram,"word (count>=2, OOV->UNK)",553.89,553.89,,765.65,
-ffnn,spm-unigram-16k,10351.76,816.6,2.2609,2760.2,11572098150.59
-lstm,spm-unigram-16k,4952.75,478.41,2.0806,1390.7,3210710096.67
-transformer,spm-unigram-16k,7286.49,633.01,2.175,2035.62,4983657480.69
-char_lstm,char (88),18352.17,5.28,2.4009,5690.69,4182573793.93
+mKN 3-gram,spm-unigram-16k,1261.56,219.37,1.7528,586.43,2951923860.43
+mKN 4-gram,spm-unigram-16k,1144.27,203.78,1.7289,533.63,2516468612.21
+mKN 5-gram,spm-unigram-16k,1121.33,200.69,1.7239,523.01,2459771484.9
+mKN 3-gram,"word (count>=2, OOV->UNK)",502.65,502.65,,585.68,
+mKN 4-gram,"word (count>=2, OOV->UNK)",484.23,484.23,,563.59,
+ffnn,spm-unigram-16k,5254.58,644.15,2.1031,2392.1,18336653920.95
+lstm,spm-unigram-16k,2620.38,380.93,1.9323,1212.39,6705547778.68
+transformer,spm-unigram-16k,3405.04,464.23,1.9966,1576.46,8605724218.96
+char_lstm,char (88),10223.43,4.81,2.2665,5025.76,8196822972.58
