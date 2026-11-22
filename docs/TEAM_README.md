@@ -50,6 +50,16 @@ bash scripts/run_phase3_lm.sh            # neural LMs, installs torch CPU (~25 m
 
 Results go to `results/phase2/` and `results/phase3/`. The write-ups are `docs/phase2_lm.md`, `docs/phase3_neural_lm.md` and `docs/phase3_ner.md`.
 
+## 3b. Trained models and the live demo (optional)
+
+`konkani_models.zip` (717 MB, shared separately) holds the trained models: SentencePiece tokenisers, word vectors, neural LMs. Unzip it from the repo root as well; it fills `data/models/`. Then:
+
+```bash
+.venv-phase2/bin/python scripts/demo/app.py --warm      # open http://127.0.0.1:8050
+```
+
+Without the models zip, run the three scripts above first (about an hour). English translation in the demo also needs `uv pip install -p .venv-phase2 "transformers<4.50" IndicTransToolkit` and a Hugging Face login (accept the terms of `ai4bharat/indictrans2-indic-en-dist-200M`, then `.venv-phase2/bin/hf auth login`).
+
 ## 4. What the team still has to check
 
 These were first-pass labelled by Claude (an AI). Fix them before quoting their numbers:
