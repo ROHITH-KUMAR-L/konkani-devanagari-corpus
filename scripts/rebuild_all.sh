@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Rebuild everything downstream of the collected data, then pack the teammate zip.
-#   Phase 1 pipeline (.venv)  ->  Phase 2 LM + embeddings (.venv-phase2)  ->  ../konkani_corpus_processed.zip
+#   Phase 1 pipeline (.venv)  ->  Phase 2 LM + embeddings (.venv-phase2)  ->  ../konkani_corpus_processed.zip + ../konkani_models.zip
 # Usage: bash scripts/rebuild_all.sh            (writes rebuild_all.log, and rebuild_all.done on success)
 #        WAIT_FOR_FETCH=1 bash scripts/rebuild_all.sh   (first wait until fetch_epaper.py fetch exits)
 set -euo pipefail
@@ -25,6 +25,12 @@ rm -f "$ZIP"
 zip -qr9 "$ZIP" data/processed data/splits results/split_summary.json metadata/data_dictionary.md docs/report.md
 zip -qj9 "$ZIP" docs/TEAM_README.md    # team guide at the zip root
 unzip -tq "$ZIP"
+# trained models for the demo (learning-curve models and rebuildable caches left out)
+MZIP=../konkani_models.zip
+rm -f "$MZIP"
+zip -qr1 "$MZIP" data/models -x 'data/models/lc/*' 'data/models/train.tok.txt' 'data/models/demo_ngram.npz' 'data/models/timings*'
+unzip -tq "$MZIP"
+ls -lh "$MZIP"
 ls -lh "$ZIP"
 
 date > rebuild_all.done

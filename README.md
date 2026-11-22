@@ -71,7 +71,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 - [x] Newspaper OCR CER (FR-E6): 902 words from 3 issues, AI-transcribed reference; corpus text CER 1.06%, WER 4.43% (`results/ocr_quality/epaper_summary.txt`)
 - [ ] Optional: categories 05/07 if a reachable Konkani source turns up. Anusvara post-correction (FR-N9) deliberately skipped: both forms are often real words
 - [x] Sharing decided: processed corpus and splits stay out of GitHub and go to the team as a zip
-- [x] Teammate zip of `data/processed` + `data/splits` (final 10.51M-token corpus); usage guide inside it (`TEAM_README.md`)
+- [x] Teammate zips (Google Drive): corpus `konkani_corpus_processed.zip` and models `konkani_models.zip`; usage guide [docs/TEAM_README.md](docs/TEAM_README.md), also inside the corpus zip
 - [x] New zip, tag `corpus-v1.0`
 
 ### Phase 2 ✅
@@ -239,13 +239,23 @@ konkani-devanagari-corpus/
 
 Column-level descriptions of every file: [metadata/data_dictionary.md](metadata/data_dictionary.md).
 
-### Sharing the corpus
+### Sharing the corpus and models
 
-`data/processed/`, `data/splits/` and `data/interim/iter*/` are too large for GitHub (hundreds of MB) and contain copyrighted text, so they are **not committed**. Either rebuild them with `scripts/run_phase1.sh` (needs only the committed `data/raw` + `data/interim` text), or use the zip shared within the team:
+`data/processed/`, `data/splits/`, `data/interim/iter*/` and `data/models/` are **not committed**: seven files are over GitHub's 100 MB limit, and the text is copyrighted. They are shared with the team as two zips in the team's Google Drive folder ("Konkani NLP project data"):
+
+| Zip | Size | Contents |
+|---|---|---|
+| `konkani_corpus_processed.zip` | 268 MB | `data/processed`, `data/splits`, report, data dictionary, [TEAM_README.md](docs/TEAM_README.md) |
+| `konkani_models.zip` | 717 MB | `data/models` (tokenisers, word vectors, neural LMs), needed for the demo without retraining |
+
+Clone the repo and unzip both **inside the repo folder**; the full steps (environments, demo, translation login) are in [docs/TEAM_README.md](docs/TEAM_README.md). Alternatively rebuild everything: `scripts/run_phase1.sh` (needs only the committed `data/raw` + `data/interim` text), then the Phase 2/3 scripts.
+
+To make new zips (sender):
 
 ```bash
-zip -r konkani_corpus_processed.zip data/processed data/splits     # sender
-unzip konkani_corpus_processed.zip                                  # receiver, from the repo root
+zip -qr9 ../konkani_corpus_processed.zip data/processed data/splits results/split_summary.json metadata/data_dictionary.md docs/report.md
+zip -qj9 ../konkani_corpus_processed.zip docs/TEAM_README.md
+zip -qr1 ../konkani_models.zip data/models -x 'data/models/lc/*' 'data/models/train.tok.txt' 'data/models/demo_ngram.npz' 'data/models/timings*'
 ```
 
 ---
