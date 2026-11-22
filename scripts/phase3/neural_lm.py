@@ -60,6 +60,7 @@ import argparse
 import copy
 import csv
 import math
+import os
 import sys
 import time
 from pathlib import Path
@@ -286,6 +287,42 @@ def make_model(name, V, counts, args):
     raise ValueError(name)
 
 
+def save_checkpoint(model, path, model_name, vocab_size):
+    """Atomically save a versioned checkpoint; the reader also accepts legacy state dicts."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + ".tmp")
+    try:
+        torch.save({
+            "format_version": 1,
+            "model_name": model_name,
+            "vocab_size": int(vocab_size),
+            "state_dict": model.state_dict(),
+        }, temporary)
+        os.replace(temporary, path)
+    except Exception:
+        temporary.unlink(missing_ok=True)
+        raise
+
+
+def load_checkpoint(model, path, device="cpu", model_name=None, vocab_size=None):
+    """Load a versioned checkpoint or a legacy plain state dict with compatibility checks."""
+    payload = torch.load(path, map_location=device, weights_only=True)
+    if isinstance(payload, dict) and "state_dict" in payload:
+        if payload.get("format_version") != 1:
+            raise ValueError(f"unsupported checkpoint format: {payload.get('format_version')}")
+        if model_name is not None and payload.get("model_name") != model_name:
+            raise ValueError(f"checkpoint is for {payload.get('model_name')}, not {model_name}")
+        if vocab_size is not None and payload.get("vocab_size") != int(vocab_size):
+            raise ValueError(
+                f"checkpoint vocabulary size {payload.get('vocab_size')} does not match {vocab_size}"
+            )
+        state_dict = payload["state_dict"]
+    else:
+        state_dict = payload
+    model.load_state_dict(state_dict)
+
+
 def forward(model, x):
     """Hidden states; the body runs under bfloat16 autocast if enabled, the output layer never does."""
     with torch.autocast(x.device.type, dtype=torch.bfloat16, enabled=AMP["enabled"]):
@@ -412,6 +449,12 @@ def train_model(name, model, data, V, args, device, budget_s, log_rows):
     rng = np.random.default_rng(args.seed)
     tr, dv = data["train"], data["dev"]
     n_tr = len(tr.slen)
+    if n_tr == 0:
+        raise ValueError("training split contains no sentences")
+    if len(dv.slen) == 0:
+        raise ValueError("development split contains no sentences")
+    if budget_s <= 0:
+        raise ValueError("training budget must be positive")
     tr_idx = np.arange(n_tr)
     if args.max_train_sentences and n_tr > args.max_train_sentences:
         tr_idx = np.sort(rng.choice(n_tr, args.max_train_sentences, replace=False))
@@ -477,6 +520,10 @@ def train_model(name, model, data, V, args, device, budget_s, log_rows):
                 break
         if stop:
             break
+    if best_state is None:
+        pos, lp = score(model, dv, dev_idx, V, device)
+        best = metrics(dv, pos, lp, dev_idx)["ppl_per_word"]
+        best_state = copy.deepcopy(model.state_dict())
     model.load_state_dict(best_state)
     return dict(steps=step, epochs=round(seen / int(ch[:, 2].sum()), 2),
                 train_targets_seen=seen, train_minutes=round((time.time() - t0) / 60, 2),
@@ -626,7 +673,13 @@ def main():
     ap.add_argument("--seed", type=int, default=2026)
     ap.add_argument("--prepare-only", action="store_true", help="only train the SPM model if missing")
     args = ap.parse_args()
+    if args.threads < 1 or args.batch_tokens < 1 or args.max_len < 1 or args.char_max_len < 1:
+        ap.error("--threads, --batch-tokens, --max-len, and --char-max-len must be positive")
+    if args.eval_every < 1 or args.warmup < 1 or args.patience < 1 or args.max_epochs < 1:
+        ap.error("--eval-every, --warmup, --patience, and --max-epochs must be positive")
     budget = {k: float(v) * 60 for k, v in (b.split("=") for b in args.budget)}
+    if any(v <= 0 for v in budget.values()):
+        ap.error("training budgets must be positive")
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -673,7 +726,7 @@ def main():
         counts = np.bincount(data[kind]["train"].seq, minlength=V)
         model = make_model(name, V, counts, args).to(device)
         info = train_model(name, model, data[kind], V, args, device, budget.get(name, 5 * 60), log_rows)
-        torch.save(model.state_dict(), models_dir / f"phase3_{name}.pt")
+        save_checkpoint(model, models_dir / f"phase3_{name}.pt", name, V)
         row = dict(model=name, unit=unit_name[kind], params=sum(p.numel() for p in model.parameters()), **info)
         t = time.time()
         for split in args.final_splits:

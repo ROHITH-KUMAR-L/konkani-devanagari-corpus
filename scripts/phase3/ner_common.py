@@ -37,15 +37,33 @@ def read_conll(path):
             meta[k] = v
         elif not line.strip():
             if toks:
+                _validate_sentence(toks, tags, meta)
                 sents.append(Sentence(meta, toks, tags))
             meta, toks, tags = {}, [], []
         else:
-            t, tag = line.split("\t")
+            fields = line.split("\t")
+            if len(fields) != 2:
+                raise ValueError(f"expected token<TAB>tag in {path}: {line!r}")
+            t, tag = fields
             toks.append(t)
             tags.append(tag)
     if toks:
+        _validate_sentence(toks, tags, meta)
         sents.append(Sentence(meta, toks, tags))
     return sents
+
+
+def _validate_sentence(tokens, tags, meta):
+    if len(tokens) != len(tags):
+        raise ValueError(f"token/tag length mismatch in {meta.get('sent_id', '<unknown>')}")
+    allowed = {"O"} | {f"{prefix}-{label}" for prefix in ("B", "I") for label in LABELS}
+    previous = None
+    for tag in tags:
+        if tag not in allowed:
+            raise ValueError(f"invalid NER tag {tag!r} in {meta.get('sent_id', '<unknown>')}")
+        if tag.startswith("I-") and previous != tag[2:]:
+            raise ValueError(f"orphaned inside tag {tag!r} in {meta.get('sent_id', '<unknown>')}")
+        previous = tag[2:] if tag != "O" else None
 
 
 def write_conll(path, sents, header=None):
@@ -56,6 +74,7 @@ def write_conll(path, sents, header=None):
                 f.write(f"# {h}\n")
             f.write("\n")
         for s in sents:
+            _validate_sentence(s.tokens, s.tags, s.meta)
             for k, v in s.meta.items():
                 f.write(f"# {k} = {v}\n")
             for t, g in zip(s.tokens, s.tags):

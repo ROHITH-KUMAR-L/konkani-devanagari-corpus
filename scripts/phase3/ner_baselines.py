@@ -15,7 +15,8 @@ It also runs 5-fold cross-validation of the crf_dev setup over all 300 silver
 sentences, because a 150-sentence test set gives very wide error bars.
 
 Outputs: results/phase3/ner_scores.csv, results/phase3/ner_cv.csv,
-         results/phase3/ner_test_predictions.tsv
+         results/phase3/ner_test_predictions.tsv,
+         results/phase3/ner_token_confusion_matrix.csv (token-level diagnostic)
 """
 import argparse
 import csv
@@ -26,6 +27,7 @@ import warnings
 from pathlib import Path
 
 import sklearn_crfsuite
+from sklearn.metrics import confusion_matrix
 from seqeval.metrics import classification_report
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -127,6 +129,9 @@ def sent2features(tokens, seed_gaz):
             "num": bool(NUM_RE.match(t)),
             "year": bool(YEAR_RE.match(t)),
             "latin": bool(LATIN_RE.match(t)),
+            "devanagari": any("\u0900" <= ch <= "\u097f" for ch in t),
+            "nukta": "़" in t,
+            "virama": "्" in t,
             "month": is_month(t),
             "weekday": is_weekday(t),
             "gaz": gtags[i],
@@ -143,9 +148,9 @@ def sent2features(tokens, seed_gaz):
         else:
             f.update(word_feats(tokens[i + 1], "+1:", gtags[i + 1]))
         if i > 1:
-            f["-2:w"] = tokens[i - 2]
+            f.update(word_feats(tokens[i - 2], "-2:", gtags[i - 2]))
         if i + 2 < len(tokens):
-            f["+2:w"] = tokens[i + 2]
+            f.update(word_feats(tokens[i + 2], "+2:", gtags[i + 2]))
         feats.append(f)
     return feats
 
@@ -201,6 +206,19 @@ def report_rows(system, train_desc, gold, pred):
         rows.append([system, train_desc, k, round(r["precision"], 4), round(r["recall"], 4),
                      round(r["f1-score"], 4), int(r["support"])])
     return rows
+
+
+def write_token_confusion(path, gold, pred):
+    """Write a token-level BIO confusion matrix; entity-level scores remain primary."""
+    labels = ["O"] + [f"{p}-{label}" for label in LABELS for p in ("B", "I")]
+    gold_flat = [tag for sent in gold for tag in sent]
+    pred_flat = [tag for sent in pred for tag in sent]
+    matrix = confusion_matrix(gold_flat, pred_flat, labels=labels)
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["gold\\pred"] + labels)
+        for label, row in zip(labels, matrix):
+            w.writerow([label] + row.tolist())
 
 
 def main():
@@ -275,6 +293,8 @@ def main():
             for i, t in enumerate(s.tokens):
                 f.write(f"{s.meta['sent_id']}\t{t}\t{s.tags[i]}\t" +
                         "\t".join(preds[n][k][i] for n in sysnames) + "\n")
+
+    write_token_confusion(out / "ner_token_confusion_matrix.csv", gold, preds["crf_dev"])
 
     for r in rows:
         if r[2] == "micro avg":

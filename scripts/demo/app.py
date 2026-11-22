@@ -23,6 +23,7 @@ Usage:
 """
 import argparse
 import json
+import logging
 import re
 import sys
 import threading
@@ -61,9 +62,16 @@ def cached(name, build):
         return _cache[name]
 
 
+def require_text(value, name):
+    if not isinstance(value, str):
+        raise ValueError(f"{name} must be a string")
+    return value
+
+
 # ------------------------------------------------------------------ language check
 
 def api_langid(text):
+    text = require_text(text, "text")
     from validate_konkani import judge
     out = []
     for para in [p for p in text.split("\n") if p.strip()]:
@@ -79,6 +87,7 @@ def api_langid(text):
 # ------------------------------------------------------------------ sentences
 
 def api_segment(text):
+    text = require_text(text, "text")
     from clean_text import fix_line, normalise
     from segment_sentences import split_sentences
     sents = []
@@ -99,6 +108,7 @@ def _spm(name):
 
 
 def api_tokenize(text):
+    text = require_text(text, "text")
     words = tokenize(text)
     line = " ".join(words)
     rows = [dict(name="Whole words", pieces=words, fertility=1.0)]
@@ -184,6 +194,7 @@ class Trigram:
 
 
 def api_complete(text):
+    text = require_text(text, "text")
     model = cached("trigram", Trigram)
     words = tokenize(text)
     prefix = ""
@@ -202,15 +213,20 @@ def _kv():
 
 
 def api_similar(word, a="", b="", c=""):
+    word, a, b, c = (
+        require_text(value, name) for value, name in ((word, "word"), (a, "a"), (b, "b"), (c, "c"))
+    )
+    word, a, b, c = (value.strip() for value in (word, a, b, c))
+    if not word and not (a and b and c):
+        raise ValueError("provide a word or all three analogy terms")
     kv = _kv()
     out = {}
     if word:
-        word = word.strip()
         known = word in kv.key_to_index
         out["neighbours"] = [dict(word=w, sim=round(s, 3)) for w, s in kv.most_similar(word, topn=12)]
         out["known"] = known
     if a and b and c:
-        res = kv.most_similar(positive=[b.strip(), c.strip()], negative=[a.strip()], topn=5)
+        res = kv.most_similar(positive=[b, c], negative=[a], topn=5)
         out["analogy"] = [dict(word=w, sim=round(s, 3)) for w, s in res]
     return out
 
@@ -219,11 +235,21 @@ def api_similar(word, a="", b="", c=""):
 
 class Generator:
     def __init__(self):
+        ckpt = MODELS / "extended/phase3_lstm.pt"
+        if not ckpt.exists():
+            ckpt = MODELS / "phase3_lstm.pt"
+        if not ckpt.exists():
+            raise FileNotFoundError(
+                "no LSTM checkpoint found; run scripts/phase3/neural_lm.py with verified train/dev/test splits"
+            )
+        spm_path = MODELS / "spm_unigram_16000.model"
+        if not spm_path.exists():
+            raise FileNotFoundError(f"SentencePiece model not found: {spm_path}")
         import torch
         import sentencepiece as spm
         import neural_lm as nl
         self.torch, self.nl = torch, nl
-        self.sp = spm.SentencePieceProcessor(model_file=str(MODELS / "spm_unigram_16000.model"))
+        self.sp = spm.SentencePieceProcessor(model_file=str(spm_path))
         V = self.sp.vocab_size()
         counts_path = MODELS / "demo_piece_counts.npy"
         if counts_path.exists():
@@ -237,13 +263,7 @@ class Generator:
             np.save(counts_path, counts)
         args = SimpleNamespace(ff_context=3, max_len=128)
         self.model = nl.make_model("lstm", V, counts, args)
-        ckpt = MODELS / "extended/phase3_lstm.pt"
-        if not ckpt.exists():
-            ckpt = MODELS / "phase3_lstm.pt"
-        if not ckpt.exists():
-            raise FileNotFoundError("no LSTM checkpoint yet: run `bash scripts/run_phase3_lm.sh` first "
-                                    "(it saves data/models/phase3_lstm.pt)")
-        self.model.load_state_dict(torch.load(ckpt, map_location="cpu"))
+        nl.load_checkpoint(self.model, ckpt, model_name="lstm", vocab_size=V)
         self.model.eval()
         self.ckpt = str(ckpt.relative_to(ROOT))
 
@@ -269,6 +289,7 @@ class Generator:
 
 
 def api_generate(prompt, temperature=0.8):
+    prompt = require_text(prompt, "prompt")
     g = cached("lstm", Generator)
     t = max(0.3, min(1.5, float(temperature)))
     return {"prompt": " ".join(tokenize(prompt)), "continuations": g.generate(prompt, temperature=t),
@@ -294,13 +315,18 @@ def _ner():
 
 
 def api_ner(text):
+    text = require_text(text, "text")
     rule_tag, gaz = cached("ner", _ner)
     out = []
     for line in [l for l in text.split("\n") if l.strip()]:
         toks = ner_tokens(line)
         tags = rule_tag(toks, gaz)
         out.append([dict(t=t, tag=g) for t, g in zip(toks, tags)])
-    return {"sentences": out, "gazetteer_entries": len(gaz)}
+    return {
+        "sentences": out,
+        "gazetteer_entries": len(gaz),
+        "note": "Rule/gazetteer suggestions only; silver_dev entries are AI-generated and not human-verified gold.",
+    }
 
 
 # ------------------------------------------------------------------ corpus search
@@ -322,8 +348,13 @@ def _corpus():
 
 
 def api_search(word, limit=25):
-    freq, sents = cached("corpus", _corpus)
+    word = require_text(word, "word")
     word = word.strip()
+    if not word:
+        raise ValueError("search word must not be empty")
+    if isinstance(limit, bool) or not isinstance(limit, int) or limit < 1:
+        raise ValueError("search result limit must be positive")
+    freq, sents = cached("corpus", _corpus)
     pat = re.compile(r"(?<![ऀ-ॿ‌‍])" + re.escape(word) + r"(?![ऀ-ॿ‌‍])")
     hits, total = [], 0
     for doc, s in sents:
@@ -371,6 +402,8 @@ class Translator:
 
 
 def api_translate(sentences):
+    if not isinstance(sentences, list) or not all(isinstance(s, str) for s in sentences):
+        raise ValueError("sentences must be a list of strings")
     sents = [s.strip() for s in sentences if s.strip()][:40]      # keep one request to a few seconds
     if not sents:
         return {"translations": []}
@@ -409,16 +442,25 @@ class Handler(BaseHTTPRequestHandler):
         if not fn:
             return self._send(404, json.dumps({"error": f"unknown endpoint {name}"}), "application/json")
         try:
-            args = json.loads(self.rfile.read(int(self.headers.get("Content-Length", 0))) or b"{}")
+            length = int(self.headers.get("Content-Length", 0))
+            if length < 0:
+                raise ValueError("invalid Content-Length")
+            args = json.loads(self.rfile.read(length) or b"{}")
+            if not isinstance(args, dict):
+                raise ValueError("request body must be a JSON object")
             res = fn(**args)
             self._send(200, json.dumps(res, ensure_ascii=False), "application/json; charset=utf-8")
         except FileNotFoundError as e:
-            self._send(200, json.dumps({"error": str(e)}, ensure_ascii=False), "application/json; charset=utf-8")
+            self._send(503, json.dumps({"error": str(e)}, ensure_ascii=False), "application/json; charset=utf-8")
         except KeyError as e:
-            self._send(200, json.dumps({"error": f"not in the model's vocabulary: {e}"}, ensure_ascii=False),
+            self._send(422, json.dumps({"error": f"not in the model's vocabulary: {e}"}, ensure_ascii=False),
                        "application/json; charset=utf-8")
-        except Exception as e:  # report to the page instead of dropping the connection
-            self._send(500, json.dumps({"error": f"{type(e).__name__}: {e}"}, ensure_ascii=False),
+        except (json.JSONDecodeError, TypeError, ValueError) as e:
+            self._send(400, json.dumps({"error": str(e)}, ensure_ascii=False),
+                       "application/json; charset=utf-8")
+        except Exception:
+            logging.exception("Demo API endpoint %s failed", name)
+            self._send(500, json.dumps({"error": "internal server error"}, ensure_ascii=False),
                        "application/json; charset=utf-8")
 
     def log_message(self, fmt, *args):

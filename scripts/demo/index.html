@@ -358,7 +358,7 @@ const R = {
         } else { html += esc(t.t) + " "; i++; }
       }
       return `<div class="card deva">${html}</div>`;
-    }).join("") + `<div class="meta">Gazetteer entries: ${j.gazetteer_entries}</div>`;
+    }).join("") + `<div class="meta">Gazetteer entries: ${j.gazetteer_entries} · ${esc(j.note)}</div>`;
   },
   cs: async () => {
     const j = await api("search", { word: $("#cs-in").value });
