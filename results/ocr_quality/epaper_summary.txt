@@ -1,0 +1,62 @@
+E-paper OCR quality (Bhaangarbhuin, FR-E6)
+Reference: AI-transcribed reference (Claude vision), not human-typed; team spot-check recommended.
+Regions: data/eval/ocr_gold/epaper/manifest.csv (6 article regions from 3 issues: 2025-04-15, 2025-11-18, 2026-06-16)
+Characters compared: 6070; words compared: 902; printed lines: 203
+
+(a) Tesseract mar+hin --psm 3 on each region crop (rendered 150 dpi greyscale like fetch_epaper.py), whole region, reading order counts:
+    CER (raw OCR):                14.10%
+    CER (punct spacing fixed):    14.12%
+    WER (raw OCR):                22.06%
+    WER (punct spacing fixed):    22.17%
+    CER excl. uncertain words:    14.18%  (54 reference chars in 7 uncertain tokens dropped)
+    Median region CER:            1.75%
+(b) Same crop OCR, every printed line aligned on its own (layout-independent):
+    CER 3.97%   WER 9.20%   CER excl. uncertain 3.94%   line order kept 85.26%
+(c) Text actually stored in the corpus (data/interim/02_news_and_media/epaper/BHAANGARBHUIN/<issue>/page_NN.txt, full-page OCR), every printed line aligned on its own:
+    CER 1.06%   WER 4.43%   CER excl. uncertain 1.00%   line order kept 74.21%   lines with alignment score < 80: 1
+    'line order kept' = share of consecutive printed lines that are also adjacent in the OCR text; a low value means lines of neighbouring columns are interleaved.
+All rates micro-averaged; 'punct spacing fixed' removes the space OCR puts before punctuation, as in summary.txt.
+
+Per region:            words  (a) CER    WER   excl.unc | (b) CER    WER  | (c) CER    WER   order
+  A1  2025-04-15 p03   208   53.06% 68.27%  53.49% | 11.98% 19.71% |  0.90%  3.37%  30.2%
+  A2  2025-04-15 p03   122    9.22% 22.13%   9.22% |  3.05%  9.02% |  0.49%  3.28%  39.1%
+  B1  2025-11-18 p03   178    1.05%  5.62%   0.89% |  1.09%  5.62% |  1.09%  5.62%  97.1%
+  B2  2025-11-18 p03    95    1.32%  6.32%   1.32% |  1.36%  6.32% |  0.91%  4.21%  95.5%
+  C1  2026-06-16 p03   120    2.18%  5.83%   2.18% |  2.01%  5.83% |  2.01%  5.83%  96.3%
+  C2  2026-06-16 p03   179    0.95%  4.47%   0.79% |  0.98%  4.47% |  0.98%  4.47%  95.0%
+
+Error types in (a) (character class gold -> OCR; 857 edits):
+    158   18.4%  insert   <none> -> consonant
+    116   13.5%  delete   consonant -> <none>
+     77    9.0%  replace  consonant -> consonant
+     77    9.0%  delete   vowel sign (matra) -> <none>
+     74    8.6%  insert   <none> -> vowel sign (matra)
+     60    7.0%  insert   <none> -> space
+     38    4.4%  delete   space -> <none>
+     21    2.5%  insert   <none> -> punctuation
+     21    2.5%  replace  consonant -> vowel sign (matra)
+     21    2.5%  delete   anusvara/chandrabindu -> <none>
+     19    2.2%  replace  vowel sign (matra) -> vowel sign (matra)
+     17    2.0%  insert   <none> -> anusvara/chandrabindu
+
+Top 20 character confusions in (a) (after punct spacing fix; full list in epaper_confusions.csv):
+     60  insert   <none>  ->  <space>
+     38  delete   <space>  ->  <none>
+     34  delete   ा (DEVANAGARI VOWEL SIGN AA)  ->  <none>
+     29  insert   <none>  ->  ा (DEVANAGARI VOWEL SIGN AA)
+     21  delete   ं (DEVANAGARI SIGN ANUSVARA)  ->  <none>
+     17  insert   <none>  ->  ल (DEVANAGARI LETTER LA)
+     17  insert   <none>  ->  न (DEVANAGARI LETTER NA)
+     17  insert   <none>  ->  ं (DEVANAGARI SIGN ANUSVARA)
+     16  insert   <none>  ->  ् (DEVANAGARI SIGN VIRAMA)
+     16  delete   ् (DEVANAGARI SIGN VIRAMA)  ->  <none>
+     15  insert   <none>  ->  त (DEVANAGARI LETTER TA)
+     15  delete   े (DEVANAGARI VOWEL SIGN E)  ->  <none>
+     13  insert   <none>  ->  र (DEVANAGARI LETTER RA)
+     12  insert   <none>  ->  ी (DEVANAGARI VOWEL SIGN II)
+     12  delete   ी (DEVANAGARI VOWEL SIGN II)  ->  <none>
+     11  insert   <none>  ->  क (DEVANAGARI LETTER KA)
+     11  delete   ल (DEVANAGARI LETTER LA)  ->  <none>
+     11  delete   न (DEVANAGARI LETTER NA)  ->  <none>
+     11  delete   क (DEVANAGARI LETTER KA)  ->  <none>
+     10  insert   <none>  ->  े (DEVANAGARI VOWEL SIGN E)

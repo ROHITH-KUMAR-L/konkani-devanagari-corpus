@@ -1,0 +1,11 @@
+region_id,part,issue_date,issue_id,pdf,page,dpi,x,y,w,h,article
+A1,1,2025-04-15,3997952,data/raw/02_news_and_media/epaper/BHAANGARBHUIN/2025-04-15_3997952/page_03.pdf,3,150,394,2850,387,891,वर्गांचेर बहिष्कार घालूंक ना (cols 1-2)
+A1,2,2025-04-15,3997952,data/raw/02_news_and_media/epaper/BHAANGARBHUIN/2025-04-15_3997952/page_03.pdf,3,150,781,2770,388,964,वर्गांचेर बहिष्कार घालूंक ना (cols 1-2)
+A2,1,2025-04-15,3997952,data/raw/02_news_and_media/epaper/BHAANGARBHUIN/2025-04-15_3997952/page_03.pdf,3,150,0,2690,388,1050,वक्फ दुरुस्तीक गोंयांतूय विरोध
+B1,1,2025-11-18,4083386,data/raw/02_news_and_media/epaper/BHAANGARBHUIN/2025-11-18_4083386/page_03.pdf,3,150,0,1608,394,767,गोंयांत शीं वाडलें (cols 1-2)
+B1,2,2025-11-18,4083386,data/raw/02_news_and_media/epaper/BHAANGARBHUIN/2025-11-18_4083386/page_03.pdf,3,150,397,1608,384,765,गोंयांत शीं वाडलें (cols 1-2)
+B2,1,2025-11-18,4083386,data/raw/02_news_and_media/epaper/BHAANGARBHUIN/2025-11-18_4083386/page_03.pdf,3,150,791,1687,378,688,इश्टक वाटावपा खातीर गेलो (cols 1-2)
+B2,2,2025-11-18,4083386,data/raw/02_news_and_media/epaper/BHAANGARBHUIN/2025-11-18_4083386/page_03.pdf,3,150,1175,2129,387,246,इश्टक वाटावपा खातीर गेलो (cols 1-2)
+C1,1,2026-06-16,4164223,data/raw/02_news_and_media/epaper/BHAANGARBHUIN/2026-06-16_4164223/page_03.pdf,3,150,0,2049,394,1131,बाणावले आदले आमदार इत्सुकांचे वळेरेंत (col 1)
+C2,1,2026-06-16,4164223,data/raw/02_news_and_media/epaper/BHAANGARBHUIN/2026-06-16_4164223/page_03.pdf,3,150,0,4053,397,809,108 एम्बुलन्स सेवे खातीर कमांड सेंटर (cols 1-2)
+C2,2,2026-06-16,4164223,data/raw/02_news_and_media/epaper/BHAANGARBHUIN/2026-06-16_4164223/page_03.pdf,3,150,397,3973,397,886,108 एम्बुलन्स सेवे खातीर कमांड सेंटर (cols 1-2)

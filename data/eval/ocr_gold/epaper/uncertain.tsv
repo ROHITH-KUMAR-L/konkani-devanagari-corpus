@@ -1,0 +1,8 @@
+region	word	reason
+B1	गांवगिऱ्या	eyelash ra (ऱ्) glyph; encoded as U+0931 RRA + virama, could also be र + virama + ZWJ
+C2	बऱ्यो	eyelash ra (ऱ्) glyph; encoded as U+0931 RRA + virama
+C2	अधिकाऱ्यांचे	eyelash ra (ऱ्) glyph; encoded as U+0931 RRA + virama
+C2	दुसऱ्या	eyelash ra (ऱ्) glyph; encoded as U+0931 RRA + virama
+B1	मुगगांवां	printed as shown (probably a typo for मुरगांवां); kept as printed
+A1	णववेचे	printed as shown (probably a typo for णवव्या/नवव्या); kept as printed
+A1	मायली	clear in print but unusual word (expected आयली); kept as printed

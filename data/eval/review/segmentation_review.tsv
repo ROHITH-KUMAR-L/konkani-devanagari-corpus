@@ -1,0 +1,4 @@
+file	line_no	first_pass_context	decision	reason
+data/eval/segmentation_gold.txt	7	बाबा येतकच दोतोराक हाडंया आं. " ' आज तरी आयल्यार पुरो ते.”	changed: boundary added after 'आं. "'	'आं.' ends a full quoted sentence; a new quotation ('आज तरी आयल्यार पुरो ते.') starts after it. The first pass had no boundary here.
+data/eval/segmentation_gold.txt	6	विचारलें. || " हांव रावतलें” " बायल मनीस आसप बरी. "	kept first pass (no boundary)	The independent pass saw a change of speaker between two quotations, but there is no terminal punctuation and the guideline splits only on . ? ! ।. Borderline, so left as is.
+data/eval/segmentation_gold_heldout.txt	75	: अवयवदानाचे मोल कळटा आनी तो ! || ताचो स्वीकार करता.	changed: boundary removed after 'तो !'	'आनी तो ... ताचो स्वीकार करता' is one clause ('and he accepts it'). The '!' is OCR noise in the middle of the clause, so the sentence cannot end at 'आनी तो'.

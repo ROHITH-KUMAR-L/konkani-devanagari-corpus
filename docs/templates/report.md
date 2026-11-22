@@ -12,6 +12,7 @@
 | Format | Plain UTF-8, LF line endings, Unicode NFC; `file` reports "UTF-8 text" |
 | Non-Devanagari tokens | {{fin_nondeva_pct}}% (numbers {{fin_num_pct}}%, as `<NUM>`) |
 | OCR quality (book OCR vs. LDC-IL gold) | CER {{ocr_cer}}%, WER {{ocr_wer}}% |
+| OCR quality (newspaper, 902 words, AI-transcribed reference) | Corpus text CER 1.06%, WER 4.43% per line; one 2025 page mixes lines across columns |
 | Sentence segmentation | Held-out F1 **{{seg_held_f1}}** ({{seg_held_paras}} paragraphs, {{seg_held_bounds}} boundaries); P {{seg_held_p}}, R {{seg_held_r}} |
 | Non-Konkani text | {{audit_nonkok_pct}}% on a {{audit_n}}-paragraph random audit (target < 2%) |
 | Splits | Document-level {{train_pct}} / {{dev_pct}} / {{test_pct}}% of tokens (train/dev/test), plus a domain-balanced subset |
@@ -37,6 +38,10 @@ Empty categories: {{empty_categories}}. For public information we tried the Goa 
   - CER {{ocr_cer_raw}}% and WER {{ocr_wer_raw}}% on the raw OCR;
   - CER **{{ocr_cer}}%** and WER **{{ocr_wer}}%** once the spurious space before punctuation is removed (a fix that cleaning applies).
 - **Most frequent OCR errors** (`results/ocr_quality/confusions.csv`): dropped anusvara `ं`, dropped virama `्`, dropped `ा`.
+- **Newspaper OCR quality** (`ocr_quality_check.py --epaper`; details in `results/ocr_quality/epaper_summary.txt`). Six article regions from three issues (Apr 2025, Nov 2025, Jun 2026; 902 words) were transcribed from 300-dpi page images by Claude (AI), not hand-typed, so they are a reference for estimates only.
+  - Text stored in the corpus, aligned line by line: CER **1.06%**, WER **4.43%**.
+  - Tesseract on each crop as a whole: CER 14.12%, WER 22.17%; 2.75% / 8.36% without one region where Tesseract cut a narrow column into pieces. That error is reading order, not misread letters.
+  - On the April 2025 page the full-page OCR interleaves lines from neighbouring columns (only 30–39% of line order kept, against 95–97% on later pages), which breaks some sentences.
 - **Inference:** OCR errors are mostly *deletions of small marks*. They create false word types (`आसा`/`आसां`) rather than garbage, which matters for the type counts below.
 
 ## 3. Cleaning iterations (brief steps 6–7)

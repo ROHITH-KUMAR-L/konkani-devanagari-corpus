@@ -2,8 +2,9 @@
 # 40 paragraphs sampled from the cleaned corpus (seed 7), stratified by category; half contain '.' after a short word.
 # One paragraph per line; gold sentence boundaries marked with ' || '.
 # Annotated by correcting system output by hand (first pass by Claude, 2026-11-20). TEAM: please verify and extend to ~200 paragraphs.
+# Second pass: independent review by Claude (AI), 2026-11-22; 1 boundary change (see data/eval/review/segmentation_review.tsv). Still not human-verified.
 " दवरची पडटली तिका, विनोद.” || " जाला कितें तर तिका अशें अकस्मात " विनोद. || " बी. पी. बरोच देवला. || आय वॉण्ट टू कीप हर अंडर ऑबझवेशन. || " " बरें आसा दोतोर. || " " कोण रावता तिचे म्हऱ्यांत” दोतोरान विचारलें. || " हांव रावतलें” " बायल मनीस आसप बरी. "
-" बरें दिसता रे. || फाकेज खूब आयल्या.” || " बाबा येतकच दोतोराक हाडंया आं. " ' आज तरी आयल्यार पुरो ते.” || " खूब दीस जाले न्हय? || आज येवंकूच जाय. "
+" बरें दिसता रे. || फाकेज खूब आयल्या.” || " बाबा येतकच दोतोराक हाडंया आं. " || ' आज तरी आयल्यार पुरो ते.” || " खूब दीस जाले न्हय? || आज येवंकूच जाय. "
 तुज्या बापायन जाय या बायलाकडेन खेळ केल्ले. || तूं तागेल्या खंयच्या बायलेचें चली गो? || कायदयान लग्न जाल्ले काय. ? "
 ’अंबू बेगोबेगीन वचून अं ऽ त्या घरांतल्यान तांबयोभर उदक घेवन यो चल.’ || वाटे कुशीक, थंयच लागीच्या वाड्यावेल्या एका घराकडेन शेवतू मावशेन बोट दाखयलें.
 " दोन दीस तिका तुमी चलोवन हाडली. || कालूच ती हांगा पावली. || कितें खालां तिणे? "

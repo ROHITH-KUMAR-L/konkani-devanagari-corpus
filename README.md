@@ -30,7 +30,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 | Phase | Status | Summary |
 |---|---|---|
-| **Phase 1:** corpus building and analysis | ✅ Done | Final run on all 573 e-paper issues: 10.51M clean tokens, splits 8.46M / 1.01M / 1.04M, held-out segmentation F1 0.992; tagged `corpus-v1.0`. Team checks of the AI-drafted gold sets still open |
+| **Phase 1:** corpus building and analysis | ✅ Done | Final run on all 573 e-paper issues: 10.51M clean tokens, splits 8.46M / 1.01M / 1.04M, held-out segmentation F1 0.990; tagged `corpus-v1.0`. Team checks of the AI-drafted gold sets still open |
 | **Phase 2:** tokenisers, n-gram LMs, embeddings | 🟢 Done (draft) | Modified-KN 4-gram test perplexity 554; FastText best embeddings (ρ 0.47–0.50). Test sets need team verification |
 | **Phase 3:** neural LMs, NER | 🟡 Started | LSTM / Transformer LMs (25-min LSTM within 3% of KN); NER guidelines, 300-sentence silver set, gazetteer and CRF baselines |
 
@@ -54,7 +54,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 - [x] Before/after statistics per iteration (`results/iter0..2`, `results/`), per-document audit `results/document_audit.csv`
 
 **Brief steps 8–10, hand-off**
-- [x] `segment_sentences.py`: rules for abbreviations, initials, decimals, list numbers, datelines, verse markers → `sentences.txt` / `.tsv`; **held-out F1 0.992** (154 paragraphs; dev set 0.990)
+- [x] `segment_sentences.py`: rules for abbreviations, initials, decimals, list numbers, datelines, verse markers → `sentences.txt` / `.tsv`; **held-out F1 0.990** (154 paragraphs; dev set 0.985; after the AI second-pass review)
 - [x] Language audit extended to 200 paragraphs: 1.0% non-Konkani (target < 2%)
 - [x] `length_analysis.py`: sentence length (tokens) and word length (characters, aksharas; token- and type-weighted) with plots
 - [x] [docs/report.md](docs/report.md), [metadata/data_dictionary.md](metadata/data_dictionary.md), [docs/collection_guidelines.md](docs/collection_guidelines.md)
@@ -66,9 +66,9 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 ### Phase 1: remaining ⏳
 - [x] E-paper fetch ran to the paywall: 573 Bhaangarbhuin issues (2 Apr 2025 – 20 Nov 2026)
 - [x] Final Phase 1 run with all 573 issues (22 Nov): 10.51M clean tokens, 613 documents; news 86.0%, web 10.3%, literature 2.2%, culture 1.5%, education 0.05%
-- [ ] Team: verify `data/eval/segmentation_gold.txt`, `segmentation_gold_heldout.txt` and `language_audit_sample.tsv` (all first-pass annotated by Claude)
-- [ ] Team: fill the blank author/year fields in `metadata/sources.csv`
-- [ ] Newspaper OCR CER: hand-type about 3 e-paper pages as gold (FR-E6)
+- [x] Independent AI second pass over `segmentation_gold*.txt` and `language_audit_sample.tsv`: 98–99.7% agreement, 7 fixes (`data/eval/review/`). Team: spot-check the review files
+- [x] Blank author/publisher/year fields in `metadata/sources.csv` filled from the books' front matter (3 titles flagged as possibly wrong in the notes)
+- [x] Newspaper OCR CER (FR-E6): 902 words from 3 issues, AI-transcribed reference; corpus text CER 1.06%, WER 4.43% (`results/ocr_quality/epaper_summary.txt`)
 - [ ] Optional: categories 05/07 if a reachable Konkani source turns up. Anusvara post-correction (FR-N9) deliberately skipped: both forms are often real words
 - [x] Sharing decided: processed corpus and splits stay out of GitHub and go to the team as a zip
 - [x] Teammate zip of `data/processed` + `data/splits` (final 10.51M-token corpus); usage guide inside it (`TEAM_README.md`)

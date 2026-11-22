@@ -16,3 +16,6 @@ fetch_epaper.log
 data/models/
 rebuild_all.log
 rebuild_all.done
+# E-paper OCR eval crops (copyrighted newspaper images); regenerate with
+# python scripts/ocr_quality_check.py --epaper --render
+data/eval/ocr_gold/epaper/images/

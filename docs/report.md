@@ -13,7 +13,8 @@
 | Format | Plain UTF-8, LF line endings, Unicode NFC; `file` reports "UTF-8 text" |
 | Non-Devanagari tokens | 0.00% (numbers 3.50%, as `<NUM>`) |
 | OCR quality (book OCR vs. LDC-IL gold) | CER 4.77%, WER 17.86% |
-| Sentence segmentation | Held-out F1 **0.992** (154 paragraphs, 311 boundaries); P 0.987, R 0.997 |
+| OCR quality (newspaper, 902 words, AI-transcribed reference) | Corpus text CER 1.06%, WER 4.43% per line; one 2025 page mixes lines across columns |
+| Sentence segmentation | Held-out F1 **0.990** (154 paragraphs, 310 boundaries); P 0.984, R 0.997 |
 | Non-Konkani text | 1.0% on a 200-paragraph random audit (target < 2%) |
 | Splits | Document-level 80.5 / 9.6 / 9.9% of tokens (train/dev/test), plus a domain-balanced subset |
 
@@ -38,6 +39,10 @@ Empty categories: 05 (public information), 07 (oral transcripts). For public inf
   - CER 6.87% and WER 43.33% on the raw OCR;
   - CER **4.77%** and WER **17.86%** once the spurious space before punctuation is removed (a fix that cleaning applies).
 - **Most frequent OCR errors** (`results/ocr_quality/confusions.csv`): dropped anusvara `ं`, dropped virama `्`, dropped `ा`.
+- **Newspaper OCR quality** (`ocr_quality_check.py --epaper`; details in `results/ocr_quality/epaper_summary.txt`). Six article regions from three issues (Apr 2025, Nov 2025, Jun 2026; 902 words) were transcribed from 300-dpi page images by Claude (AI), not hand-typed, so they are a reference for estimates only.
+  - Text stored in the corpus, aligned line by line: CER **1.06%**, WER **4.43%**.
+  - Tesseract on each crop as a whole: CER 14.12%, WER 22.17%; 2.75% / 8.36% without one region where Tesseract cut a narrow column into pieces. That error is reading order, not misread letters.
+  - On the April 2025 page the full-page OCR interleaves lines from neighbouring columns (only 30–39% of line order kept, against 95–97% on later pages), which breaks some sentences.
 - **Inference:** OCR errors are mostly *deletions of small marks*. They create false word types (`आसा`/`आसां`) rather than garbage, which matters for the type counts below.
 
 ## 3. Cleaning iterations (brief steps 6–7)
@@ -56,7 +61,7 @@ The full rationale and the before/after tables are in [`docs/data_cleaning_log.m
 - `HISTORY.txt` turned out to be Marathi (2 Konkani vs 676 Marathi markers).
 - One culture book is a Konkani–Hindi parallel grammar.
 
-A 200-paragraph random audit of the final corpus (`data/eval/language_audit_sample.tsv`) found 2 non-Konkani paragraphs (**1.0%**, target < 2%), 2.0% OCR garbage, 3.5% partly garbled paragraphs and 10.5% newspaper fragments where OCR merged columns.
+A 200-paragraph random audit of the final corpus (`data/eval/language_audit_sample.tsv`) found 2 non-Konkani paragraphs (**1.0%**, target < 2%), 2.0% OCR garbage, 4.0% partly garbled paragraphs and 10.5% newspaper fragments where OCR merged columns.
 
 ## 4. Type–token analysis (brief step 4)
 
@@ -112,8 +117,8 @@ The output is `data/processed/combined/sentences.txt` (one sentence per line) an
 
 | Gold set | Paragraphs | Gold boundaries | Precision | Recall | F1 |
 |---|---|---|---|---|---|
-| Development (`segmentation_gold.txt`; rules were tuned on it) | 40 | 99 | 0.990 | 0.990 | 0.990 |
-| **Held-out** (`segmentation_gold_heldout.txt`; never used to write rules) | 154 | 311 | 0.987 | 0.997 | **0.992** |
+| Development (`segmentation_gold.txt`; rules were tuned on it) | 40 | 100 | 0.990 | 0.980 | 0.985 |
+| **Held-out** (`segmentation_gold_heldout.txt`; never used to write rules) | 154 | 310 | 0.984 | 0.997 | **0.990** |
 
 History:
 - The first version scored F1 0.934 on the development set.
