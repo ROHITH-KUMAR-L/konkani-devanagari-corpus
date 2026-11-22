@@ -1,8 +1,8 @@
 # Konkani corpus: processed data for the team
 
-This zip holds the cleaned corpus and the train/dev/test splits. They are not on GitHub because they are large (about 870 MB unzipped) and contain copyrighted newspaper and book text. **Do not upload or share it outside the team.**
+This zip holds the cleaned corpus and the train/dev/test splits. They are not on GitHub because they are large (about 1.5 GB unzipped) and contain copyrighted newspaper and book text. **Do not upload or share it outside the team.**
 
-Snapshot: 21 Nov 2026, **6.06M clean tokens**, 329 documents, 5 domains (news 75.7%, web/Wikipedia 17.8%, literature 3.9%, culture 2.6%, education 0.1%). All text is UTF-8, Unicode NFC, LF line endings.
+Snapshot: 22 Nov 2026 (`corpus-v1.0`), **10.51M clean tokens**, 613 documents, 5 domains (news 86.0%, web/Wikipedia 10.3%, literature 2.2%, culture 1.5%, education 0.05%). Splits: train 8.46M, dev 1.01M, test 1.04M tokens. Because news dominates, consider the balanced split (below) for anything domain-sensitive. All text is UTF-8, Unicode NFC, LF line endings.
 
 ## 1. Set up
 
@@ -59,6 +59,8 @@ These were first-pass labelled by Claude (an AI). Fix them before quoting their 
 - `data/eval/word_similarity.tsv`, `analogies.tsv`: embedding test sets
 - `data/eval/ner/silver_spans.txt`: 300 NER sentences (rules in `docs/ner_guidelines.md`)
 
-## 5. Newer data
+## 5. Version
 
-The e-paper collection later grew to 573 issues; this zip has the first 289. To include all of them, rebuild instead of using the zip: `bash scripts/run_phase1.sh` (or `scripts/rebuild_all.sh` for Phase 1 + Phase 2 + a new zip). A newer zip will be shared after that run.
+This is the final Phase 1 corpus: all 573 Bhaangarbhuin issues (2 Apr 2025 – 20 Nov 2026; later issues are behind a paywall). It matches git tag `corpus-v1.0`. To rebuild it from the committed OCR text: `bash scripts/run_phase1.sh`.
+
+Note: the Phase 2/3 numbers in `docs/` were measured on the earlier 6.06M-token splits; they will be refreshed after a re-run on these splits.

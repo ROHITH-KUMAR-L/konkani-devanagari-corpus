@@ -4,7 +4,7 @@
 Each cleaning iteration is run by one script, with the analysis repeated after it (PRD FR-N10).
 Every number below comes from `scripts/run_phase1.sh` and is filled in by `scripts/build_report.py`. The per-iteration outputs are in `results/iter0`, `results/iter1`, `results/iter2` and `results/` (final).
 
-> **Run of 21 Nov 2026:** 290 Bhaangarbhuin issues (2026-01-23 to 2026-11-20).
+> **Run of 22 Nov 2026:** 573 Bhaangarbhuin issues (2025-04-02 to 2026-11-20).
 
 ## Iteration 0: raw corpus (`extract_text.py`)
 
@@ -13,11 +13,11 @@ Iteration 0 is every source after encoding fixes only (UTF-8, BOM removed, CRLF 
 | Source | Docs | Raw tokens |
 |---|---|---|
 | Literature: 9 OCR'd books + 4 LDC-IL gold files | 13 | 243,015 |
-| News: Bhaangarbhuin e-paper issues (OCR) | 290 | 4,938,601 |
+| News: Bhaangarbhuin e-paper issues (OCR) | 573 | 9,734,941 |
 | Education: NCERT Konkani textbook (OCR at 300 dpi) | 1 | 6,257 |
 | Culture/history: 6 OCR'd books | 6 | 204,627 |
 | Web: Konkani Wikipedia, 2,779 Devanagari articles in 20 shards | 20 | 1,434,598 |
-| **Total** | **330** | **6,827,098** |
+| **Total** | **613** | **11,623,438** |
 
 Excluded before iteration 0 (see `metadata/excluded_documents.csv`):
 - `MAHAROOKH.txt`, a duplicate of *Konkani Katha Sangraha*.
@@ -26,17 +26,17 @@ Excluded before iteration 0 (see `metadata/excluded_documents.csv`):
 
 ### Observations on iteration 0 (brief step 6)
 
-1. **Template text in Wikipedia.** These words rank near the top of the raw frequency list: `गांवांत` (rank 15), `उपलब्ध` (rank 16), `सगळ्यांत` (rank 22), `लागीं` (rank 24), `अंतराचेर` (rank 34), `किलोमिटर` (rank 111). A bot created hundreds of village stubs from census tables ("गांवांत ट्रॅक्टर उपलब्ध ना."). Of 73,157 Wikipedia lines, only 38,887 are unique. If this is not removed, these few templates dominate the frequency list and the coverage curve.
-2. **Numbers are the most frequent "word".** `<NUM>` makes up 5.72% of tokens (390,741). It comes from dates, scores, census figures, page numbers, verse numbers and OCR misreadings of `।`/`॥` as `1` or `॥`.
-3. **Latin and other scripts make up 0.47% of tokens.** The top Latin tokens are Wikipedia image markup (`thumb`, `px`, `right`), English front matter in books (`of`, `the`, `Published`), and capitalised Goan place names from newspaper advertisements (`MARGAO`, `PANAJI`). There are also stray Gurmukhi, Bengali and Kannada letters and IPA symbols (`ː`) that OCR or Wikipedia introduced.
+1. **Template text in Wikipedia.** These words rank near the top of the raw frequency list: `गांवांत` (rank 39), `उपलब्ध` (rank 38), `सगळ्यांत` (rank 48), `लागीं` (rank 47), `अंतराचेर` (rank 72), `किलोमिटर` (rank 218). A bot created hundreds of village stubs from census tables ("गांवांत ट्रॅक्टर उपलब्ध ना."). Of 73,157 Wikipedia lines, only 38,887 are unique. If this is not removed, these few templates dominate the frequency list and the coverage curve.
+2. **Numbers are the most frequent "word".** `<NUM>` makes up 5.94% of tokens (690,835). It comes from dates, scores, census figures, page numbers, verse numbers and OCR misreadings of `।`/`॥` as `1` or `॥`.
+3. **Latin and other scripts make up 0.28% of tokens.** The top Latin tokens are Wikipedia image markup (`thumb`, `px`, `right`), English front matter in books (`of`, `the`, `Published`), and capitalised Goan place names from newspaper advertisements (`MARGAO`, `PANAJI`). There are also stray Gurmukhi, Bengali and Kannada letters and IPA symbols (`ː`) that OCR or Wikipedia introduced.
 4. **Marathi and Hindi contamination.** Counting marker words found:
    - `HISTORY.txt` is almost entirely **Marathi** (कोंकणाख्यान with a Marathi commentary): 2 Konkani markers against 676 Marathi ones.
    - *Some Aspects of Konkani Culture Heritage* is a Konkani–**Hindi** parallel grammar: 3176 Hindi markers.
    - *Nataka* contains Marathi dialogue (168 Marathi markers).
 5. **OCR noise.** Newspaper mastheads and ad pages produce Devanagari-looking garbage (`भिबेभाइभ0५॥णा`, `€090श.प€ट०भा`). Books have spaces before punctuation (`आसा .`), and words are split at line ends (`कर-\nतल्यो`). The OCR quality check (`results/ocr_quality/`) shows the most frequent character error is a **dropped anusvara**, followed by dropped viramas and dropped `ा`.
 6. **Running headers and page numbers.** Every book page carries a header (`कोकणी कथासंग्रह`) and a page number. Page breaks cut paragraphs mid-sentence.
-7. **Spelling variation is real Konkani variation, not noise.** Final-corpus counts: `पूण` 15,436 vs `पुण` 1,041; `म्हूण` 7,453 vs `म्हणून` 5,782; `सगळ्यांत` 3,122 vs `सगल्यांत` 1,612; `हांव` 5,701 vs `हाव` 124. The *Konkani Shuddhlekhanache Nem* rules give a standard form, but we did **not** normalise spelling: it would erase dialect information and needs a linguist's review.
-8. **Long tail.** 60.6% of types are hapax legomena. A random sample of hapaxes mixes genuine inflected forms (`पागोट्याचें`, `दुबायच्या`: postpositions attached to nouns) with OCR errors (`विधार्थ्र्यांक`, missing spaces such as `दुसऱ्याचेरआशिल्ल्या`).
+7. **Spelling variation is real Konkani variation, not noise.** Final-corpus counts: `पूण` 25,847 vs `पुण` 1,236; `म्हूण` 12,980 vs `म्हणून` 9,480; `सगळ्यांत` 3,950 vs `सगल्यांत` 2,967; `हांव` 8,582 vs `हाव` 189. The *Konkani Shuddhlekhanache Nem* rules give a standard form, but we did **not** normalise spelling: it would erase dialect information and needs a linguist's review.
+8. **Long tail.** 59.9% of types are hapax legomena. A random sample of hapaxes mixes genuine inflected forms (`पागोट्याचें`, `दुबायच्या`: postpositions attached to nouns) with OCR errors (`विधार्थ्र्यांक`, missing spaces such as `दुसऱ्याचेरआशिल्ल्या`).
 
 ## Iteration 1: normalisation and junk removal (`clean_text.py`)
 
@@ -51,7 +51,7 @@ The rules, each motivated by an observation above:
   - a paragraph cut by a page break (a gap that held removed junk and no sentence-final punctuation) is joined across the break, e.g. `…अखेरेक मन घट` + `करून हांव…`.
 - Paragraphs of fewer than 3 tokens (titles, headings) are dropped.
 
-Result: 35,036 junk lines and 33,498 short paragraphs removed (per document: `metadata/clean_log.csv`). Latin and other-script tokens went from 0.47% to 0.00%, and numbers from 5.72% to 4.91%.
+Result: 62,598 junk lines and 50,354 short paragraphs removed (per document: `metadata/clean_log.csv`). Latin and other-script tokens went from 0.28% to 0.00%, and numbers from 5.94% to 5.03%.
 
 ## Iteration 2: Konkani-only, well-formed text (`validate_konkani.py`)
 
@@ -61,17 +61,17 @@ Result: 35,036 junk lines and 33,498 short paragraphs removed (per document: `me
 
 | Dropped | Paragraphs |
 |---|---|
-| Marathi | 261 |
-| Hindi | 716 (mostly the Hindi half of *Some Aspects…*, plus ad-page garbage that happens to hit Hindi markers) |
-| Orthography / OCR garbage | 2,058 |
-| Numeric | 6,399 |
+| Marathi | 407 |
+| Hindi | 904 (mostly the Hindi half of *Some Aspects…*, plus ad-page garbage that happens to hit Hindi markers) |
+| Orthography / OCR garbage | 4,021 |
+| Numeric | 10,714 |
 | Whole documents | 1: `cult_history` (2 Konkani vs 676 Marathi / 6 Hindi markers) |
 
 Per-document counts are in `metadata/quality_checks.csv`.
 
 ## Iteration 3: deduplication (`deduplicate.py`)
 
-- **(obs. 1) Exact paragraph duplicates.** Paragraphs are compared on their letters only (punctuation, digits and spaces ignored), across the whole corpus; the first occurrence is kept. This removed **40,328 paragraphs (14.0%)**: almost all Wikipedia village templates, plus repeated newspaper boilerplate (mastheads, weather boxes, standing columns).
+- **(obs. 1) Exact paragraph duplicates.** Paragraphs are compared on their letters only (punctuation, digits and spaces ignored), across the whole corpus; the first occurrence is kept. This removed **51,214 paragraphs (10.5%)**: almost all Wikipedia village templates, plus repeated newspaper boilerplate (mastheads, weather boxes, standing columns).
 - **Near-duplicate documents.** MinHash over word 5-grams, Jaccard ≥ 0.8: 0 found (the known book duplicate had already been excluded).
 
 Per-document counts are in `metadata/dedup_log.csv`.
@@ -80,27 +80,27 @@ Per-document counts are in `metadata/dedup_log.csv`.
 
 | Iteration | Tokens | Types | TTR | Hapax (% types) | Devanagari % | Number % | Latin+other % | Types for 50% / 90% coverage | Zipf slope | Heaps β |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 0 raw | 6,827,098 | 443,286 | 0.0649 | 268,485 (60.6%) | 93.81 | 5.72 | 0.47 | 1,003 / 48,944 | -1.023 | 0.722 |
-| 1 cleaned | 6,642,343 | 430,555 | 0.0648 | 260,206 (60.4%) | 95.09 | 4.91 | 0.00 | 1,021 / 47,997 | -1.025 | 0.722 |
-| 2 Konkani only | 6,412,954 | 413,273 | 0.0644 | 247,492 (59.9%) | 96.38 | 3.62 | 0.00 | 1,050 / 46,738 | -1.026 | 0.722 |
-| 3 deduplicated (final) | 6,058,270 | 413,170 | 0.0682 | 248,167 (60.1%) | 96.67 | 3.33 | 0.00 | 1,155 / 51,061 | -1.014 | 0.723 |
+| 0 raw | 11,623,438 | 579,049 | 0.0498 | 347,011 (59.9%) | 93.78 | 5.94 | 0.28 | 968 / 43,395 | -1.025 | 0.708 |
+| 1 cleaned | 11,323,158 | 566,362 | 0.0500 | 338,991 (59.9%) | 94.97 | 5.03 | 0.00 | 999 / 43,288 | -1.025 | 0.709 |
+| 2 Konkani only | 10,940,713 | 542,105 | 0.0495 | 320,424 (59.1%) | 96.29 | 3.71 | 0.00 | 1,032 / 42,382 | -1.026 | 0.709 |
+| 3 deduplicated (final) | 10,505,770 | 541,967 | 0.0516 | 321,329 (59.3%) | 96.50 | 3.50 | 0.00 | 1,087 / 45,020 | -1.021 | 0.709 |
 
 | Category | 0 raw | 1 cleaned | 2 Konkani only | 3 final | kept |
 |---|---|---|---|---|---|
 | 01_literature | 243,015 | 236,500 | 235,042 | 234,999 | 96.7% |
-| 02_news_media | 4,938,601 | 4,821,883 | 4,641,623 | 4,584,033 | 92.8% |
+| 02_news_media | 9,734,941 | 9,502,698 | 9,169,382 | 9,031,556 | 92.8% |
 | 03_education_science | 6,257 | 6,020 | 5,177 | 5,177 | 82.7% |
 | 04_culture_history | 204,627 | 195,421 | 155,544 | 154,935 | 75.7% |
-| 06_web_articles | 1,434,598 | 1,382,519 | 1,375,568 | 1,079,126 | 75.2% |
+| 06_web_articles | 1,434,598 | 1,382,519 | 1,375,568 | 1,079,103 | 75.2% |
 
 Per-document survival through every iteration is in `results/document_audit.csv`.
 
 ### What the iterations changed
 
-- **Deduplication moved coverage the most.** Before dedup, 1,050 types covered 50% of tokens; after, 1,155 are needed. Repeated template sentences had been inflating the counts of a few words. TTR rose from 0.064 to 0.068 for the same reason: 354,684 duplicate tokens were removed but only 103 types disappeared.
-- **The Zipf slope moved from -1.03 to -1.01 after dedup**, towards the classic −1. The template words had created a "bump" in the mid ranks.
-- **Cleaning barely changed the hapax share (60.6% → 60.1%).** Most hapaxes are real inflected forms, not noise. This is the agglutination effect that LDC-IL also reports (see the report, §8).
-- **Numbers fell from 5.72% of tokens to 3.33%** but stay the single most frequent type. They are kept, as `<NUM>`, so dates and amounts remain in sentences for the language models.
+- **Deduplication moved coverage the most.** Before dedup, 1,032 types covered 50% of tokens; after, 1,087 are needed. Repeated template sentences had been inflating the counts of a few words. TTR rose from 0.050 to 0.052 for the same reason: 434,943 duplicate tokens were removed but only 138 types disappeared.
+- **The Zipf slope moved from -1.03 to -1.02 after dedup**, towards the classic −1. The template words had created a "bump" in the mid ranks.
+- **Cleaning barely changed the hapax share (59.9% → 59.3%).** Most hapaxes are real inflected forms, not noise. This is the agglutination effect that LDC-IL also reports (see the report, §8).
+- **Numbers fell from 5.94% of tokens to 3.50%** but stay the single most frequent type. They are kept, as `<NUM>`, so dates and amounts remain in sentences for the language models.
 
 ## Known remaining noise
 

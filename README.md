@@ -4,7 +4,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 > **Requirements:** see [PRD.md](PRD.md) for goals, numbered requirements, acceptance criteria and risks.
 >
-> **Status (21 Nov 2026):** Phase 1 done: **6.06M clean tokens**, 5 domains (live numbers: [docs/report.md](docs/report.md)). Phase 2 (tokenisers, n-gram LMs, embeddings) done. Phase 3 started: neural LMs and an NER setup with a silver set. E-paper collection is complete (573 issues); 284 of them still need one pipeline re-run to enter the corpus. Stage-by-stage change list: [docs/progress_log.md](docs/progress_log.md). See [Progress and remaining work](#progress-and-remaining-work).
+> **Status (22 Nov 2026):** Phase 1 done (`corpus-v1.0`): **10.51M clean tokens**, 613 documents, 5 domains, all 573 e-paper issues included (live numbers: [docs/report.md](docs/report.md)). Phase 2 (tokenisers, n-gram LMs, embeddings) done on the earlier 6.06M-token splits; a re-run on the final splits is pending. Phase 3 started: neural LMs and an NER setup with a silver set. Stage-by-stage change list: [docs/progress_log.md](docs/progress_log.md). See [Progress and remaining work](#progress-and-remaining-work).
 
 ---
 
@@ -26,11 +26,11 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 ## Progress and remaining work
 
-*Last updated: 21 Nov 2026. Tick items here as they are finished. Full change list by stage: [docs/progress_log.md](docs/progress_log.md).*
+*Last updated: 22 Nov 2026. Tick items here as they are finished. Full change list by stage: [docs/progress_log.md](docs/progress_log.md).*
 
 | Phase | Status | Summary |
 |---|---|---|
-| **Phase 1:** corpus building and analysis | 🟢 About 95% | Pipeline, analyses, segmentation, splits and auto-generated report done; 6.06M clean tokens. Remaining: one re-run with the last 284 e-paper issues, team verification, tag v1.0 |
+| **Phase 1:** corpus building and analysis | ✅ Done | Final run on all 573 e-paper issues: 10.51M clean tokens, splits 8.46M / 1.01M / 1.04M, held-out segmentation F1 0.992; tagged `corpus-v1.0`. Team checks of the AI-drafted gold sets still open |
 | **Phase 2:** tokenisers, n-gram LMs, embeddings | 🟢 Done (draft) | Modified-KN 4-gram test perplexity 554; FastText best embeddings (ρ 0.47–0.50). Test sets need team verification |
 | **Phase 3:** neural LMs, NER | 🟡 Started | LSTM / Transformer LMs (25-min LSTM within 3% of KN); NER guidelines, 300-sentence silver set, gazetteer and CRF baselines |
 
@@ -54,7 +54,7 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 - [x] Before/after statistics per iteration (`results/iter0..2`, `results/`), per-document audit `results/document_audit.csv`
 
 **Brief steps 8–10, hand-off**
-- [x] `segment_sentences.py`: rules for abbreviations, initials, decimals, list numbers, datelines, verse markers → `sentences.txt` / `.tsv`; **held-out F1 0.989** (154 paragraphs; dev set 0.990)
+- [x] `segment_sentences.py`: rules for abbreviations, initials, decimals, list numbers, datelines, verse markers → `sentences.txt` / `.tsv`; **held-out F1 0.992** (154 paragraphs; dev set 0.990)
 - [x] Language audit extended to 200 paragraphs: 1.0% non-Konkani (target < 2%)
 - [x] `length_analysis.py`: sentence length (tokens) and word length (characters, aksharas; token- and type-weighted) with plots
 - [x] [docs/report.md](docs/report.md), [metadata/data_dictionary.md](metadata/data_dictionary.md), [docs/collection_guidelines.md](docs/collection_guidelines.md)
@@ -65,14 +65,14 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 
 ### Phase 1: remaining ⏳
 - [x] E-paper fetch ran to the paywall: 573 Bhaangarbhuin issues (2 Apr 2025 – 20 Nov 2026)
-- [ ] Re-run `scripts/rebuild_all.sh` (Phase 1 + Phase 2 + zip) so the 284 issues fetched after the last run enter the corpus
+- [x] Final Phase 1 run with all 573 issues (22 Nov): 10.51M clean tokens, 613 documents; news 86.0%, web 10.3%, literature 2.2%, culture 1.5%, education 0.05%
 - [ ] Team: verify `data/eval/segmentation_gold.txt`, `segmentation_gold_heldout.txt` and `language_audit_sample.tsv` (all first-pass annotated by Claude)
 - [ ] Team: fill the blank author/year fields in `metadata/sources.csv`
 - [ ] Newspaper OCR CER: hand-type about 3 e-paper pages as gold (FR-E6)
 - [ ] Optional: categories 05/07 if a reachable Konkani source turns up. Anusvara post-correction (FR-N9) deliberately skipped: both forms are often real words
 - [x] Sharing decided: processed corpus and splits stay out of GitHub and go to the team as a zip
-- [x] Teammate zip of `data/processed` + `data/splits` (6.06M-token snapshot); usage guide inside it (`TEAM_README.md`)
-- [ ] After the final re-run: new zip, then tag `corpus-v1.0`
+- [x] Teammate zip of `data/processed` + `data/splits` (final 10.51M-token corpus); usage guide inside it (`TEAM_README.md`)
+- [x] New zip, tag `corpus-v1.0`
 
 ### Phase 2 ✅
 *Details in [§5](#5-phase-2-representations-and-language-models).*

@@ -3,19 +3,19 @@
 
 **NLP Experiential Learning, Phase 1.** Language: Konkani (ISO 639-3 `gom`/`kok`), Devanagari script.
 
-> **Run of 21 Nov 2026.** Every number comes from `scripts/run_phase1.sh` and is filled in by `scripts/build_report.py`. This run includes 290 Bhaangarbhuin issues (2026-01-23 to 2026-11-20). The pipeline is deterministic: re-running it reproduces every number.
+> **Run of 22 Nov 2026.** Every number comes from `scripts/run_phase1.sh` and is filled in by `scripts/build_report.py`. This run includes 573 Bhaangarbhuin issues (2025-04-02 to 2026-11-20). The pipeline is deterministic: re-running it reproduces every number.
 
 ## Summary
 
 | | |
 |---|---|
-| Clean corpus | **6,058,270 tokens**, 413,170 types, 637,412 sentences, 329 documents, 5 domains |
+| Clean corpus | **10,505,770 tokens**, 541,967 types, 1,110,440 sentences, 612 documents, 5 domains |
 | Format | Plain UTF-8, LF line endings, Unicode NFC; `file` reports "UTF-8 text" |
-| Non-Devanagari tokens | 0.00% (numbers 3.33%, as `<NUM>`) |
+| Non-Devanagari tokens | 0.00% (numbers 3.50%, as `<NUM>`) |
 | OCR quality (book OCR vs. LDC-IL gold) | CER 4.77%, WER 17.86% |
 | Sentence segmentation | Held-out F1 **0.992** (154 paragraphs, 311 boundaries); P 0.987, R 0.997 |
 | Non-Konkani text | 1.0% on a 200-paragraph random audit (target < 2%) |
-| Splits | Document-level 78.8 / 10.6 / 10.6% of tokens (train/dev/test), plus a domain-balanced subset |
+| Splits | Document-level 80.5 / 9.6 / 9.9% of tokens (train/dev/test), plus a domain-balanced subset |
 
 ## 1. Sources (brief step 3)
 
@@ -24,7 +24,7 @@ Full bibliographic details are in `metadata/sources.csv`, and per-issue newspape
 | Category | Sources | How text was obtained |
 |---|---|---|
 | 01 Literature | 9 books (novels, short stories, poetry, drama, children's) + 4 LDC-IL gold-standard files | Book text OCR'd by the team; LDC-IL XML parsed (`extract_ldcil.py`) |
-| 02 News | *Bhaangarbhuin*, Goa's Konkani daily: 290 issues, 2026-01-23 to 2026-11-20 | Free e-paper issues downloaded and OCR'd with Tesseract `mar+hin` (`fetch_epaper.py`) |
+| 02 News | *Bhaangarbhuin*, Goa's Konkani daily: 573 issues, 2025-04-02 to 2026-11-20 | Free e-paper issues downloaded and OCR'd with Tesseract `mar+hin` (`fetch_epaper.py`) |
 | 03 Education | NCERT Konkani vocational-education textbook | PDF text layer is broken (doubled vowel signs); re-OCR'd at 300 dpi with `--force-ocr` |
 | 04 Culture/history | 6 books (story anthology, Mahabharata in Old Konkani, biography, orthography rules, culture) | OCR text |
 | 06 Web | Konkani Wikipedia (`gomwiki`, 1 Nov 2026 dump, CC BY-SA): 2,779 articles | `mwparserfromhell`, Devanagari articles only (≥ 70% Devanagari letters; Romi articles skipped) |
@@ -46,13 +46,13 @@ The full rationale and the before/after tables are in [`docs/data_cleaning_log.m
 
 | Iteration | Script | What it removes | Tokens after |
 |---|---|---|---|
-| 0 raw | `extract_text.py` | (nothing) | 6,827,098 |
-| 1 cleaned | `clean_text.py` | Page numbers, running headers, boilerplate, Latin/other-script text, OCR spacing; rebuilds paragraphs across line and page breaks | 6,642,343 |
-| 2 Konkani only | `validate_konkani.py` | Marathi/Hindi paragraphs (marker-word language ID), Marathi documents, OCR garbage, number tables | 6,412,954 |
-| 3 deduplicated | `deduplicate.py` | 40,328 duplicate paragraphs (14.0%): Wikipedia census templates, newspaper boilerplate | **6,058,270** |
+| 0 raw | `extract_text.py` | (nothing) | 11,623,438 |
+| 1 cleaned | `clean_text.py` | Page numbers, running headers, boilerplate, Latin/other-script text, OCR spacing; rebuilds paragraphs across line and page breaks | 11,323,158 |
+| 2 Konkani only | `validate_konkani.py` | Marathi/Hindi paragraphs (marker-word language ID), Marathi documents, OCR garbage, number tables | 10,940,713 |
+| 3 deduplicated | `deduplicate.py` | 51,214 duplicate paragraphs (10.5%): Wikipedia census templates, newspaper boilerplate | **10,505,770** |
 
 **Observations that drove the cleaning:**
-- Iteration 0's frequency list was topped by Wikipedia census-template words (`गांवांत` (rank 15), `उपलब्ध` (rank 16), `सगळ्यांत` (rank 22), `लागीं` (rank 24), `अंतराचेर` (rank 34), `किलोमिटर` (rank 111)). These come from bot-generated village stubs: of 73,157 Wikipedia lines only 38,887 were unique.
+- Iteration 0's frequency list was topped by Wikipedia census-template words (`गांवांत` (rank 39), `उपलब्ध` (rank 38), `सगळ्यांत` (rank 48), `लागीं` (rank 47), `अंतराचेर` (rank 72), `किलोमिटर` (rank 218)). These come from bot-generated village stubs: of 73,157 Wikipedia lines only 38,887 were unique.
 - `HISTORY.txt` turned out to be Marathi (2 Konkani vs 676 Marathi markers).
 - One culture book is a Konkani–Hindi parallel grammar.
 
@@ -64,22 +64,22 @@ Tokens are words with punctuation removed and every number mapped to the single 
 
 |  | Raw (iter 0) | Final |
 |---|---|---|
-| Tokens N | 6,827,098 | 6,058,270 |
-| Types V | 443,286 | 413,170 |
-| TTR | 0.065 | 0.068 |
-| Hapax legomena | 268,485 (60.6% of types) | 248,167 (60.1% of types, 4.1% of tokens) |
-| Zipf slope (ranks 10–10,000) | -1.023 | -1.014 |
-| Heaps' law V = K·N^β | K 5.56, β 0.722 | K 5.49, β 0.723 |
+| Tokens N | 11,623,438 | 10,505,770 |
+| Types V | 579,049 | 541,967 |
+| TTR | 0.050 | 0.052 |
+| Hapax legomena | 347,011 (59.9% of types) | 321,329 (59.3% of types, 3.1% of tokens) |
+| Zipf slope (ranks 10–10,000) | -1.025 | -1.021 |
+| Heaps' law V = K·N^β | K 6.32, β 0.708 | K 6.27, β 0.709 |
 
 | Category | Docs | Tokens | Share | Types | TTR | Hapax % of types |
 |---|---|---|---|---|---|---|
-| Literature | 13 | 234,999 | 3.9% | 47,285 | 0.201 | 63.3 |
-| News | 290 | 4,584,033 | 75.7% | 265,209 | 0.058 | 56.5 |
-| Education | 1 | 5,177 | 0.1% | 1,922 | 0.371 | 64.2 |
-| Culture/history | 6 | 154,935 | 2.6% | 37,511 | 0.242 | 62.5 |
-| Web (Wikipedia) | 20 | 1,079,126 | 17.8% | 166,557 | 0.154 | 64.8 |
+| Literature | 13 | 234,999 | 2.2% | 47,285 | 0.201 | 63.3 |
+| News | 573 | 9,031,556 | 86.0% | 407,121 | 0.045 | 56.7 |
+| Education | 1 | 5,177 | 0.0% | 1,922 | 0.371 | 64.2 |
+| Culture/history | 6 | 154,935 | 1.5% | 37,511 | 0.242 | 62.5 |
+| Web (Wikipedia) | 20 | 1,079,103 | 10.3% | 166,556 | 0.154 | 64.8 |
 
-The most frequent words are `<NUM>`, `आनी` (and), `ह्या` (this, oblique), `आसा` (is), `खातीर` (for), `हे` (this/these), `ते` (they/that), `हांणी`, `एक` (one), `ना` (not), `अशें` (thus). All are function words, as Zipf's law predicts.
+The most frequent words are `<NUM>`, `आनी` (and), `ह्या` (this, oblique), `खातीर` (for), `आसा` (is), `हांणी`, `ते` (they/that), `हे` (this/these), `एक` (one), `ना` (not), `अशें` (thus). All are function words, as Zipf's law predicts.
 
 ![Zipf](../results/plots/zipf.png) ![Heaps](../results/plots/heaps.png)
 
@@ -87,9 +87,9 @@ The most frequent words are `<NUM>`, `आनी` (and), `ह्या` (this, ob
 
 | Token coverage | 10% | 25% | 50% | 75% | 90% | 95% | 99% |
 |---|---|---|---|---|---|---|---|
-| Types needed (final) | 11 | 132 | 1,155 | 8,493 | 51,061 | 137,630 | 352,588 |
-| % of vocabulary | 0.00266 | 0.0319 | 0.28 | 2.06 | 12.4 | 33.3 | 85.3 |
-| Types needed (raw) | 5 | 102 | 1,003 | 7,664 | 48,944 | 138,367 | 375,016 |
+| Types needed (final) | 11 | 129 | 1,087 | 7,636 | 45,020 | 129,135 | 436,910 |
+| % of vocabulary | 0.00203 | 0.0238 | 0.201 | 1.41 | 8.31 | 23.8 | 80.6 |
+| Types needed (raw) | 5 | 104 | 968 | 7,070 | 43,395 | 129,008 | 462,815 |
 
 Per-category coverage is in `results/coverage_analysis.csv`.
 
@@ -136,17 +136,17 @@ Full output: `results/length_analysis.txt`, `sentence_length_stats.csv` and `wor
 
 | Sentence length (tokens) | Sentences | Mean | Median | Std | p95 |
 |---|---|---|---|---|---|
-| Overall | 637,412 | 9.50 | 8 | 7.67 | 23 |
+| Overall | 1,110,440 | 9.46 | 8 | 7.61 | 23 |
 | Literature | 34,018 | 6.91 | 6 | 4.97 | 15 |
-| News | 485,289 | 9.45 | 7 | 7.91 | 23 |
+| News | 958,324 | 9.42 | 8 | 7.72 | 23 |
 | Education | 347 | 14.92 | 13 | 9.38 | 31 |
 | Culture/history | 18,685 | 8.29 | 6 | 6.99 | 21 |
-| Web (Wikipedia) | 99,073 | 10.89 | 9 | 7.04 | 23 |
+| Web (Wikipedia) | 99,066 | 10.89 | 9 | 7.04 | 23 |
 
 | Word length | Token-weighted mean (median) | Type-weighted mean (median) |
 |---|---|---|
-| Characters (code points) | 5.67 (5) | 8.12 (8) |
-| Aksharas | 3.04 (3) | 4.14 (4) |
+| Characters (code points) | 5.67 (5) | 8.19 (8) |
+| Aksharas | 3.04 (3) | 4.17 (4) |
 
 On average one akshara is 1.87 code points: a consonant plus a vowel sign, conjunct or anusvara.
 
@@ -156,25 +156,25 @@ On average one akshara is 1.87 code points: a consonant plus a vowel sign, conju
 ## 8. Observations and inferences
 
 1. **Konkani vocabulary does not saturate at this size.**
-   - **Observation:** The Heaps exponent is β ≈ 0.72. Typical values for English are about 0.4–0.6. 60.1% of types are hapaxes, and covering 90% of tokens takes 51,061 types (12.4% of the vocabulary).
+   - **Observation:** The Heaps exponent is β ≈ 0.71. Typical values for English are about 0.4–0.6. 59.3% of types are hapaxes, and covering 90% of tokens takes 45,020 types (8.3% of the vocabulary).
    - **Inference:** This is consistent with the LDC-IL documentation (2018, §9). It says Konkani is "highly agglutinative and morphologically rich … the new words coming into corpus for a unit amount of input is much higher compared to other languages", and that much larger corpora are needed for good coverage. Postpositions fuse with nouns (`घरांत`, `घराक`, `घराचो`), so each noun lemma surfaces as many types. Two consequences follow:
      - for Phase 2, **subword models (BPE/Unigram, FastText)** are needed, because a word-level vocabulary will have a high OOV rate on the test split;
      - for comparison, the LDC-IL corpus has about 4.0M words from 282 titles.
 2. **The β value is partly inflated by noise and domain mixing.** Each new domain and each new newspaper issue brings new names, so the growth curve keeps rising. OCR deletions (anusvara, virama) also create false types.
-3. **Deduplication matters more than any other cleaning step for frequency statistics.** Removing duplicates took out 5.5% of tokens but moved the 50%-coverage point by 10% (1,050 → 1,155 types), and changed the Zipf slope from -1.03 to -1.01. Without dedup, the frequency list describes a census table, not the language.
+3. **Deduplication matters more than any other cleaning step for frequency statistics.** Removing duplicates took out 4.0% of tokens but moved the 50%-coverage point by 5% (1,032 → 1,087 types), and changed the Zipf slope from -1.03 to -1.02. Without dedup, the frequency list describes a census table, not the language.
 4. **Domains differ sharply.**
    - Literature has the shortest sentences (median 6 tokens) and Education the longest (median 13). Fiction is dominated by dialogue and quoted speech; the textbook by expository prose.
-   - Among the large categories, News has the lowest TTR (0.058): recurring names, places and formulae.
+   - Among the large categories, News has the lowest TTR (0.045): recurring names, places and formulae.
    - Web (Wikipedia) and Literature have the highest hapax shares.
 5. **Function words dominate and are distinctively Konkani.** `आनी`, `आसा`, `ना`, `पूण`, `खातीर` and `जाल्यार` separate Konkani from Marathi (`आणि`, `आहे`, `नाही`, `पण`, `साठी`). That is why the marker-word language ID works: it found a Marathi book and a Hindi parallel text that script-based filtering would have kept.
-6. **Spelling variation is large.** Examples: `पूण` 15,436 vs `पुण` 1,041; `म्हूण` 7,453 vs `म्हणून` 5,782; `सगळ्यांत` 3,122 vs `सगल्यांत` 1,612; `हांव` 5,701 vs `हाव` 124. We kept it, since it is real dialect and orthographic variation (Antruzi, Saxtti, Mangalorean and Cochin spellings all occur, e.g. `अश्शि बरंयताति`). It does split the counts for one word, which Phase 2 embeddings should partly recover.
-7. **Words average 3.0 aksharas (token-weighted) but 4.1 aksharas (type-weighted).** Frequent words are short function words, while the long tail is long inflected forms. This matches Zipf's law of abbreviation.
+6. **Spelling variation is large.** Examples: `पूण` 25,847 vs `पुण` 1,236; `म्हूण` 12,980 vs `म्हणून` 9,480; `सगळ्यांत` 3,950 vs `सगल्यांत` 2,967; `हांव` 8,582 vs `हाव` 189. We kept it, since it is real dialect and orthographic variation (Antruzi, Saxtti, Mangalorean and Cochin spellings all occur, e.g. `अश्शि बरंयताति`). It does split the counts for one word, which Phase 2 embeddings should partly recover.
+7. **Words average 3.0 aksharas (token-weighted) but 4.2 aksharas (type-weighted).** Frequent words are short function words, while the long tail is long inflected forms. This matches Zipf's law of abbreviation.
 
 ## 9. Limitations
 
-- **Domain balance (FR-C6).** News is 75.7% of the corpus, above the 60% cap.
+- **Domain balance (FR-C6).** News is 86.0% of the corpus, above the 60% cap.
   - The full corpus is kept for Phase 2, because more text gives better language models.
-  - `make_splits.py` also writes a domain-balanced subset to `data/splits/balanced/`, with no category above 60%. It has 177 documents and 3,639,742 tokens: literature 6.5%, news 59.5%, education 0.1%, culture/history 4.3%, web (wikipedia) 29.6%.
+  - `make_splits.py` also writes a domain-balanced subset to `data/splits/balanced/`, with no category above 60%. It has 180 documents and 3,658,414 tokens: literature 6.4%, news 59.7%, education 0.1%, culture/history 4.2%, web (wikipedia) 29.5%.
   - Capped categories keep evenly spaced documents, which for newspapers spreads them over the whole date range.
 - **Missing categories.** 05 (public information), 07 (oral transcripts) are empty. Education has one textbook.
 - **Residual OCR noise.** Anusvara loss, merged newspaper columns and missing spaces remain. Anusvara is not restored automatically (FR-N9): both forms are often real words (`आसा` "is", `आसां` "I am"), so blind restoring would add errors. CER is measured on book OCR only; newspaper CER needs about 3 hand-typed pages (FR-E6).
@@ -184,6 +184,6 @@ On average one akshara is 1.87 code points: a consonant plus a vowel sign, conju
 
 ## 10. Readiness for Phase 2
 
-- `data/splits/{train,dev,test}.txt`: document-level splits (seed 2026; 263/33/33 documents), so no book, issue or Wikipedia shard appears in two splits. The manifest is in `data/splits/split_manifest.csv`, and the totals in `results/split_summary.json`.
+- `data/splits/{train,dev,test}.txt`: document-level splits (seed 2026; 490/61/61 documents), so no book, issue or Wikipedia shard appears in two splits. The manifest is in `data/splits/split_manifest.csv`, and the totals in `results/split_summary.json`.
 - `data/splits/balanced/`: the same split restricted to the domain-balanced subset.
 - `data/processed/combined/documents.jsonl` keeps the document boundaries for any re-splitting.

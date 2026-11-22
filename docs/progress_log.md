@@ -1,6 +1,6 @@
-# Progress log: 20–21 Nov 2026 (Fedora work sessions)
+# Progress log: 20–22 Nov 2026 (Fedora work sessions)
 
-What changed from the move to the Fedora machine (20 Nov 2026) to 21 Nov 2026 night, grouped by stage. Commits are on `main`; git history has the detail.
+What changed from the move to the Fedora machine (20 Nov 2026) to 22 Nov 2026, grouped by stage. Commits are on `main`; git history has the detail.
 
 Before these sessions the repo had: README, PRD, the LDC-IL gold sample and OCR quality check, the e-paper fetch + OCR script, and 21 OCR'd Bhaangarbhuin issues (360k tokens). No cleaning pipeline, analyses, splits or Phase 2/3 work existed.
 
@@ -43,17 +43,17 @@ Before these sessions the repo had: README, PRD, the LDC-IL gold sample and OCR 
 - `scripts/rebuild_all.sh`: Phase 1 + Phase 2 + teammate zip in one command (optionally waits for the fetch to end).
 - `metadata/data_dictionary.md`, `docs/collection_guidelines.md` updated.
 
-### Phase 1 numbers (last full run, 289 e-paper issues)
+### Phase 1 numbers (final run, 22 Nov 2026, all 573 e-paper issues; tag `corpus-v1.0`)
 
 | | Value |
 |---|---|
-| Clean tokens | **6.06M** (goal ≥ 2M, stretch 5M) |
-| Documents | 329, 5 domains |
-| Share by domain | news 75.7%, web 17.8%, literature 3.9%, culture 2.6%, education 0.1% |
-| Splits (tokens) | train 4.77M, dev 640k, test 644k |
-| Balanced subset | 3.64M tokens, news 59.5% |
+| Clean tokens | **10.51M** (goal ≥ 2M, stretch 5M); 541,967 types |
+| Documents | 613, 5 domains |
+| Share by domain | news 86.0%, web 10.3%, literature 2.2%, culture 1.5%, education 0.05% |
+| Splits (tokens) | train 8.46M, dev 1.01M, test 1.04M (490/61/61 documents) |
+| Balanced subset | 3.66M tokens, news 59.7% |
 
-The 284 issues fetched after that run are committed as OCR text but are **not yet** in `data/processed` or the splits. The next `scripts/run_phase1.sh` (or `scripts/rebuild_all.sh`) adds them.
+Held-out segmentation F1 0.992. The previous run (289 issues) gave 6.06M tokens; the Phase 2 and 3 results below still use those 6.06M-token splits.
 
 ---
 
@@ -94,7 +94,7 @@ The 284 issues fetched after that run are committed as OCR text but are **not ye
 
 ## Still to do
 
-1. Re-run `scripts/rebuild_all.sh` so the 284 newer issues enter the corpus, then `scripts/run_phase3_lm.sh`; refresh the tables in the Phase 2/3 docs; tag `corpus-v1.0`.
+1. Re-run Phase 2 (`scripts/run_phase2_lm.sh`, `scripts/run_phase2_embeddings.sh`) and `scripts/run_phase3_lm.sh` on the final 10.51M-token splits; refresh the tables in the Phase 2/3 docs.
 2. Team verification of every AI-drafted set: segmentation gold, language audit, word similarity, analogies, NER silver (see each doc).
 3. NER: grow to 2–3k verified sentences, 200 double-annotated for Cohen's κ; BiLSTM-CRF and MuRIL/IndicBERT.
 4. Hand-typed gold for about 3 e-paper pages (newspaper OCR CER).

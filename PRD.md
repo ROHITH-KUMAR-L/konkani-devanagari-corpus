@@ -203,7 +203,7 @@ data/splits/{train,dev,test}.txt  → Phase 2 (tokenisers, LMs, embeddings) → 
 ### Phase 1 (exit criteria)
 | Metric | Target | Status (20 Nov 2026; live numbers in [docs/report.md](docs/report.md)) |
 |---|---|---|
-| Clean tokens | ≥ 2M (stretch 5M) | ✅ met (3.47M at the last run; e-paper fetch still adding news) |
+| Clean tokens | ≥ 2M (stretch 5M) | ✅ met (10.51M, final run with all 573 e-paper issues) |
 | Categories with data | ≥ 5 | ✅ 5 (literature, news, education, culture/history, web); 05 and 07 empty |
 | Files passing `file` = "UTF-8 text", no CRLF | 100% | ✅ 100% of processed and split files |
 | Non-Devanagari characters in final corpus (excluding punctuation/digits) | < 0.5% | ✅ 0.00% of tokens |

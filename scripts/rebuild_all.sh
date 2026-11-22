@@ -23,6 +23,7 @@ echo "== zip $(date)"
 ZIP=../konkani_corpus_processed.zip
 rm -f "$ZIP"
 zip -qr9 "$ZIP" data/processed data/splits results/split_summary.json metadata/data_dictionary.md docs/report.md
+zip -qj9 "$ZIP" docs/TEAM_README.md    # team guide at the zip root
 unzip -tq "$ZIP"
 ls -lh "$ZIP"
 
