@@ -18,7 +18,8 @@ Status: **setup only.** The labels used here are an AI first-pass *silver* annot
 | `results/phase3/ner_label_counts.csv` | Entity counts per split |
 | `results/phase3/ner_scores.csv` | Per-type and micro/macro P/R/F1 on silver_test |
 | `results/phase3/ner_cv.csv` | 5-fold CV over all 300 silver sentences |
-| `results/phase3/ner_test_predictions.tsv` | Token-level gold vs. every system on silver_test, for error analysis |
+| `results/phase3/ner_test_predictions.tsv` | Token-level silver tags vs. every system on silver_test, for error analysis |
+| `results/phase3/ner_token_confusion_matrix.csv` | Token-level BIO confusion matrix for the CRF baseline; diagnostic, not entity-level scoring |
 
 Reproduce (Python 3.12 venv with `scripts/phase3/requirements-ner.txt`):
 
@@ -98,3 +99,32 @@ Per type (F1). Full P/R/support is in `results/phase3/ner_scores.csv`.
 - The silver labels have no inter-annotator agreement and may contain systematic errors from a single annotator.
 - The test set has 183 entities, so one entity is worth about 0.5 F1 points. ORG (24) and DATE (17) per-type scores are especially unstable.
 - Punctuation is removed by the corpus tokeniser. Abbreviations such as `एल आय सी` therefore appear as separate tokens, and the sentence context loses its punctuation cues.
+
+## 7. Experimental BiLSTM-CRF implementation
+
+`scripts/phase3/ner_bilstm_crf.py` now provides a word/suffix BiLSTM with a
+linear-chain CRF, BIO transition constraints, optional local FastText vectors,
+and `train` / `predict` commands. The training command uses an internal
+validation slice from `silver_dev.conll`, keeps `silver_test.conll` out of model
+selection, saves a versioned checkpoint atomically, and writes entity-level
+P/R/F1 plus a token-level BIO confusion matrix. The existing CRF baseline also
+adds two-token context features and writes a token-level confusion matrix for
+its CRF predictions.
+
+Example (Windows, from the repository root):
+
+```powershell
+.venv-phase2\Scripts\python.exe scripts\phase3\ner_bilstm_crf.py train
+.venv-phase2\Scripts\python.exe scripts\phase3\ner_bilstm_crf.py predict `
+    --checkpoint data\models\phase3_ner_bilstm_crf.pt `
+    --input data\eval\ner\silver_test.conll `
+    --out results\phase3\ner_bilstm_crf_predictions.conll
+```
+
+An optional local FastText KeyedVectors file can be supplied with
+`--fasttext data\models\ft25.kv`; its dimension must match `--embedding-dim`.
+This is an experimental implementation only. No NER model was trained as part
+of the development update, and no new scores are claimed. Existing and future
+scores on `silver_*` files describe agreement with AI-generated, unverified
+labels; they are not human-gold results. Annotate and review a genuine gold
+test set before using these figures as evidence of NER quality.

@@ -21,6 +21,11 @@ The script installs the PyTorch CPU wheel into `.venv-phase2` if it is missing (
 | n-gram baselines on the same splits | `scripts/phase2/ngram_lm.py --skip curve` | `results/phase3/ngram_baseline/{ngram,subword}_perplexity.csv`, `plots/ngram_perplexity.png` |
 | Neural LMs | `scripts/phase3/neural_lm.py` | `results/phase3/neural_perplexity.csv`, `training_log.csv`, `comparison.csv`, `samples.md`, `plots/loss_curves.png`, `plots/comparison.png`; checkpoints `data/models/phase3_*.pt` (git-ignored) |
 
+Neural LM checkpoints are written atomically with a format version, model name,
+and vocabulary size. The loader accepts older plain state-dict checkpoints and
+rejects versioned checkpoints with a mismatched model or vocabulary. Training
+fails explicitly for empty train/dev splits and invalid positive settings.
+
 **Runtime.** Default run 22 min end to end on the team laptop (AMD Ryzen 7 8845HS, 8 cores, no GPU). The neural step is time-boxed per model: FFNN 2.5 min, LSTM 7 min, Transformer 7 min, char LSTM 3.5 min of training, plus test scoring. The extended run (§3.2) took about 52 min more. Other jobs (embedding training) shared the CPU during the default run, so a free machine trains further within the same budget. Seed: 2026 (`--seed`). All options: `--help`.
 
 ## 2. Method

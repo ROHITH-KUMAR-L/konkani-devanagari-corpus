@@ -90,7 +90,8 @@ A clean, documented, plain-text corpus of **Konkani written in Devanagari script
 - [x] NER annotation guidelines ([docs/ner_guidelines.md](docs/ner_guidelines.md)), 3,000-sentence pool, 300-sentence AI silver set
 - [ ] NER: team verifies the silver set, grows it to 2–3k sentences; 200 double-annotated for Cohen's κ
 - [x] NER baselines: gazetteer + rules, CRF ([docs/phase3_ner.md](docs/phase3_ner.md))
-- [ ] NER models: BiLSTM-CRF (FastText) → fine-tuned MuRIL/IndicBERT; P/R/F1
+- [x] Experimental BiLSTM-CRF training/inference code added; no model trained and silver labels remain unverified
+- [ ] NER models evaluated on human-verified gold: BiLSTM-CRF (FastText) → fine-tuned MuRIL/IndicBERT; P/R/F1
 - [ ] Optional: POS tagging, domain classification, OCR spell-corrector
 - [ ] Final report and presentation
 
@@ -417,8 +418,15 @@ file data/processed/combined/*.txt                # must say: UTF-8 text (no CRL
 
 **Live demo.** After Phase 2 and 3 have been run (models in `data/models/`), a local web app shows the work interactively: language check, sentence splitter, tokenisers, autocomplete, similar words, LSTM text generation, NER, corpus search, an on-screen Konkani keyboard and English translation of sentences.
 
+```powershell
+.venv-phase2\Scripts\python.exe scripts\demo\app.py --warm
+# Open http://127.0.0.1:8050
+```
+
+On Linux/macOS:
+
 ```bash
-.venv-phase2/bin/python scripts/demo/app.py --warm    # open http://127.0.0.1:8050
+.venv-phase2/bin/python scripts/demo/app.py --warm
 ```
 
 Translation uses AI4Bharat's IndicTrans2 (`ai4bharat/indictrans2-indic-en-dist-200M`), an outside pretrained model: install `transformers<4.50` and `IndicTransToolkit` into `.venv-phase2`, accept the model's terms on Hugging Face and run `.venv-phase2/bin/hf auth login`. Without it, every other tab still works.
